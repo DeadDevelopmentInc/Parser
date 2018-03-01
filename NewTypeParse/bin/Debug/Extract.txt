@@ -1,0 +1,24 @@
+0	Programming Languages:
+1	Java (Sun Certified), SQL, JavaScript, VBScript, XSLT, XPath, UML, C#, PHP, T-SQL, KornShell, BashShell, Delphi
+
+2	Web Technologies:
+3	J2EE, Java Server Pages (JSP), Spring, Hibernate, CSS3, JQuery, AJAX, HTTP, AngularJS, Web Liberty, Backbone, Yii v.1, Yii v.2 , Bootstrap, Foundation, Asp, HTML5, REST-API
+	
+4	Application Servers:
+5	Apache Tomcat Server, Denwer, Wamp, IBM WebSphere Application Server, API Economy, Oracle WebLogic Application Server, Microsoft IIS
+	
+6	Databases:
+7	Microsoft SQL Server, Oracle Database, Microsoft Access, H2 Database, MySql, IBM DB2.
+	
+8	Operating Systems:
+9	Microsoft (MS Windows XP/2003/7/8/10), Microsoft Windows Server 2008, Unix (Linux, Red Hat, Solaris, HP-UX), Android
+
+10	Other Skills:
+11	Putty, WinSCP, Adobe Dreamweaver 8, Maven, JDBC, ODBC, Control System (SVN, CVS, GitHub), grunt, bower, XML, XSL, MVC, OOP, XML & JSON Format, UDP, Ethernet
+
+12	Foreign Languages:
+13	English 
+14	Advanced
+
+
+

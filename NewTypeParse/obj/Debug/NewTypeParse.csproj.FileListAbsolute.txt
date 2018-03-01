@@ -1,0 +1,13 @@
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\bin\Debug\NewTypeParse.exe.config
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\bin\Debug\NewTypeParse.exe
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\bin\Debug\NewTypeParse.pdb
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\bin\Debug\Spire.Doc.dll
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\bin\Debug\Spire.License.dll
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\bin\Debug\Spire.Pdf.dll
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\bin\Debug\Microsoft.mshtml.dll
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\bin\Debug\Spire.Doc.xml
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\bin\Debug\Spire.License.xml
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\obj\Debug\NewTypeParse.csprojResolveAssemblyReference.cache
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\obj\Debug\NewTypeParse.csproj.CoreCompileInputs.cache
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\obj\Debug\NewTypeParse.exe
+D:\repos\Parse\ParceDocxToXml\ParceDocxToXml\NewTypeParse\obj\Debug\NewTypeParse.pdb
