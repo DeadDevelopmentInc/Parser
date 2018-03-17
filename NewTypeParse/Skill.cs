@@ -66,4 +66,19 @@ namespace NewTypeParse
             this.level = level;
         }
     }
+
+    [DataContract]
+    public class AdditionInfo
+    {
+        [DataMember]
+        public string Id { get; set; }
+        public string Years { get; set; }
+    }
+
+    public class Exp
+    {
+        public string Name { get; set; }
+
+        public string Year { get; set; }
+    }
 }

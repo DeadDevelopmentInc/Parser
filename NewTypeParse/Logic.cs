@@ -1,10 +1,15 @@
-﻿using Spire.Doc;
+﻿#define OLD_pARCE_DEBUG
+#define NEW_PARCE_DEBUG
+using NewTypeParse.ForNewTemplate;
+using NewTypeParse.ForOldTemplate;
+using Spire.Doc;
 using Spire.Doc.Documents;
 using Spire.Doc.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace NewTypeParse
@@ -16,57 +21,64 @@ namespace NewTypeParse
         /// </summary>
         /// <param name="source">file destination</param>
         /// <param name="type">template type</param>
-        public static void ParseDoc(string source, int type)
-        {
-            switch(type)
+        public static void ParseDoc(string source)
+        { 
+            try
             {
-                case 1:
-                    {
-                        ParseNewTemplate(source);
-                    }
-                    break;
-                case 2:
-                    {
-                        ParseOldTemplate(source);
-                    }
-                    break;
+                //Open doc
+                Document doc = new Document();
+                doc.LoadFromFile(source);
+                //Find section with table
+                Section section = doc.Sections[0];
+                Console.WriteLine("Read complete");
+                //Know type of template
+                int type = doc.Sections[0].Tables.Count;
+                switch (type)
+                {
+                    case 8:
+                        {
+                            ProccessNewTemplate.Responce(section);
+                        }
+                        break;
+                    case 2:
+                        {
+                            PrccssOldTmplt.Responce(section);
+                        }
+                        break;
+                }
             }
+            catch
+            {
+                Console.WriteLine("Can't load document");
+            }            
         }
 
         /// <summary>
         /// Parse old template
         /// </summary>
         /// <param name="source">file destination</param>
-        private static void ParseOldTemplate(string source)
+        private static void ParseOldTemplate(Section section)
         {
-            //Open doc
-            Document doc = new Document();
             try
             {
-                doc.LoadFromFile(source);
-                Console.WriteLine("Read complete");
                 //Create list of skills
-                List<string> mainList = new List<string>();
-                //Find section with table
-                Section section = doc.Sections[0];
-                //Find table with skills(number 0)
-                ITable table = section.Tables[0];
-                foreach (TableRow row in table.Rows)
-                {
-                    foreach (TableCell cell in row.Cells)
-                    {
-                        //For each cell read value
-                        foreach (Paragraph paragraph in cell.Paragraphs)
-                        {
-                            //Delete stuff from line
-                            string s = paragraph.Text.Trim(':');
-                            mainList.Add(s);
-                        }
-                    }
-                }
+                List<string> skillsList = new List<string>();
+                List<string> expList = new List<string>();
+
+                List<Exp> sortExpSkills = new List<Exp>();
+                //Get text from tables
+                skillsList = GetTextFromTable(section.Tables[0]); //table with skills
+                expList = GetTextFromTable(section.Tables[1]); // table with exp 
+#if OLD_PARCE_DEBUG
+                foreach(string s in skillsList) { Console.WriteLine(s); }
+                foreach (string s in expList) { Console.WriteLine(s); }
+                Console.ReadKey();
+#endif
                 Console.WriteLine("Parse complete");
-                //Split lines with skills 
-                Helpers.SplitSkills(mainList);
+                //Split and save skills
+                Helpers.ProccExp(ref expList);
+                Helpers.SaveSkills(skillsList, sortExpSkills);
+                //Processing and save expearence
                 Console.WriteLine("Create json model complete");
             }
             catch
@@ -79,49 +91,57 @@ namespace NewTypeParse
         /// Parce new type of template
         /// </summary>
         /// <param name="source">file destination</param>
-        private static void ParseNewTemplate(string source)
+        private static void ParseNewTemplate(Section section)
         {
-            Document doc = new Document();
             try
             {
-                doc.LoadFromFile(source);
-                Console.WriteLine("Read complete");
-
-                List<string> mainList = new List<string>();
-                StringBuilder sb = new StringBuilder();
-
-                Section section = doc.Sections[0];
+                List<string> skillsList = new List<string>();
+                List<String> expList = new List<String>();
                 //Now need for all tables with different skills 
                 //Read table, handle, and save json model
                 //Number of table in section 7
-                for(int i = 0; i < 7; i++)
+                expList = GetTextFromTable(section.Tables[7]);
+#if NEW_PARCE_DEBUG
+                foreach (string s in skillsList) { Console.WriteLine(s); }
+                foreach (string s in expList) { Console.WriteLine(s); }
+                Console.ReadKey();
+#endif
+                Helpers.ProccExp(ref expList);
+                for (int i = 0; i < 6; i++)
                 {
-                    mainList.Clear();
+                    skillsList.Clear();
                     ITable table = section.Tables[i];
-                    foreach (TableRow row in table.Rows)
-                    {
-                        foreach (TableCell cell in row.Cells)
-                        {
-                            foreach (Paragraph paragraph in cell.Paragraphs)
-                            {
-                                if (paragraph.Text != "")
-                                {
-                                    string s = paragraph.Text.Trim(':');
-                                    mainList.Add(s);
-                                }
-                            }
-                        }
-                    }
-                    Console.WriteLine(@"Parse {0} table complete", i+1);
+                    skillsList = GetTextFromTable(table);
+                    Console.WriteLine(@"Parse {0} table complete", i + 1);
                     //After reading, create json model
-                    ToJson.CreateJsonModelNew(mainList);
+                    //ToJson.CreateJsonModelNew(skillsList);
                 }
+
                 Console.WriteLine("Create json model complete");
             }
             catch
             {
                 Console.WriteLine("Invalid document");
             }
+        }
+
+        private static List<string> GetTextFromTable(ITable table)
+        {
+            List<string> list = new List<string>();
+            foreach (TableRow row in table.Rows)
+            {
+                foreach (TableCell cell in row.Cells)
+                {
+                    //For each cell read value
+                    foreach (Paragraph paragraph in cell.Paragraphs)
+                    {
+                        //Delete stuff from line
+                        string s = paragraph.Text.Trim(':');
+                        list.Add(s);
+                    }
+                }
+            }
+            return list;
         }
     }
 }

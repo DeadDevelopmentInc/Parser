@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>NewTypeParse</RootNamespace>
     <AssemblyName>NewTypeParse</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ForNewTemplate\ProccessNewTemplate.cs" />
+    <Compile Include="ForOldTemplate\PrccssOldTmplt.cs" />
+    <Compile Include="ForOldTemplate\ProccessOldTemplate.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Logic.cs" />
     <Compile Include="Program.cs" />

@@ -17,8 +17,7 @@ namespace NewTypeParse
         static void Main(string[] args)
         {
             string container = null;
-            int type = 0;
-            Console.Write("Write name of document (pattern *.doc) and type of document (new template = 1 or old template 2): ");
+            Console.Write("Write name of document (pattern *.doc): ");
             bool fl = false;
             while(!fl)
             {
@@ -26,12 +25,10 @@ namespace NewTypeParse
                 {
                     container = Console.ReadLine();
                     Regex regex = new Regex(@"(\w*).doc");
-                    string[] build = container.Split(' ');
-                    MatchCollection match = regex.Matches(build[0]);
-                    if (match.Count > 0 & int.TryParse(build[1], out type) & type >= 0 && 2 >= type)
+                    MatchCollection match = regex.Matches(container);
+                    if (match.Count > 0)
                     {
                         fl = true;
-                        container = build[0];
                     }
                 }
                 catch
@@ -39,7 +36,7 @@ namespace NewTypeParse
                     Console.WriteLine("Check writed data");
                 }
             }
-            Logic.ParseDoc(container, type);
+            Logic.ParseDoc(container);
             Console.Write("Press any button");
             Console.ReadKey();
         }
