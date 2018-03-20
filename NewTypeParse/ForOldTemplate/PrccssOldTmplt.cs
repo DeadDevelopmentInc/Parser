@@ -115,14 +115,17 @@ namespace NewTypeParse.ForOldTemplate
             }
             for(int  i = 0; i < exps.Count - 1; i++)
             {
-                for(int  j = i; j < exps.Count; j++)
+                for(int  j = i + 1; j < exps.Count; j++)
                 {
                     if(exps[i].Name == exps[j].Name)
                     {
                         if (Convert.ToInt32(exps[i].Year) > Convert.ToInt32(exps[j].Year))
                             exps.RemoveAt(j);
                         else
+                        {
                             exps.RemoveAt(i);
+                            i--;
+                        }
                     }
                 }
             }

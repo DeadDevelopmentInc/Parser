@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DictionarySkills.cs" />
     <Compile Include="ForNewTemplate\ProccessNewTemplate.cs" />
     <Compile Include="ForOldTemplate\PrccssOldTmplt.cs" />
     <Compile Include="ForOldTemplate\ProccessOldTemplate.cs" />
