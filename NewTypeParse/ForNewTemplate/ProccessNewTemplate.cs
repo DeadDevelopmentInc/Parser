@@ -21,24 +21,24 @@ namespace NewTypeParse.ForNewTemplate
                 //Now need for all tables with different skills
                 //Read table, handle, and save json model
                 //Number of table in section 7
-                expList = Helpers.GetTextFromTable(section.Tables[7]);
-#if NEW_PARCE_DEBUG
-                foreach (string s in skillsList) { Console.WriteLine(s); }
-                foreach (string s in expList) { Console.WriteLine(s); }
-                Console.ReadKey();
-#endif
-                Helpers.ProccExp(ref expList);
-                for (int i = 0; i < 6; i++)
-                {
-                    skillsList.Clear();
-                    ITable table = section.Tables[i];
-                    skillsList = Helpers.GetTextFromTable(table);
-                    Console.WriteLine(@"Parse {0} table complete", i + 1);
-                    //After reading, create json model
-                    //ToJson.CreateJsonModelNew(skillsList);
-                }
+//                expList = Helpers.GetTextFromTable(section.Tables[7]);
+//#if NEW_PARCE_DEBUG
+//                foreach (string s in skillsList) { Console.WriteLine(s); }
+//                foreach (string s in expList) { Console.WriteLine(s); }
+//                Console.ReadKey();
+//#endif
+//                Helpers.ProccExp(ref expList);
+//                for (int i = 0; i < 6; i++)
+//                {
+//                    skillsList.Clear();
+//                    ITable table = section.Tables[i];
+//                    skillsList = Helpers.GetTextFromTable(table);
+//                    Console.WriteLine(@"Parse {0} table complete", i + 1);
+//                    //After reading, create json model
+//                    //ToJson.CreateJsonModelNew(skillsList);
+//                }
 
-                Console.WriteLine("Create json model complete");
+//                Console.WriteLine("Create json model complete");
             }
             catch
             {

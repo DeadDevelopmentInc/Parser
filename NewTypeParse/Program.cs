@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ParserLibrary;
 using Spire.Doc;
 using Spire.Doc.Documents;
 using Spire.Doc.Fields;
@@ -36,9 +37,11 @@ namespace NewTypeParse
                     Console.WriteLine("Check writed data");
                 }
             }
-            Logic.ParseDoc(container);
+            //Logic.ParseDoc(container);
+            Parser.StartParse(container);
             Console.Write("Press any button");
             Console.ReadKey();
         }
+
     }
 }

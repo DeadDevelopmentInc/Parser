@@ -84,24 +84,5 @@ namespace NewTypeParse
         //        }
         //    }
         //}
-
-        public static List<string> GetTextFromTable(ITable table)
-        {
-            List<string> list = new List<string>();
-            foreach (TableRow row in table.Rows)
-            {
-                foreach (TableCell cell in row.Cells)
-                {
-                    //For each cell read value
-                    foreach (Paragraph paragraph in cell.Paragraphs)
-                    {
-                        //Delete stuff from line
-                        string s = paragraph.Text.Trim(':');
-                        list.Add(s);
-                    }
-                }
-            }
-            return list;
-        }
     }
 }

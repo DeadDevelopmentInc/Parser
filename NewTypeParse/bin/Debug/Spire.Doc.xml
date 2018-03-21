@@ -11987,6 +11987,82 @@
             <param name="sectionIndex">Current section index</param>
             <returns>returns the header referred by the current section by comparing the current and preceeding section</returns>
         </member>
+        <member name="T:Spire.Doc.Documents.SdtType">
+            <summary>
+            Specifies the type of a structured document tag (SDT) Element.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.None">
+            <summary>
+            No type is assigned to the SDT.
+            If no type element is specified, the SDT structured document tag should be a rich text box.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.RichText">
+            <summary>
+            The SDT represents a rich text box when displayed in the document.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.Bibliography">
+            <summary>
+            The SDT represents a bibliography entry. 
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.Citation">
+            <summary>
+            The SDT represents a citation.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.ComboBox">
+            <summary>
+            The SDT represents a combo box when displayed in the document.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.DropDownList">
+            <summary>
+            The SDT represents a drop down list when displayed in the document.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.Picture">
+            <summary>
+            The SDT represents a picture when displayed in the document.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.Text">
+            <summary>
+            The SDT represents a plain text box when displayed in the document.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.Equation">
+            <summary>
+            The SDT represents an equation.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.DatePicker">
+            <summary>
+            The SDT represents a date picker when displayed in the document.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.BuildingBlockGallery">
+            <summary>
+            The SDT represents a building block gallery type.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.DocPartObj">
+            <summary>
+            The SDT represents a document part type.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.Group">
+            <summary>
+            The SDT represents a restricted grouping when displayed in the document.
+            </summary>
+        </member>
+        <member name="F:Spire.Doc.Documents.SdtType.CheckBox">
+            <summary>
+            The SDT represents a checkbox when displayed in the document.
+            </summary>
+        </member>
         <member name="P:Spire.Doc.Documents.SdtText.IsMultiline">
             <summary>
             Allow Soft Line Breaks. Specifies whether soft line breaks can be added to 

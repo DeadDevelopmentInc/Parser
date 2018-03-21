@@ -19,8 +19,8 @@ namespace NewTypeParse.ForOldTemplate
                 List<string> skillsList = new List<string>();
                 List<string> expList = new List<string>();
                 //Get text from tables
-                skillsList = Helpers.GetTextFromTable(section.Tables[0]); //table with skills
-                expList = Helpers.GetTextFromTable(section.Tables[1]); // table with exp 
+                //skillsList = Helpers.GetTextFromTable(section.Tables[0]); //table with skills
+                //expList = Helpers.GetTextFromTable(section.Tables[1]); // table with exp 
 #if OLD_PARSE_DEBUG_SKILL
                 foreach(string s in skillsList) { Console.WriteLine(s); }
                 foreach (string s in expList) { Console.WriteLine(s); }

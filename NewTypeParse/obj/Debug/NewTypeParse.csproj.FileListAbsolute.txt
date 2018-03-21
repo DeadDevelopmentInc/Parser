@@ -25,3 +25,5 @@ D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.csproj.CoreCompileInputs.cac
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.exe
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.pdb
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.csproj.CopyComplete
+D:\repos\Parser\NewTypeParse\bin\Debug\ParserLibrary.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\ParserLibrary.pdb
