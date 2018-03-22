@@ -52,12 +52,17 @@
   <ItemGroup>
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Logic_for_old_template\Logic_for_old_template.cs" />
+    <Compile Include="Logic_for_old_template\ProcessExps.cs" />
+    <Compile Include="Logic_for_old_template\ProcessSkills.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Logic_for_new_template\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

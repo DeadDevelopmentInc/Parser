@@ -30,7 +30,7 @@ namespace ParserLibrary
                         break;
                     case 2:
                         {
-                            Logic_for_old_template.Responce(section);
+                            Logic_for_old_template.Logic_for_old_template.Responce(section);
                         }
                         break;
                 }

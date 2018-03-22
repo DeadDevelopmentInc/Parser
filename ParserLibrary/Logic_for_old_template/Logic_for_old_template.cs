@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParserLibrary
+namespace ParserLibrary.Logic_for_old_template
 {
     internal static class Logic_for_old_template
     {
@@ -26,12 +26,9 @@ namespace ParserLibrary
 #endif
                 Console.WriteLine("Parse complete");
                 //Split and save exp
-                expList = Helpers.ProccExp(expList);
-                var skillsModelList = Helpers.ProccSkills(skillsList);
-                //List<Exp> exps = Parse(expList.ToArray());
-                //dynamic proccList = SaveSkills(skillsList, expList);
+                var skillsModelList = ProcessSkills.ProccSkills(skillsList);
+                skillsModelList.AddRange(ProcessExps.ProccExp(expList));
                 //Processing and save expearence
-                Console.WriteLine("Create json model complete");
 #if OLD_PARSE_DEBUG_EXP
                 foreach(string s in expList) { Console.WriteLine(s); }
 #endif

@@ -12,7 +12,7 @@ namespace ParserLibrary
         January = 1,
         February,
         March,
-        Aprill,
+        April,
         May,
         June,
         July,
@@ -59,12 +59,13 @@ namespace ParserLibrary
         public string name { get; set; }
         public string level { get; set; } = "Working knowledge";
         public string type { get; set; } = "Other";
+        public List<string> SimilarSkills { get; set; } = new List<string>();
     }
 
     internal class SkillDate
     {
-        int _month;
-        int _year;
+        double _month;
+        double _year;
 
         public string Month
         {
@@ -76,7 +77,7 @@ namespace ParserLibrary
                     case "January": { _month = (int)Months.January; } break;
                     case "February": { _month = (int)Months.February; } break;
                     case "March": { _month = (int)Months.March; } break;
-                    case "Aprill": { _month = (int)Months.Aprill; } break;
+                    case "April": { _month = (int)Months.April; } break;
                     case "May": { _month = (int)Months.May; } break;
                     case "June": { _month = (int)Months.June; } break;
                     case "July": { _month = (int)Months.July; } break;
@@ -89,10 +90,30 @@ namespace ParserLibrary
             }
         }
 
+        public double MonthInt
+        {
+            get { return _month; }
+            set { _month = value; }
+        }
+
         public string Year
         {
             get { return _year.ToString(); }
             set { _year = int.Parse(value); }
+        }
+
+        public double YearInt
+        {
+            get { return _year; }
+            set { _year = value; }
+        }
+
+        public double GetLenght(SkillDate date)
+        {
+            double years = 0;
+            years = Math.Abs(this.YearInt - date.YearInt + 1) + 
+                Math.Abs((12 - this.MonthInt + date.MonthInt) / 12);
+            return years;
         }
     }
 }
