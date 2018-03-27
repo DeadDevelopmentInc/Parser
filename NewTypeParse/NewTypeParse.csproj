@@ -53,16 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DictionarySkills.cs" />
-    <Compile Include="ForNewTemplate\ProccessNewTemplate.cs" />
-    <Compile Include="ForOldTemplate\PrccssOldTmplt.cs" />
-    <Compile Include="ForOldTemplate\ProccessOldTemplate.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="Logic.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Skill.cs" />
-    <Compile Include="ToJson.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

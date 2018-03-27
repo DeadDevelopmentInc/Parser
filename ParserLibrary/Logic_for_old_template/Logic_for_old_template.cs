@@ -1,4 +1,6 @@
-﻿using Spire.Doc;
+﻿//#define OLD_PARSE_DEBUG_EXP
+//#define OLD_RARSE_DEBUG_SKILLS_AND_EXP
+using Spire.Doc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +26,25 @@ namespace ParserLibrary.Logic_for_old_template
                 foreach (string s in expList) { Console.WriteLine(s); }
                 Console.ReadKey();
 #endif
+#if OLD_PARSE_DEBUG_EXP
+                foreach(string s in expList) { Console.WriteLine(s); }
+#endif
                 Console.WriteLine("Parse complete");
                 //Split and save exp
                 var skillsModelList = ProcessSkills.ProccSkills(skillsList);
-                skillsModelList.AddRange(ProcessExps.ProccExp(expList));
+                var expModelList = ProcessExps.ProccExp(expList);
+#if OLD_RARSE_DEBUG_SKILLS_AND_EXP
+                foreach (ModelSkill s in skillsModelList)
+                {
+                    Console.WriteLine(s.name + " " + s.level + " " + s.type + " " + s.allNames.Count.ToString());
+                }
+#endif
                 //Processing and save expearence
-#if OLD_PARSE_DEBUG_EXP
-                foreach(string s in expList) { Console.WriteLine(s); }
+#if OLD_RARSE_DEBUG_SKILLS_AND_EXP
+                foreach (ModelSkill s in skillsModelList)
+                {
+                    Console.WriteLine(s.name + " " + s.level + " " + s.type + " " + s.allNames.Count.ToString());
+                }
 #endif
             }
             catch
@@ -38,5 +52,25 @@ namespace ParserLibrary.Logic_for_old_template
                 Console.WriteLine("Invalid document");
             }
         }
+
+        private static List<ModelSkill> Split(List<ModelSkill> skillsModelList,
+            List<ModelSkill> expModelList)
+        {
+            foreach(ModelSkill exp in expModelList)
+            {
+                for(int i = 0; i < skillsModelList.Count; i++)
+                {
+                    if(exp.name.Contains(skillsModelList[i].name))
+                    {
+                        if (exp.name != skillsModelList[i].name) exp.allNames.Add(skillsModelList[i].name);
+                        exp.type = skillsModelList[i].type;
+                        skillsModelList.RemoveAt(i);
+                    }
+                }
+            }
+            return expModelList;
+        }
+
+        
     }
 }

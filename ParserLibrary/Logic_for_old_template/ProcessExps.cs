@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ParserLibrary.Logic_for_old_template
 {
-    internal static class ProcessExps
+    public static class ProcessExps
     {
         /// <summary>
         /// Method for proccessing readed information
         /// Correctly work only with old template
         /// </summary>
         /// <param name="list">List with skills</param>
-        internal static List<ModelSkill> ProccExp(List<string> list)
+        public static List<ModelSkill> ProccExp(List<string> list)
         {
             List<ModelSkill> listExp = new List<ModelSkill>();
             List<BufferClass> bufferList = new List<BufferClass>();
@@ -26,6 +27,14 @@ namespace ParserLibrary.Logic_for_old_template
                 if (match.Count > 0 & list[i] == "Environment") { bufferList.AddRange(SplitLineExps(list[i + 1], list[i - 5])); }
             }
             CreateLevel(ref bufferList);
+            foreach(BufferClass cl in bufferList)
+            {
+                listExp.Add(new ModelSkill {
+                    name = cl.name,
+                    level = cl.level,
+                    allNames = cl.SimilarSkills
+                });
+            }
             return listExp;
         }
 
@@ -58,27 +67,30 @@ namespace ParserLibrary.Logic_for_old_template
         /// <param name="buffer">ref buffer with models</param>
         private static void CreateLevel(ref List<BufferClass> buffer)
         {
+            List<BufferClass> temp = new List<BufferClass>();
             for (int i = 0; i < buffer.Count - 1; i++)
             {
-                List<BufferClass> temp = new List<BufferClass>();
+                temp = new List<BufferClass>();
                 List<int> tempPosition = new List<int>();
                 temp.Add(buffer[i]);
-                tempPosition.Add(i);
                 for (int j = i + 1; j < buffer.Count; j++)
                 {
                     if (buffer[i].name.Contains(buffer[j].name))
                     {
                         if (!buffer[i].name.Equals(buffer[j].name)) { buffer[i].SimilarSkills.Add(buffer[j].name); }
                         temp.Add(buffer[j]); tempPosition.Add(j);
-                    }                    
+                    }
                 }
+                buffer[i].level = ProcessDate(temp);
                 if (temp.Count > 1)
                 {
-                    buffer[i].level = ProcessDate(temp);
                     int j = 0;
                     foreach (int s in tempPosition) { buffer.RemoveAt(s - j); j++; }
                 }
             }
+            temp.Clear();
+            temp.Add(buffer[buffer.Count - 1]);
+            buffer[buffer.Count - 1].level = ProcessDate(temp);
         }
 
         /// <summary>
@@ -114,51 +126,31 @@ namespace ParserLibrary.Logic_for_old_template
         private static string CalculateDate(List<Tuple<SkillDate, SkillDate>> list)
         {
             double date = 0;
+            //Event a
             for(int i = 0; i < list.Count - 1; i++)
             {
+                //Event b
                 for(int j = i + 1; j < list.Count; j++)
                 {
-                    if (list[i].Item1.YearInt >= list[j].Item1.YearInt &
-                    list[i].Item1.YearInt < list[j].Item2.YearInt)
+
+                    //If events a and b didn't cross
+                    if (list[j].Item2.NotIntersect(list[i].Item1) |
+                        list[i].Item2.NotIntersect(list[j].Item1))
+                    { continue; }
+                    //Well then need find best way
+                    else
                     {
-                        if(list[i].Item1.MonthInt > list[j].Item1.MonthInt)
-                        {
-                            list[i] = list[j];
-                        }
-                        else
-                        {
-                            list[i].Item1.MonthInt = list[j].Item1.MonthInt;
-                        }
+                        //When event b happened before a and their cross
+                        if (list[j].Item1.NotIntersect(list[i].Item1))
+                        { list[i].Item1.Update(list[j].Item1); }
+                        //If event b happened after a and their cross
+                        if (list[i].Item2.NotIntersect(list[j].Item2))
+                        { list[i].Item2.Update(list[j].Item2); }
+
                         list.RemoveAt(j);
                         j--;
                     }
-                    if (list[i].Item2.YearInt >= list[j].Item1.YearInt &
-                        list[i].Item2.YearInt <= list[j].Item2.YearInt)
-                    {
-                        if(list[i].Item2.YearInt == list[j].Item2.YearInt)
-                        {
-                            if(list[i].Item2.MonthInt < list[j].Item2.MonthInt) list[i].Item2.MonthInt = list[j].Item2.MonthInt;
-                        }
-                        else
-                        {
-                            list[i] = list[j];
-                        }
-                        list.RemoveAt(j);
-                        j--;
-                    }
-                    if(list[i].Item1.YearInt > list[j].Item1.YearInt &
-                        list[i].Item2.YearInt < list[j].Item2.YearInt)
-                    {
-                        list[i] = list[j];
-                        list.RemoveAt(j);
-                        j--;
-                    }
-                    if(list[i].Item1.YearInt < list[j].Item1.YearInt &
-                        list[i].Item2.YearInt > list[j].Item2.YearInt)
-                    {
-                        list.RemoveAt(j);
-                        j--;
-                    }
+
                 }
             }
             foreach(var n in list)
