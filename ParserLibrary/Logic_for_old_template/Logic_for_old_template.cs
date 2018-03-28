@@ -1,5 +1,6 @@
 ﻿//#define OLD_PARSE_DEBUG_EXP
 //#define OLD_RARSE_DEBUG_SKILLS_AND_EXP
+using MongoDB.Driver;
 using Spire.Doc;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,11 @@ namespace ParserLibrary.Logic_for_old_template
                     Console.WriteLine(s.name + " " + s.level + " " + s.type + " " + s.allNames.Count.ToString());
                 }
 #endif
+
+
+                //string connectionString = "mongodb://admin:78564523@ds046667.mlab.com:46667";
+                //MongoClient client = new MongoClient(connectionString);
+                //IMongoDatabase database = client.GetDatabase("workers_db");
             }
             catch
             {
