@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using ParserLibrary;
 using Spire.Doc;
@@ -15,12 +16,17 @@ namespace NewTypeParse
 {
     class Program
     {
+
+        /// <summary>
+        /// old logic for one file
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             string container = null;
             Console.Write("Write name of document (pattern *.doc): ");
             bool fl = false;
-            while(!fl)
+            while (!fl)
             {
                 try
                 {
@@ -37,11 +43,45 @@ namespace NewTypeParse
                     Console.WriteLine("Check writed data");
                 }
             }
-            //Logic.ParseDoc(container);
             Parser.StartParse(container);
             Console.Write("Press any button");
             Console.ReadKey();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        //static void Main(string[] args)
+        //{
+        //    string container = null;
+        //    Console.Write("Write folder path: ");
+        //    bool fl = false;
+        //    while (!fl)
+        //    {
+        //        container = Console.ReadLine();
+        //        if (Directory.Exists(container))
+        //        {
+        //            DirectoryInfo dir = new DirectoryInfo(container);
+        //            FileInfo[] files = dir.GetFiles("*.doc");
+        //            foreach (FileInfo file in files)
+        //            {
+        //                string name = file.FullName;
+        //                ParameterizedThreadStart START = new ParameterizedThreadStart(Parser.StartParse());
+        //                //Thread thread = new Thread(new ThreadStart(Parser.StartParse(name)));
+        //                Parser.StartParse(file.FullName);
+        //                Console.WriteLine("Parse " + file.Name + " complete");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine(container + " PATH NOT FOUND");
+        //        }
+        //    }
+
+        //    Console.Write("Close or press any button for reparse");
+        //    Console.ReadKey();
+        //}
 
     }
 }

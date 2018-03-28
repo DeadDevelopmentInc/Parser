@@ -11,3 +11,13 @@ D:\repos\Parser\ParserLibrary\obj\Debug\ParserLibrary.csproj.CoreCompileInputs.c
 D:\repos\Parser\ParserLibrary\obj\Debug\ParserLibrary.csproj.CopyComplete
 D:\repos\Parser\ParserLibrary\obj\Debug\ParserLibrary.dll
 D:\repos\Parser\ParserLibrary\obj\Debug\ParserLibrary.pdb
+D:\repos\Parser\ParserLibrary\bin\Debug\DnsClient.dll
+D:\repos\Parser\ParserLibrary\bin\Debug\MongoDB.Bson.dll
+D:\repos\Parser\ParserLibrary\bin\Debug\MongoDB.Driver.Core.dll
+D:\repos\Parser\ParserLibrary\bin\Debug\MongoDB.Driver.dll
+D:\repos\Parser\ParserLibrary\bin\Debug\System.Buffers.dll
+D:\repos\Parser\ParserLibrary\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\repos\Parser\ParserLibrary\bin\Debug\DnsClient.xml
+D:\repos\Parser\ParserLibrary\bin\Debug\MongoDB.Bson.xml
+D:\repos\Parser\ParserLibrary\bin\Debug\MongoDB.Driver.xml
+D:\repos\Parser\ParserLibrary\bin\Debug\MongoDB.Driver.Core.xml

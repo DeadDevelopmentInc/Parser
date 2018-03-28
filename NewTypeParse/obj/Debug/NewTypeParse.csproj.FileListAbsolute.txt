@@ -27,3 +27,13 @@ D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.pdb
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.csproj.CopyComplete
 D:\repos\Parser\NewTypeParse\bin\Debug\ParserLibrary.dll
 D:\repos\Parser\NewTypeParse\bin\Debug\ParserLibrary.pdb
+D:\repos\Parser\NewTypeParse\bin\Debug\DnsClient.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\MongoDB.Bson.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\MongoDB.Driver.Core.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\MongoDB.Driver.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\System.Buffers.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\DnsClient.xml
+D:\repos\Parser\NewTypeParse\bin\Debug\MongoDB.Bson.xml
+D:\repos\Parser\NewTypeParse\bin\Debug\MongoDB.Driver.xml
+D:\repos\Parser\NewTypeParse\bin\Debug\MongoDB.Driver.Core.xml
