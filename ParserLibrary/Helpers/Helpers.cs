@@ -3,12 +3,14 @@ using Spire.Doc.Documents;
 using Spire.Doc.Interface;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ParserLibrary
+namespace ParserLibrary.Helpers
 {
     internal static class Helpers
     {
@@ -35,6 +37,17 @@ namespace ParserLibrary
             }
             return list;
         }
+
+        //internal static Dictionary<string, Tuple<bool, string>> GetDictionars()
+        //{
+        //    Dictionary<string, Tuple<bool, string>> dictionary = new Dictionary<string, Tuple<bool, string>>();
+        //    DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(Dictionary<string, Tuple<bool, string>>));
+        //    using (FileStream fs = new FileStream("dictionary.json", FileMode.Open))
+        //    {
+        //        dictionary = (Dictionary<string, Tuple<bool, string>>)jsonSerializer.ReadObject(fs);
+        //    }
+        //    return dictionary;
+        //}
     }
 }
 

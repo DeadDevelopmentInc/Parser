@@ -6,35 +6,26 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace ParserLibrary.Logic_for_old_template
+namespace ParserLibrary.Helpers
 {
-    public static class ProcessExps
+    internal static class ProcessExps
     {
         /// <summary>
         /// Method for proccessing readed information
         /// Correctly work only with old template
         /// </summary>
         /// <param name="list">List with skills</param>
-        public static List<ModelSkill> ProccExp(List<string> list)
+        internal static List<BufferClass> ProccExp(List<string> list)
         {
-            List<ModelSkill> listExp = new List<ModelSkill>();
-            List<BufferClass> bufferList = new List<BufferClass>();
+            List<BufferClass> listExp = new List<BufferClass>();
             //Regex for date
             Regex regex = new Regex(@"^\w+\s\d{4}\s\W\s\w+");
             for (int i = 5; i < list.Count; i++)
             {
                 MatchCollection match = regex.Matches(list[i - 5]);
-                if (match.Count > 0 & list[i] == "Environment") { bufferList.AddRange(SplitLineExps(list[i + 1], list[i - 5])); }
+                if (match.Count > 0 & list[i] == "Environment") { listExp.AddRange(SplitLineExps(list[i + 1], list[i - 5])); }
             }
-            CreateLevel(ref bufferList);
-            foreach(BufferClass cl in bufferList)
-            {
-                listExp.Add(new ModelSkill {
-                    name = cl.name,
-                    level = cl.level,
-                    allNames = cl.SimilarSkills
-                });
-            }
+            CreateLevel(ref listExp);
             return listExp;
         }
 
@@ -46,7 +37,7 @@ namespace ParserLibrary.Logic_for_old_template
         /// <returns>Return list with buffer models</returns>
         private static List<BufferClass> SplitLineExps(string line, string date)
         {
-            List<ModelSkill> list = new List<ModelSkill>();
+            List<BufferClass> list = new List<BufferClass>();
             List<BufferClass> bufferList = new List<BufferClass>();
             line = Regex.Replace(line, ",(?=[^()]*\\))", "|");
             string[] newSkills = Regex.Split(line, ", ");
@@ -77,7 +68,9 @@ namespace ParserLibrary.Logic_for_old_template
                 {
                     if (buffer[i].name.Contains(buffer[j].name))
                     {
-                        if (!buffer[i].name.Equals(buffer[j].name)) { buffer[i].SimilarSkills.Add(buffer[j].name); }
+                        if (buffer[i].name != buffer[j].name &&
+                            Logic_for_old_template.Logic_for_old_template.ExName(buffer[i].allNames, buffer[j].name))
+                        { buffer[i].allNames.Add(buffer[j].name); }
                         temp.Add(buffer[j]); tempPosition.Add(j);
                     }
                 }

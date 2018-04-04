@@ -1,0 +1,402 @@
+[
+	{	
+		"Key":"C#",
+		"Value":
+		{
+			"m_Item1":"C#",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"ASP.NET",
+		"Value":
+		{
+			"m_Item1":"C#",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"Asp.Net",
+		"Value":
+		{
+			"m_Item1":"C#",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"ASP.NET CORE",
+		"Value":
+		{
+			"m_Item1":"C#",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"Asp.Net Core",
+		"Value":
+		{
+			"m_Item1":"C#",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"Asp MVC",
+		"Value":
+		{
+			"m_Item1":"C#",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"ASP.Net",
+		"Value":
+		{
+			"m_Item1":"C#",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"Java (Sun Certified)",
+		"Value":
+		{
+			"m_Item1":"Java",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"SQL",
+		"Value":
+		{
+			"m_Item1":"SQL",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"JavaScript",
+		"Value":
+		{
+			"m_Item1":"JavaScript",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"XSLT",
+		"Value":
+		{
+			"m_Item1":"XML",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"XPath",
+		"Value":
+		{
+			"m_Item1":"XML",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"UML",
+		"Value":
+		{
+			"m_Item1":"UML",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"PHP",
+		"Value":
+		{
+			"m_Item1":"PHP",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"T-SQL",
+		"Value":
+		{
+			"m_Item1":"SQL",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"KornShell",
+		"Value":
+		{
+			"m_Item1":"Shell",
+			"m_Item2":"Programming Languages"
+		}
+	},
+	{	
+		"Key":"BashShell",
+		"Value":
+		{
+			"m_Item1":"Shell",
+			"m_Item2":"Programming Languages"
+		}
+	},	
+	{	
+		"Key":"J2EE",
+		"Value":
+		{
+			"m_Item1":"Java Web",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Java Server Pages (JSP)",
+		"Value":
+		{
+			"m_Item1":"Java Web",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Spring",
+		"Value":
+		{
+			"m_Item1":"Java Web",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Hibernate",
+		"Value":
+		{
+			"m_Item1":"Java Web",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"CSS3",
+		"Value":
+		{
+			"m_Item1":"CSS",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"JQuery",
+		"Value":
+		{
+			"m_Item1":"JavaScript",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"AJAX",
+		"Value":
+		{
+			"m_Item1":"JavaScript",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"HTTP",
+		"Value":
+		{
+			"m_Item1":"Protocol",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"AngularJS",
+		"Value":
+		{
+			"m_Item1":"JavaScript",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Backbone",
+		"Value":
+		{
+			"m_Item1":"JavaScript",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Yii v.1",
+		"Value":
+		{
+			"m_Item1":"PHP",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Yii v.2 ",
+		"Value":
+		{
+			"m_Item1":"PHP",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Bootstrap",
+		"Value":
+		{
+			"m_Item1":"CSS",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"CSS",
+		"Value":
+		{
+			"m_Item1":"CSS",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Foundation",
+		"Value":
+		{
+			"m_Item1":"CSS",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Asp",
+		"Value":
+		{
+			"m_Item1":"asp.net",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"HTML5",
+		"Value":
+		{
+			"m_Item1":"HTML",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"REST-API",
+		"Value":
+		{
+			"m_Item1":"HTTP",
+			"m_Item2":"Web Technologies"
+		}
+	},
+	{	
+		"Key":"Apache Tomcat Server",
+		"Value":
+		{
+			"m_Item1":"Java Web",
+			"m_Item2":"Application Servers"
+		}
+	},
+	{	
+		"Key":"Denwer",
+		"Value":
+		{
+			"m_Item1":"PHP Web",
+			"m_Item2":"Application Servers"
+		}
+	},
+	{	
+		"Key":"Wamp",
+		"Value":
+		{
+			"m_Item1":"PHP Web",
+			"m_Item2":"Application Servers"
+		}
+	},
+	{	
+		"Key":"IBM WebSphere Application Server",
+		"Value":
+		{
+			"m_Item1":"Java Web",
+			"m_Item2":"Application Servers"
+		}
+	},
+	{	
+		"Key":"API Economy",
+		"Value":
+		{
+			"m_Item1":"Other Web",
+			"m_Item2":"Application Servers"
+		}
+	},
+	{	
+		"Key":"Oracle WebLogic Application Server",
+		"Value":
+		{
+			"m_Item1":"Java Web",
+			"m_Item2":"Application Servers"
+		}
+	},
+	{	
+		"Key":"Microsoft IIS",
+		"Value":
+		{
+			"m_Item1":"Cpp Web",
+			"m_Item2":"Application Servers"
+		}
+	},
+	{	
+		"Key":"IBM DB2",
+		"Value":
+		{
+			"m_Item1":"SQL",
+			"m_Item2":"Databases"
+		}
+	},
+	{	
+		"Key":"H2 Database",
+		"Value":
+		{
+			"m_Item1":"SQL",
+			"m_Item2":"Databases"
+		}
+	},
+	{	
+		"Key":"Oracle Database",
+		"Value":
+		{
+			"m_Item1":"SQL",
+			"m_Item2":"Databases"
+		}
+	},
+	{	
+		"Key":"Microsoft Access",
+		"Value":
+		{
+			"m_Item1":"GUI SQL",
+			"m_Item2":"Databases"
+		}
+	},
+	{	
+		"Key":"MS SQL",
+		"Value":
+		{
+			"m_Item1":"T-SQL",
+			"m_Item2":"Databases"
+		}
+	},
+	{	
+		"Key":"Microsoft SQL Server",
+		"Value":
+		{
+			"m_Item1":"T-SQL",
+			"m_Item2":"Databases"
+		}
+	},
+	{	
+		"Key":"MySql",
+		"Value":
+		{
+			"m_Item1":"SQL",
+			"m_Item2":"Databases"
+		}
+	},
+	{	
+		"Key":"MySQL",
+		"Value":
+		{
+			"m_Item1":"SQL",
+			"m_Item2":"Databases"
+		}
+	},
+], 

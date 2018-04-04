@@ -1,4 +1,5 @@
-﻿using Spire.Doc;
+﻿using MongoDB.Driver;
+using Spire.Doc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,7 @@ namespace ParserLibrary
 {
     public static class Parser
     {
-        public static void StartParse(string destination)
+        public static void StartParse(string destination, string name)
         {
             try
             {
@@ -20,26 +21,20 @@ namespace ParserLibrary
                 //Find section with table
                 Section section = doc.Sections[0];
                 Console.WriteLine("Complete read " + destination + " file");
-                //Know type of template
+                //Get type of template
                 int type = doc.Sections[0].Tables.Count;
                 switch (type)
                 {
-                    case 8:
-                        {
-                            //ProccessNewTemplate.Responce(section);
-                        }
-                        break;
-                    case 2:
-                        {
-                            Logic_for_old_template.Logic_for_old_template.Responce(section);
-                        }
-                        break;
+                    case 8: { Logic_for_new_template.Logic_for_new_template.Response(section, name); } break;
+                    case 2: { Logic_for_old_template.Logic_for_old_template.Response(section, name); } break;
                 }
             }
             catch
             {
-                Console.WriteLine("Can't load document");
+                Console.WriteLine("Can't load document " + name);
             }
         }
+
+        
     }
 }

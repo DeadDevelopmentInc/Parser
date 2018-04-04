@@ -32,8 +32,6 @@ namespace ParserLibrary
         [DataMember]
         public string name { get; set; }
         [DataMember]
-        public string level { get; set; } = "Working knowledge";
-        [DataMember]
         public List<string> allNames { get; set; } = new List<string>();
         [DataMember]
         public string type { get; set; } = "Other";
@@ -43,15 +41,20 @@ namespace ParserLibrary
         public ModelSkill()
         { }
 
-        public ModelSkill(string id, string name, List<string> allNames, string level, string type, bool isNew)
+        public ModelSkill(string id, string name, List<string> allNames, string type, bool isNew)
         {
             _id = id;
             this.name = name;
             this.type = type;
             isSkillNew = isNew;
             this.allNames = allNames;
-            this.level = level;
-        }
+        }        
+    }
+
+    internal class SkillLevel
+    {
+        public string _id { get; set; }
+        public string level { get; set; }
     }
 
     internal class BufferClass
@@ -59,7 +62,16 @@ namespace ParserLibrary
         public string name { get; set; }
         public string level { get; set; } = "Working knowledge";
         public string type { get; set; } = "Other";
-        public List<string> SimilarSkills { get; set; } = new List<string>();
+        public List<string> allNames { get; set; } = new List<string>();
+
+        internal void AddLevel(string newLevel)
+        {
+            if ((level == "Expert" | level == "Experienced") &
+                (newLevel != "Expert" | newLevel != "Experienced")) { level = "Expert"; return; }
+            if ((level == "Working knowledge" | level == "Extensive knowledge") &
+                (newLevel != "Working knowledge" | newLevel != "Extensive knowledge")) { level = "Experienced"; return; }
+            level = "Expert";
+        }
     }
 
     internal class SkillDate

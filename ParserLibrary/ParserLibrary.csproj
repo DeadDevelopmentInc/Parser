@@ -69,9 +69,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\PrivateDictionary.cs" />
     <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Logic_for_new_template\Logic_for_new_template.cs" />
+    <Compile Include="Logic_for_new_template\ProcessSkills.cs" />
     <Compile Include="Logic_for_old_template\Logic_for_old_template.cs" />
-    <Compile Include="Logic_for_old_template\ProcessExps.cs" />
+    <Compile Include="Helpers\ProcessExps.cs" />
     <Compile Include="Logic_for_old_template\ProcessSkills.cs" />
     <Compile Include="Models.cs" />
     <Compile Include="Parser.cs" />
@@ -80,8 +83,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic_for_new_template\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
