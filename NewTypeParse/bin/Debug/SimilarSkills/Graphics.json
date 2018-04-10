@@ -1,0 +1,74 @@
+[
+	{	
+		"Key":"ADOBE",
+		"Value":
+		{
+			"m_Item1":"Adobe",
+			"m_Item2":"Graphics",
+			"m_Item3":"1"
+		}
+	},
+	{	
+		"Key":"ADOBE DREAMWEAVER",
+		"Value":
+		{
+			"m_Item1":"Adobe",
+			"m_Item2":"Graphics",
+			"m_Item3":"0"
+		}
+	},
+	{	
+		"Key":"ADOBE AFTEREFFECTS",
+		"Value":
+		{
+			"m_Item1":"Adobe",
+			"m_Item2":"Graphics",
+			"m_Item3":"0"
+		}
+	},
+	{	
+		"Key":"ADOBE ILLUSTRATOR",
+		"Value":
+		{
+			"m_Item1":"Adobe",
+			"m_Item2":"Graphics",
+			"m_Item3":"0"
+		}
+	},
+	{	
+		"Key":"ADOBE PHOTOSHOP",
+		"Value":
+		{
+			"m_Item1":"Adobe",
+			"m_Item2":"Graphics",
+			"m_Item3":"0"
+		}
+	},
+	{	
+		"Key":"PAINT",
+		"Value":
+		{
+			"m_Item1":"Paint",
+			"m_Item2":"Graphics",
+			"m_Item3":"1"
+		}
+	},
+	{	
+		"Key":"MS PAINT",
+		"Value":
+		{
+			"m_Item1":"Paint",
+			"m_Item2":"Graphics",
+			"m_Item3":"0"
+		}
+	},
+	{	
+		"Key":"MS PAINT (FOR SCHEMAS)",
+		"Value":
+		{
+			"m_Item1":"Paint",
+			"m_Item2":"Graphics",
+			"m_Item3":"0"
+		}
+	},
+]

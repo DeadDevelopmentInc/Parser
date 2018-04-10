@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using ParserLibrary;
+using ParserLibrary.Helpers;
 using Spire.Doc;
 using Spire.Doc.Documents;
 using Spire.Doc.Fields;
@@ -14,34 +18,93 @@ namespace NewTypeParse
 {
     class Program
     {
+
+        /// <summary>
+        /// old logic for one file
+        /// </summary>
+        /// <param name="args"></param>
+        //static void Main(string[] args)
+        //{
+        //    string container = null;
+        //    Console.Write("Write name of document (pattern *.doc): ");
+        //    bool fl = false;
+        //    while (!fl)
+        //    {
+        //        try
+        //        {
+        //            container = Console.ReadLine();
+        //            Regex regex = new Regex(@"(\w*).doc");
+        //            MatchCollection match = regex.Matches(container);
+        //            if (match.Count > 0)
+        //            {
+        //                fl = true;
+        //            }
+        //        }
+        //        catch
+        //        {
+        //            Console.WriteLine("Check writed data");
+        //        }
+        //    }
+        //    Parser.StartParse(container, container);
+        //    Console.Write("Press any button");
+        //    Console.ReadKey();
+        //}
+
+        /// <summary>
+        /// Method main for parsing folder
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             string container = null;
-            int type = 0;
-            Console.Write("Write name of document (pattern *.doc) and type of document (new template = 1 or old template 2): ");
+            Console.Write("Write folder path: ");
             bool fl = false;
-            while(!fl)
+            while (!fl)
             {
-                try
+                container = Console.ReadLine();
+                if (Directory.Exists(container))
                 {
-                    container = Console.ReadLine();
-                    Regex regex = new Regex(@"(\w*).doc");
-                    string[] build = container.Split(' ');
-                    MatchCollection match = regex.Matches(build[0]);
-                    if (match.Count > 0 & int.TryParse(build[1], out type) & type >= 0 && 2 >= type)
+                    //Create list with threads
+                    List<Thread> threads = new List<Thread>();
+                    //Open directory
+                    DirectoryInfo dir = new DirectoryInfo(container);
+                    //Get fies from directory
+                    FileInfo[] files = dir.GetFiles("*.doc");
+                    //Number of threads
+                    int i = 0;
+                    //For each file, create new thread
+                    foreach (FileInfo file in files)
                     {
-                        fl = true;
-                        container = build[0];
+                        threads.Add(new Thread(() => Parser.StartParse(file.FullName, file.Name)));
+                        threads[i].Start();
+                        i++;
                     }
+                    AwaitThreads(ref threads);
+                    Console.WriteLine("DONE");
+                    Console.Write("Close or press any button for reparse");
                 }
-                catch
+                else
                 {
-                    Console.WriteLine("Check writed data");
+                    Console.WriteLine(container + " PATH NOT FOUND");
                 }
             }
-            Logic.ParseDoc(container, type);
-            Console.Write("Press any button");
+
             Console.ReadKey();
+        }
+
+        private static void AwaitThreads(ref List<Thread> threads)
+        {
+            //Await where all threads finish
+            bool awaitTh = false;
+            while (!awaitTh)
+            {
+                foreach (Thread th in threads)
+                {
+                    if (th.IsAlive) { awaitTh = false; break; }
+                    else { awaitTh = true;  }
+                }
+            }
+            threads.Clear();
         }
     }
 }
