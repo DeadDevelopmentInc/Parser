@@ -70,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\PrivateDictionary.cs" />
-    <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Helpers\AddMethods.cs" />
     <Compile Include="Logic_for_new_template\Logic_for_new_template.cs" />
     <Compile Include="Logic_for_new_template\ProcessSkills.cs" />
     <Compile Include="Logic_for_old_template\Logic_for_old_template.cs" />

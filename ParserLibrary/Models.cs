@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParserLibrary.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -24,18 +25,12 @@ namespace ParserLibrary
     }
 
 
-    [DataContract]
     public class ModelSkill
     {
-        [DataMember]
         public string _id { get; set; } = Convert.ToString(Guid.NewGuid());
-        [DataMember]
         public string name { get; set; }
-        [DataMember]
         public List<string> allNames { get; set; } = new List<string>();
-        [DataMember]
         public string type { get; set; } = "Other";
-        [DataMember]
         public bool isSkillNew { get; set; } = true;
 
         public ModelSkill()
@@ -71,6 +66,20 @@ namespace ParserLibrary
             if ((level == "Working knowledge" | level == "Extensive knowledge") &
                 (newLevel != "Working knowledge" | newLevel != "Extensive knowledge")) { level = "Experienced"; return; }
             level = "Expert";
+        }
+
+        public void HeadState()
+        {
+            string temp = null;
+            for(int i = 0; i < allNames.Count; i++)
+            {
+                if(!PrivateDictionary.CheckHead(name, allNames[i]))
+                {
+                    temp = allNames[i];
+                    allNames[i] = name;
+                    name = temp;
+                }
+            }
         }
     }
 

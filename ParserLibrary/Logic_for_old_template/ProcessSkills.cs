@@ -19,7 +19,7 @@ namespace ParserLibrary.Logic_for_old_template
             List<BufferClass> list = new List<BufferClass>();
             for (int i = 1; i < allSkills.Count - 1 & !allSkills[i - 1].Contains("Fore"); i += 2)
             {
-                //If skills line contain struct (,)
+                //If skills line contain struct ...(...,...)
                 if (allSkills[i].Contains("(")) { list.AddRange(SplitLineSkills(allSkills[i], allSkills[i - 1])); }
                 else { list.AddRange(SplitLineSkills(Regex.Split(allSkills[i], ", "), allSkills[i - 1])); }
             }

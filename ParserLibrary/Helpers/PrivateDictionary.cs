@@ -10,38 +10,62 @@ namespace ParserLibrary.Helpers
 {
     internal static class PrivateDictionary
     {
-        const string path = @"SimilarSkills\similarSkills.json";
-        static Dictionary<string, Tuple<string, string>> dictionary = new Dictionary<string, Tuple<string, string>>();
+        const string path = @"SimilarSkills\";
+        static Dictionary<string, Tuple<string, string, string>> dictionary = new Dictionary<string, Tuple<string, string, string>>();
 
         static PrivateDictionary()
         {
             DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(dictionary.GetType());
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            DirectoryInfo directory = new DirectoryInfo(path);
+            FileInfo[] files = directory.GetFiles();
+            foreach (FileInfo file in files)
             {
-                dictionary = (Dictionary<string, Tuple<string, string>>)jsonSerializer.ReadObject(fs);
+                using (FileStream fs = new FileStream(file.FullName, FileMode.OpenOrCreate))
+                {
+                    var temp = (Dictionary<string, Tuple<string, string, string>>)jsonSerializer.ReadObject(fs);
+                    AddRange(temp, ref dictionary);
+                }
+
             }
             //using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             //{
-            //    dictionary.Add("C#", new Tuple<string, string>("C#", "Programming Languages"));
+            //    dictionary.Add("C#", new Tuple<string, string, string>("C#", "Programming Languages", 1));
             //    jsonSerializer.WriteObject(fs, dictionary);
             //}
         }
 
+        private static void AddRange(Dictionary<string, Tuple<string, string, string>> newData, ref Dictionary<string, Tuple<string, string, string>> oldDictionary)
+        {
+            foreach(KeyValuePair<string, Tuple<string, string, string>> value in newData)
+            {
+                oldDictionary.Add(value.Key, value.Value);
+            }
+        }
+
         internal static string GetTypeTechByKey(string value)
         {
-            if (dictionary.ContainsKey(value)) return dictionary[value].Item2;
+            if (dictionary.ContainsKey(value.ToUpper())) return dictionary[value.ToUpper()].Item2;
             return null;
         }
 
         internal static bool CheckTwoValues(string valueA, string valueB)
         {
-            bool fl = dictionary.Keys.Contains(valueA);
-            bool newFl = dictionary.Keys.Contains(valueB);
-            if (dictionary.Keys.Contains(valueA) && dictionary.Keys.Contains(valueB))
-            {
-                if (dictionary[valueA].Item1 == dictionary[valueB].Item1 & (dictionary[valueA] != null & dictionary[valueB] != null)) return true;
-            }
-            return false;
+            valueA = valueA.ToUpperInvariant();
+            valueB = valueB.ToUpperInvariant();
+            return dictionary.Keys.Contains(valueA) && dictionary.Keys.Contains(valueB) 
+                ? (dictionary[valueA].Item1 == dictionary[valueB].Item1 
+                    & (dictionary[valueA] != null & dictionary[valueB] != null) 
+                ? true : false) : false;
+        }
+
+        internal static bool CheckHead(string valueA, string valueB)
+        {
+            valueA = valueA.ToUpperInvariant();
+            valueB = valueB.ToUpperInvariant();
+            return dictionary.Keys.Contains(valueA) && dictionary.Keys.Contains(valueB)
+                ? (int.Parse(dictionary[valueA].Item3) > int.Parse(dictionary[valueB].Item3) 
+                    & (dictionary[valueA] != null & dictionary[valueB] != null)
+                ? true : false) : false;
         }
     }
 }
