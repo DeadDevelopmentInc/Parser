@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParserLibrary.Logic_for_new_template
 {
-    internal static class ProcessSkills
+    internal          class ProcessSkills
     {
         internal static List<BufferClass> ProccSkills(List<string> skillsList)
         {

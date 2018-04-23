@@ -1,0 +1,5 @@
+D:\repos\PandaWikiProj\PandaWiki
+--output-path=obj\Release\netcoreapp2.0\
+--application-name=PandaAPI
+--content-root=D:\repos\PandaWikiProj\PandaWiki
+--file=

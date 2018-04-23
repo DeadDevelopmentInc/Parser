@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ParserLibrary.Helpers
 {
-    internal static class AddMethods
+    internal static class HelpersMethods
     {
         /// <summary>
         /// Read information from table
@@ -39,43 +39,43 @@ namespace ParserLibrary.Helpers
             return list;
         }
 
-        internal static void DeleteSimilarSkills(ref List<BufferClass> expModelList)
-        {
-            for (int i = 0; i < expModelList.Count - 1; i++)
-            {
-                for (int j = i + 1; j < expModelList.Count; j++)
-                {
-                    if (PrivateDictionary.CheckTwoValues(expModelList[i].name, expModelList[j].name))
-                    {
-                        if (expModelList[i].name == expModelList[j].name)
-                        {
-                            expModelList.RemoveAt(j); j--;
-                            expModelList[i].AddLevel(expModelList[j].level);
-                        }
-                        else if (expModelList[i].allNames.Contains(expModelList[j].name)) { expModelList.RemoveAt(j); j--; continue; }
-                        else
-                        {
-                            expModelList[i].allNames.Add(expModelList[j].name);
-                            expModelList[i].allNames.AddRange(expModelList[j].allNames);
-                            expModelList[i].AddLevel(expModelList[j].level);
-                            expModelList.RemoveAt(j);
-                            j--;
-                        }
-                    }
-                }
-                var temp = PrivateDictionary.GetTypeTechByKey(expModelList[i].name);
-                if (temp != null) { expModelList[i].type = temp; }
+        //internal static void DeleteSimilarSkills(ref List<BufferClass> expModelList)
+        //{
+        //    for (int i = 0; i < expModelList.Count - 1; i++)
+        //    {
+        //        for (int j = i + 1; j < expModelList.Count; j++)
+        //        {
+        //            if (PrivateDictionary.CheckTwoValues(expModelList[i].name, expModelList[j].name))
+        //            {
+        //                if (expModelList[i].name == expModelList[j].name)
+        //                {
+        //                    expModelList.RemoveAt(j); j--;
+        //                    expModelList[i].AddLevel(expModelList[j].level);
+        //                }
+        //                else if (expModelList[i].allNames.Contains(expModelList[j].name)) { expModelList.RemoveAt(j); j--; continue; }
+        //                else
+        //                {
+        //                    expModelList[i].allNames.Add(expModelList[j].name);
+        //                    expModelList[i].allNames.AddRange(expModelList[j].allNames);
+        //                    expModelList[i].AddLevel(expModelList[j].level);
+        //                    expModelList.RemoveAt(j);
+        //                    j--;
+        //                }
+        //            }
+        //        }
+        //        var temp = PrivateDictionary.GetTypeTechByKey(expModelList[i].name);
+        //        if (temp != null) { expModelList[i].type = temp; }
                 
-            }
-        }
+        //    }
+        //}
 
-        internal static void CheckLeadSkill(ref List<BufferClass> expModelList)
-        {
-            foreach (BufferClass bs in expModelList)
-            {
-                bs.HeadState();
-            }
-        }
+        //internal static void CheckLeadSkill(ref List<BufferClass> expModelList)
+        //{
+        //    foreach (BufferClass bs in expModelList)
+        //    {
+        //        bs.HeadState();
+        //    }
+        //}
 
         internal static bool ExName(List<string> array, string name)
         {
@@ -119,6 +119,3 @@ namespace ParserLibrary.Helpers
         }
     }
 }
-
-
-

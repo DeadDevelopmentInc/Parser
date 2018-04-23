@@ -24,12 +24,12 @@ namespace ParserLibrary.Logic_for_new_template
                 //Get text from tables
                 for (int i = 0; i < 6; i++)
                 {
-                    List<string> str = AddMethods.GetTextFromTable(section.Tables[i]);
+                    List<string> str = HelpersMethods.GetTextFromTable(section.Tables[i]);
                     skillsModelList.AddRange(ProcessSkills.ProccSkills(str));
                     Console.WriteLine(@"Parse {0} table complete", i + 1);
                     //After reading, create json model
                 }
-                expList = AddMethods.GetTextFromTable(section.Tables[7]); // table with exp 
+                expList = HelpersMethods.GetTextFromTable(section.Tables[7]); // table with exp 
 #if NEW_PARSE_DEBUG_SKILL
                 foreach(string s in skillsList) { Console.WriteLine(s); }
                 foreach (string s in expList) { Console.WriteLine(s); }
@@ -49,15 +49,15 @@ namespace ParserLibrary.Logic_for_new_template
                     Console.WriteLine(s.name + " " + s.level + " " + s.type + " " + s.allNames.Count.ToString());
                 }
 #endif
-                AddMethods.DeleteSimilarSkills(ref expModelList);
-                AddMethods.CheckLeadSkill(ref expModelList);
+                //HelpersMethods.DeleteSimilarSkills(ref expModelList);
+                //HelpersMethods.CheckLeadSkill(ref expModelList);
                 string connectionString = "mongodb://admin:78564523@ds046667.mlab.com:46667/workers_db";
                 MongoClient client = new MongoClient(connectionString);
                 IMongoDatabase database = client.GetDatabase("workers_db");
                 database.CreateCollection(name);
                 var colSkills = database.GetCollection<ModelSkill>(name);
                 var colLevels = database.GetCollection<SkillLevel>(name + "Lvl");
-                var data = AddMethods.ToModelSkills(expModelList);
+                var data = HelpersMethods.ToModelSkills(expModelList);
                 colSkills.InsertMany(data.Item1.ToArray());
                 colLevels.InsertMany(data.Item2.ToArray());
             }
