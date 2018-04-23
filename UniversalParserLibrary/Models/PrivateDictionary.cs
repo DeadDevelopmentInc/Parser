@@ -42,7 +42,27 @@ namespace UniversalParserLibrary.Models
 
         }
 
-        internal static void FindAllСoncurrences(ref List<BufferSkill> skills)
+        internal static void FindAllСoncurrencesInNewTemplate(ref List<BufferSkill> skills)
+        {
+            for (int i = 0; i < skills.Count; i++)
+            {
+                skills[i] = FindSkill(skills[i]);
+            }
+            for (int i = 0; i < skills.Count - 1; i++)
+            {
+                for (int j = i + 1; j < skills.Count; j++)
+                {
+                    if (skills[i]._id == skills[j]._id)
+                    {
+                        if (skills[j].Date != null) { skills[i].AddLevel(skills[j].level); }
+                        skills.RemoveAt(j);
+                        j--;
+                    }
+                }
+            }
+        }
+
+        internal static void FindAllСoncurrencesInOldTemplate(ref List<BufferSkill> skills)
         {
             for(int i = 0; i < skills.Count; i++)
             {
@@ -60,7 +80,6 @@ namespace UniversalParserLibrary.Models
                     }
                 }
             }
-            return;
         }
 
         private static BufferSkill FindSkill(BufferSkill skill)

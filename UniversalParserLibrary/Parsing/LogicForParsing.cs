@@ -27,7 +27,7 @@ namespace UniversalParserLibrary.Parsing
                 int type = doc.Sections[0].Tables.Count;
                 switch (type)
                 {
-                    case 8: { ParseNewTemplate(ParseSectionFromNewTemplate(section)); } break;
+                    case 8: { skills = ParseNewTemplate(ParseSectionFromNewTemplate(section)); } break;
                     case 2: { skills = ParseOldTemplate(ParseSectionFromOldTemplate(section)); } break;
                 }
                 SendDataToDB(name, skills);
@@ -48,9 +48,10 @@ namespace UniversalParserLibrary.Parsing
             }
         }
 
-        private static void ParseNewTemplate(List<BufferSkill> skills)
+        private static List<BufferSkill> ParseNewTemplate(List<BufferSkill> skills)
         {
-
+            DeleteSimpleSkills(ref skills);
+            return skills;
         }
 
         private static List<BufferSkill> ParseOldTemplate(List<BufferSkill> skills)
@@ -76,7 +77,7 @@ namespace UniversalParserLibrary.Parsing
         
         private static void DeleteSimpleSkills(ref List<BufferSkill> skills)
         {
-            PrivateDictionary.FindAllСoncurrences(ref skills);
+            PrivateDictionary.FindAllСoncurrencesInOldTemplate(ref skills);
             for(int i = 0; i < skills.Count; i++)
             {
                 if (skills[i].Date != null) { skills[i].SimilarSkills.Add(skills[i]); }
