@@ -10,6 +10,6 @@ namespace UniversalParserLibrary.Models
     {
         public string _id { get; set; }
 
-        public List<SkillLevel> Levels { get; set; }
+        public List<SkillLevel> skills { get; set; }
     }
 }

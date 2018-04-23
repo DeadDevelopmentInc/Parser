@@ -179,7 +179,7 @@ namespace UniversalParserLibrary.Parsing
             MongoClient client = new MongoClient(connectionString);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var colSkills = database.GetCollection<User>("users");
-            colSkills.InsertOne(new User { _id = name, Levels = levels});
+            colSkills.InsertOne(new User { _id = name, skills = levels});
         }
     }
 }
