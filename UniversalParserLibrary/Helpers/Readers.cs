@@ -40,7 +40,7 @@ namespace UniversalParserLibrary.Helpers
         {
             List<string> arraySkills = GetTextFromTable(table);
             List<BufferSkill> list = new List<BufferSkill>();
-            for(int i = 1; i < arraySkills.Count; i+=2)
+            for (int i = 1; i < arraySkills.Count; i += 2)
             {
                 if (arraySkills[i].Contains('('))
                 {
@@ -48,7 +48,7 @@ namespace UniversalParserLibrary.Helpers
                     arraySkills[i] = arraySkills[i].Replace(")", "");
                 }
                 string[] buff = Regex.Split(arraySkills[i], ", ");
-                foreach(string s in buff)
+                foreach (string s in buff)
                 {
                     list.Add(new BufferSkill()
                     {
@@ -72,7 +72,7 @@ namespace UniversalParserLibrary.Helpers
                     temp = temp.Replace(")", "");
                 }
                 string[] buff = Regex.Split(temp, ", ");
-                foreach(string s in buff)
+                foreach (string s in buff)
                 {
                     list.Add(new BufferSkill
                     {
@@ -121,14 +121,14 @@ namespace UniversalParserLibrary.Helpers
         /// <returns></returns>
         internal static List<Tuple<string, string>> GetExpsFromTable(ITable table)
         {
-            List < Tuple<string, string> > list = new List<Tuple<string, string>>();
+            List<Tuple<string, string>> list = new List<Tuple<string, string>>();
             List<string> temp = new List<string>();
             temp = GetTextFromTable(table);
             Regex regex = new Regex(@"^\w+\s\d{4}\s\W\s\w+");
             for (int i = 5; i < temp.Count; i++)
             {
                 MatchCollection match = regex.Matches(temp[i - 5]);
-                if (match.Count > 0 & temp[i] == "Environment") { list.Add(new Tuple<string, string>(temp[i+1], temp[i-5])); }
+                if (match.Count > 0 & temp[i] == "Environment") { list.Add(new Tuple<string, string>(temp[i + 1], temp[i - 5])); }
             }
             return list;
         }
@@ -144,18 +144,18 @@ namespace UniversalParserLibrary.Helpers
             List<string> list = new List<string>();
             List<string> temp = new List<string>();
             temp = GetTextFromTable(table);
-            for(int i = 1; i < temp.Count; i++) { if (temp[i - 1].Contains("Environment")) { list.Add(temp[i]); }}
-#if DEBUG
+            for (int i = 1; i < temp.Count; i++) { if (temp[i - 1].Contains("Environment")) { list.Add(temp[i]); } }
+#if DEBUGX
             HelpMeth.PrintTextForTest(list);
 #endif
-            foreach(string s in list)
+            for (int i = 0; i < list.Count; i++)
             {
-                s.Replace(" (", ", ");
-                s.Replace(")", "");
-                string[] buff = Regex.Split(s, ", ");
-                foreach(string m in buff)
+                list[i] = Regex.Replace(list[i], ",(?=[^()]*\\))", "|");
+                string[] buff = Regex.Split(list[i], ", ");
+                foreach (string m in buff)
                 {
-                    skills.Add(new TrainSkill { NameOfSkill = m });
+                    string buffer = m.Replace("|", ",");
+                    skills.Add(new TrainSkill { NameOfSkill = buffer });
                 }
             }
             return skills;
@@ -171,14 +171,14 @@ namespace UniversalParserLibrary.Helpers
             List<TrainSkill> skills = new List<TrainSkill>();
             List<string> temp = new List<string>();
             temp = GetTextFromTable(table);
-            for(int i = 1; i < temp.Count - 2; i+=2)
+            for (int i = 1; i < temp.Count - 2; i += 2)
             {
-                temp[i] = temp[i].Replace(" (", ", ");
-                temp[i] = temp[i].Replace(")", "");
+                temp[i] = Regex.Replace(temp[i], ",(?=[^()]*\\))", "|");
                 string[] buff = Regex.Split(temp[i], ", ");
                 foreach (string m in buff)
                 {
-                    skills.Add(new TrainSkill { NameOfSkill = m, TypeOfSkill = temp[i - 1]});
+                    string buffer = m.Replace("|", ",");
+                    skills.Add(new TrainSkill { NameOfSkill = buffer, TypeOfSkill = temp[i - 1] });
                 }
             }
             return skills;
@@ -194,18 +194,17 @@ namespace UniversalParserLibrary.Helpers
             List<TrainSkill> skills = new List<TrainSkill>();
             List<string> temp = new List<string>();
             temp = GetTextFromTable(table);
-            for (int i = 1; i < temp.Count - 2; i += 2)
+            for (int i = 1; i < temp.Count; i += 2)
             {
-                temp[i] = temp[i].Replace(" (", ", ");
-                temp[i] = temp[i].Replace(")", "");
+                temp[i] = Regex.Replace(temp[i], ",(?=[^()]*\\))", "|");
                 string[] buff = Regex.Split(temp[i], ", ");
                 foreach (string m in buff)
                 {
-                    skills.Add(new TrainSkill { NameOfSkill = m, TypeOfSkill = temp[0] });
+                    string buffer = m.Replace("|", ",");
+                    skills.Add(new TrainSkill { NameOfSkill = buffer, TypeOfSkill = temp[0] });
                 }
             }
             return skills;
-        }
-        
+        }        
     }
 }

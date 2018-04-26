@@ -70,15 +70,22 @@
   <ItemGroup>
     <Compile Include="Helpers\HelpMeth.cs" />
     <Compile Include="Helpers\Readers.cs" />
+    <Compile Include="Models\Algorithms\Bitap.cs" />
+    <Compile Include="Models\Algorithms\BKTrees.cs" />
+    <Compile Include="Models\Algorithms\Ngram.cs" />
     <Compile Include="Models\BufferSkill.cs" />
+    <Compile Include="Models\Algorithms\DahmerauLevenshteinAlg.cs" />
     <Compile Include="Models\Date.cs" />
+    <Compile Include="Models\Algorithms\LevenshteinAlg.cs" />
     <Compile Include="Models\PrivateDictionary.cs" />
+    <Compile Include="Models\Rule.cs" />
     <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\SkillLevel.cs" />
     <Compile Include="Models\TrainSkill.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Parsing\LogicForParsing.cs" />
     <Compile Include="Training\LogicForTraining.cs" />
+    <Compile Include="Training\Rules.cs" />
     <Compile Include="UniversalParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

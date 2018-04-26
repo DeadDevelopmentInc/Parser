@@ -17,5 +17,7 @@ namespace UniversalParserLibrary.Helpers
         {
             foreach (Tuple<string, string> s in text) { Console.WriteLine(s.Item1 + " IN " + s.Item2); }
         }
+
+        internal static void PrintTrainCodeForTest(string code, string name) => Console.WriteLine(code + " _ " + name);
     }
 }

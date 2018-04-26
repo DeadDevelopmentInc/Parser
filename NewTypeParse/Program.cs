@@ -26,7 +26,8 @@ namespace NewTypeParse
                     "1.Parse in this folder with documents\n" +
                     "2.Train parser with documents in folder (with saving data in db)\n" +
                     "3.Train parser with documents in folder (without saving data in db)\n" +
-                    "4.Exit");
+                    "4.Exit\n" +
+                    "Write: ");
                 switch (Console.ReadLine())
                 {
                     case "1": { Console.Write("Write folder: "); UniversalParser.StartParsing(Console.ReadLine()); } break;

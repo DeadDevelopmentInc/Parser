@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UniversalParserLibrary.Models;
 using UniversalParserLibrary.Helpers;
 using Spire.Doc.Interface;
+using UniversalParserLibrary.Models.Algorithms;
 
 namespace UniversalParserLibrary.Training
 {
@@ -32,7 +33,7 @@ namespace UniversalParserLibrary.Training
                     case 2: { AddToList(ParseOldDoc(section)); } break;
                 }
             }
-            catch { }
+            catch(Exception e) { Console.WriteLine(e.Message); }
 
         }
 
@@ -46,6 +47,15 @@ namespace UniversalParserLibrary.Training
             List<TrainSkill> list = new List<TrainSkill>();
             list.AddRange(Readers.GetNamesOfExpsFromTable(section.Tables[1]));
             list.AddRange(Readers.GetNamesOfSkillsFromOldTable(section.Tables[0]));
+            PreproccessTech(ref list);
+            //var LevList = LevenshteinAlg.Start(list);
+            var DaLList = DahmerauLevenshteinAlg.Start(list);
+            foreach (TrainSkill skill in list)
+            {
+                skill.PostProccessing();
+                skill.ToString();
+            }
+
             return list;
         }
 
@@ -62,9 +72,15 @@ namespace UniversalParserLibrary.Training
             return list;
         }
 
-        public static void FindSimpleSkills()
+        private static void PreproccessTech(ref List<TrainSkill> skills)
         {
-
+            for(int i = 0; i < skills.Count; i++)
+            {
+                skills[i] = Rules.CreateRules(skills[i]);
+#if DEBUGX
+                HelpMeth.PrintTrainCodeForTest(skills[i].CodeOfSkill, skills[i].NameOfSkill);
+#endif
+            }
         }
 
         private static void AddToList(List<TrainSkill> skills)
