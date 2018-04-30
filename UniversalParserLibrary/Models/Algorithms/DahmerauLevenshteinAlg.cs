@@ -30,7 +30,6 @@ namespace UniversalParserLibrary.Models.Algorithms
             }
             return trains;
         }
-
         private static int CalcExp(int l1, int l2)
         {
             return (int)(((l1 + l2) / 2) * 0.45);

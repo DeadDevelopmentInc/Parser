@@ -84,5 +84,12 @@ namespace UniversalParserLibrary
             }
             threads.Clear();
         }
+
+        private static void WriteDataInDB()
+        {
+            var list = LogicForTraining.TrainList;
+
+
+        }
     }
 }

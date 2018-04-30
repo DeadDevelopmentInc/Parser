@@ -13,7 +13,7 @@ namespace UniversalParserLibrary.Training
 {
     internal static class LogicForTraining
     {
-        private static List<TrainSkill> TrainList { get; set; } = new List<TrainSkill>();
+       internal static List<TrainSkill> TrainList { get; set; } = new List<TrainSkill>();
         private static object locker = new object();
 
         public static void NewTrain(string destination)
@@ -49,13 +49,12 @@ namespace UniversalParserLibrary.Training
             list.AddRange(Readers.GetNamesOfSkillsFromOldTable(section.Tables[0]));
             PreproccessTech(ref list);
             //var LevList = LevenshteinAlg.Start(list);
-            var DaLList = DahmerauLevenshteinAlg.Start(list);
+            DahmerauLevenshteinAlg.Start(list);
             foreach (TrainSkill skill in list)
             {
                 skill.PostProccessing();
                 skill.ToString();
             }
-
             return list;
         }
 

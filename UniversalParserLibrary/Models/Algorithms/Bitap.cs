@@ -6,9 +6,34 @@ using System.Threading.Tasks;
 
 namespace UniversalParserLibrary.Models.Algorithms
 {
+    [Obsolete("The method is inoperative", true)]
     internal static class Bitap
     {
-        public static int SearchString(string text, string pattern, int k)
+        
+        public static List<TrainSkill> Start(List<TrainSkill> trains)
+        {
+            for (int i = 0; i < trains.Count - 1; i++)
+            {
+                for (int j = i + 1; j < trains.Count;)
+                {
+                    int temp = Compute(trains[i].CodeOfSkill, trains[j].CodeOfSkill, 3);
+                    if (temp > 0)
+                    {
+                        trains[i].Skills.Add(trains[j]);
+                        trains.RemoveAt(j);
+                    }
+                    else { j++; }
+                }
+            }
+            return trains;
+        }
+
+        private static int CalcExp(int l1, int l2)
+        {
+            return (int)(((l1 + l2) / 2) * 0.45);
+        }
+
+        public static int Compute(string text, string pattern, int k)
         {
             int result = -1;
             int m = pattern.Length;
