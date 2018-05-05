@@ -24,13 +24,13 @@ namespace UniversalParserLibrary.Training
         internal static TrainSkill CreateRules(TrainSkill skill)
         {
             skill.CodeOfSkill = skill.NameOfSkill;
-            foreach(var ru in rule.rules)
+            skill.CodeOfSkill = skill.CodeOfSkill.ToLower();
+            if (skill.CodeOfSkill.Contains("("))
             {
-                skill.CodeOfSkill = skill.CodeOfSkill.ToLower();
-                if(skill.CodeOfSkill.Contains("("))
-                {
-                    skill.CodeOfSkill = skill.CodeOfSkill.Remove(skill.CodeOfSkill.IndexOf('('), skill.CodeOfSkill.IndexOf(')') - skill.CodeOfSkill.IndexOf('(') + 1);
-                }
+                skill.CodeOfSkill = skill.CodeOfSkill.Remove(skill.CodeOfSkill.IndexOf('('), skill.CodeOfSkill.IndexOf(')') - skill.CodeOfSkill.IndexOf('(') + 1);
+            }
+            foreach (var ru in rule.rules)
+            {
                 if (skill.CodeOfSkill.Contains(ru.Item1)) { skill.CodeOfSkill = skill.CodeOfSkill.Replace(ru.Item1, ru.Item2); }
             }
             return skill;

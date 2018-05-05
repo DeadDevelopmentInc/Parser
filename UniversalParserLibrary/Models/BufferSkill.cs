@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace UniversalParserLibrary.Models
 {
+    /// <summary>
+    /// Buffer class for parsing document
+    /// </summary>
     internal class BufferSkill
     {
         public string _id { get; set; }
@@ -15,6 +18,10 @@ namespace UniversalParserLibrary.Models
         public string Date { get; set; }
         public List<BufferSkill> SimilarSkills { get; set; } = new List<BufferSkill>();
 
+        /// <summary>
+        /// Sum levels for similar skills
+        /// </summary>
+        /// <param name="newLevel">added level</param>
         internal void AddLevel(string newLevel)
         {
             if ((level == "Expert" | level == "Experienced") &

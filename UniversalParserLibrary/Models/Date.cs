@@ -22,6 +22,9 @@ namespace UniversalParserLibrary.Models
         December
     }
 
+    /// <summary>
+    /// Class for proccesing dates from documents
+    /// </summary>
     internal class Date
     {
         double _month;

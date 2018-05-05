@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace UniversalParserLibrary.Models
 {
+    /// <summary>
+    /// Class for saving data in database
+    /// </summary>
     internal class Skill
     {
-        public string _id { get; set; }
+        public string _id { get; set; } = Convert.ToString(Guid.NewGuid());
         public string name { get; set; }
         public List<string> allNames { get; set; } = new List<string>();
         public string type { get; set; } = "Other";
@@ -24,6 +27,24 @@ namespace UniversalParserLibrary.Models
             this.type = type;
             isSkillNew = isNew;
             this.allNames = allNames;
+        }
+
+        /// <summary>
+        /// Return ready-for-training object (TrainSkill)
+        /// </summary>
+        /// <returns>TrainSkill object</returns>
+        public TrainSkill ForTrain()
+        {
+            return new TrainSkill
+            {
+                NameOfSkill = name,
+                CodeOfSkill = name,
+                IsSkillNew = (isSkillNew == true ? false : false),
+                SimilarSkills = allNames,
+                Skills = new List<TrainSkill>(),
+                TypeOfSkill = type,
+                _id = _id
+            };
         }
 
         public void Print()

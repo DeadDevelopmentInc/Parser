@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace UniversalParserLibrary.Models
 {
+    /// <summary>
+    /// Class with rules for trainig
+    /// </summary>
     internal class Rule
     {
         public string _id { get; set; } = Convert.ToString(Guid.NewGuid());

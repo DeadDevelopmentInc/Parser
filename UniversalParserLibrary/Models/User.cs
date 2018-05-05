@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace UniversalParserLibrary.Models
 {
+    /// <summary>
+    /// Class for users skill
+    /// </summary>
     internal class User
     {
         public string _id { get; set; }

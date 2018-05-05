@@ -10,26 +10,60 @@ namespace UniversalParserLibrary.Models.Algorithms
     {
         public static List<TrainSkill> Start(List<TrainSkill> trains)
         {
+            bool? t = null;
             for (int i = 0; i < trains.Count - 1; i++)
             {
                 for (int j = i + 1; j < trains.Count;)
                 {
-                    int temp = Compute(trains[i].CodeOfSkill, trains[j].CodeOfSkill);
-                    if (temp > 0)
-                    {
-                        if (temp <= CalcExp(trains[i].CodeOfSkill.Length, trains[j].CodeOfSkill.Length))
-                        {
-                            trains[i].Skills.Add(trains[j]);
-                            trains.RemoveAt(j);
-                        }
-                        else { j++; }
-                        continue;
-                    }
-                    trains.RemoveAt(j);
+                    t = CheckAllNames(trains[i], trains[j]);
+                    if (t == true) { trains[i].Skills.Add(trains[j]); trains.RemoveAt(j); }
+                    else if(t == null) { trains.RemoveAt(j); }
+                    else { j++; }
+                    t = null;
                 }
             }
             return trains;
         }
+
+        private static bool? CheckAllNames(TrainSkill mainTrainSkill, TrainSkill secondTrainSkill)
+        {
+            bool? fl = null;
+            if (mainTrainSkill.Skills.Count == 0 && secondTrainSkill.Skills.Count == 0) { return CheckTwoValue(mainTrainSkill.CodeOfSkill, secondTrainSkill.CodeOfSkill); }
+            else
+            {
+                List<string> mainCodes = new List<string>();
+                List<string> secondCodes = new List<string>();
+
+                mainCodes.Add(mainTrainSkill.CodeOfSkill);
+                secondCodes.Add(secondTrainSkill.CodeOfSkill);
+
+                foreach (TrainSkill skill in mainTrainSkill.Skills) { mainCodes.Add(skill.CodeOfSkill); }
+                foreach (TrainSkill skill in secondTrainSkill.Skills) { secondCodes.Add(skill.CodeOfSkill); }
+
+                foreach(string str1 in mainCodes)
+                {
+                    foreach(string str2 in secondCodes)
+                    {
+                        var temp = CheckTwoValue(str1, str2);
+                        if (temp == true) { mainTrainSkill.Skills.AddRange(secondTrainSkill.Skills); return true; }
+                        if (temp == false) { fl = false; }
+                    }
+                }
+            }
+            return fl;
+        }
+
+        private static bool? CheckTwoValue(string first, string second)
+        {
+            int temp = Compute(first, second);
+            if (temp > 0)
+            {
+                if (temp <= CalcExp(first.Length, second.Length)) { return true; }
+                return false;
+            }
+            else { return null; }
+        }
+
         private static int CalcExp(int l1, int l2)
         {
             return (int)(((l1 + l2) / 2) * 0.45);
@@ -39,7 +73,10 @@ namespace UniversalParserLibrary.Models.Algorithms
         {
             if (first == second)
                 return 0;
-
+            if (first == null)
+                return second.Length;
+            if (second == null)
+                return first.Length;
             int len_orig = first.Length;
             int len_diff = second.Length;         
 

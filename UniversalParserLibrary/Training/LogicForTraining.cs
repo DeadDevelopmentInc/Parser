@@ -49,13 +49,34 @@ namespace UniversalParserLibrary.Training
             list.AddRange(Readers.GetNamesOfSkillsFromOldTable(section.Tables[0]));
             PreproccessTech(ref list);
             //var LevList = LevenshteinAlg.Start(list);
+            //GenerateData(list);
+            return list;
+        }
+
+        internal static void GenerateData(List<TrainSkill> list)
+        {
             DahmerauLevenshteinAlg.Start(list);
+            foreach (TrainSkill skill in list)
+            {
+                if (skill.TypeOfSkill == null)
+                {
+                    foreach(var similarSkill in skill.Skills)
+                    {
+                        if (similarSkill.TypeOfSkill != null)
+                        {
+                            skill.TypeOfSkill = similarSkill.TypeOfSkill;
+                            break;
+                        }
+                    }
+                }
+            }
+#if DEBUGX
             foreach (TrainSkill skill in list)
             {
                 skill.PostProccessing();
                 skill.ToString();
             }
-            return list;
+#endif
         }
 
         /// <summary>
@@ -68,10 +89,11 @@ namespace UniversalParserLibrary.Training
             List<TrainSkill> list = new List<TrainSkill>();
             list.AddRange(Readers.GetNamesOfExpsFromTable(section.Tables[7]));
             for (int i = 0; i < 7; i++) { list.AddRange(Readers.GetNamesOfSkillsFromNewTable(section.Tables[i])); }
+            PreproccessTech(ref list);
             return list;
         }
 
-        private static void PreproccessTech(ref List<TrainSkill> skills)
+        internal static void PreproccessTech(ref List<TrainSkill> skills)
         {
             for(int i = 0; i < skills.Count; i++)
             {

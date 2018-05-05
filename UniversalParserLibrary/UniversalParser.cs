@@ -48,6 +48,7 @@ namespace UniversalParserLibrary
         /// <param name="destination_name">specified folder</param>
         public static void StartTraining(string destination_name, bool type_of_parse)
         {
+            LogicForTraining.TrainList = new List<TrainSkill>();
             if (Directory.Exists(destination_name))
             {
                 List<Thread> threads = new List<Thread>();                                                     //Create list with threads
@@ -59,6 +60,8 @@ namespace UniversalParserLibrary
                     threads.Last().Start();
                 }
                 AwaitThreads(ref threads);
+                if (type_of_parse) { WriteDataInDBWithSaving(); }
+                else { WriteDataInDB(); }
                 Console.WriteLine("DONE");
             }
             else
@@ -88,8 +91,37 @@ namespace UniversalParserLibrary
         private static void WriteDataInDB()
         {
             var list = LogicForTraining.TrainList;
+            LogicForTraining.GenerateData(list);
+            List<Skill> newList = new List<Skill>();
+            foreach(var skill in list) { newList.Add(skill.ForWrite()); }
+            PrivateDictionary.UpdateDictionary(newList);
+        }
 
-
+        private static void WriteDataInDBWithSaving()
+        {
+            var afterTrain = LogicForTraining.TrainList;
+            var tempList = new List<TrainSkill>();
+            var forWrite = new List<Skill>();
+            var fromDB = PrivateDictionary.GetDataFromDB();
+            foreach (var s in fromDB)
+            {
+                var temp = s.ForTrain();
+                Rules.CreateRules(temp);
+                foreach(string str in temp.SimilarSkills)
+                {
+                    temp.Skills.Add(new TrainSkill { NameOfSkill = str, CodeOfSkill = str });
+                    Rules.CreateRules(temp.Skills[temp.Skills.Count - 1]);
+                }
+                tempList.Add(temp);
+            }
+            LogicForTraining.PreproccessTech(ref tempList);
+            tempList.AddRange(afterTrain);
+            LogicForTraining.GenerateData(tempList);
+            foreach(var item in tempList)
+            {
+                forWrite.Add(item.ForWrite());
+            }
+            PrivateDictionary.UpdateDictionary(forWrite);
         }
     }
 }

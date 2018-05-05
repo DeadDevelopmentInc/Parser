@@ -72,7 +72,7 @@
     <Compile Include="Helpers\Readers.cs" />
     <Compile Include="Models\Algorithms\Bitap.cs" />
     <Compile Include="Models\Algorithms\BKTrees.cs" />
-    <Compile Include="Models\Algorithms\Ngram.cs" />
+    <Compile Include="Models\Algorithms\DiceCoefficientExtensions.cs" />
     <Compile Include="Models\BufferSkill.cs" />
     <Compile Include="Models\Algorithms\DahmerauLevenshteinAlg.cs" />
     <Compile Include="Models\Date.cs" />

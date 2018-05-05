@@ -9,19 +9,18 @@ using System.Threading.Tasks;
 
 namespace UniversalParserLibrary.Models
 {
+    /// <summary>
+    /// Class for proccecing dictionary with skills
+    /// </summary>
     internal static class PrivateDictionary
     {
         const string connectionAdmin = @"mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db";
-        private static List<Skill> globalSkills = new List<Skill>();
+        internal static List<Skill> globalSkills { get; set; } = new List<Skill>();
         static object locker = new object();
 
         static PrivateDictionary()
         {
-            MongoClient client = new MongoClient(connectionAdmin);
-            IMongoDatabase database = client.GetDatabase("workers_db");
-            var collection = database.GetCollection<Skill>("skills");
-            globalSkills = collection.Find(Builders<Skill>.Filter.Empty).ToList();
-
+            globalSkills = GetDataFromDB();
         }
 
         internal static void PrintDictionary()
@@ -31,7 +30,10 @@ namespace UniversalParserLibrary.Models
                 skill.Print();
             }
         }
-
+        
+        /// <summary>
+        /// Update dictionary with global skills
+        /// </summary>
         internal static void UpdateDictionary()
         {
             MongoClient client = new MongoClient(connectionAdmin);
@@ -42,6 +44,32 @@ namespace UniversalParserLibrary.Models
 
         }
 
+        internal static List<Skill> GetDataFromDB()
+        {
+            MongoClient client = new MongoClient(connectionAdmin);
+            IMongoDatabase database = client.GetDatabase("workers_db");
+            var collection = database.GetCollection<Skill>("skills");
+            return collection.Find(Builders<Skill>.Filter.Empty).ToList();
+        }
+
+        /// <summary>
+        /// Update dictionary with local skills
+        /// </summary>
+        /// <param name="skills">local skills, replay global skills</param>
+        internal static void UpdateDictionary(List<Skill> skills)
+        {
+            MongoClient client = new MongoClient(connectionAdmin);
+            IMongoDatabase database = client.GetDatabase("workers_db");
+            var collection = database.GetCollection<Skill>("skills");
+            collection.DeleteMany(Builders<Skill>.Filter.Empty);
+            collection.InsertMany(skills.ToArray());
+            globalSkills = skills;
+        }
+
+        /// <summary>
+        /// Find all concurrences in new template
+        /// </summary>
+        /// <param name="skills"></param>
         internal static void FindAllСoncurrencesInNewTemplate(ref List<BufferSkill> skills)
         {
             for (int i = 0; i < skills.Count; i++)
@@ -62,6 +90,10 @@ namespace UniversalParserLibrary.Models
             }
         }
 
+        /// <summary>
+        /// Find all concurrences in old template
+        /// </summary>
+        /// <param name="skills"></param>
         internal static void FindAllСoncurrencesInOldTemplate(ref List<BufferSkill> skills)
         {
             for(int i = 0; i < skills.Count; i++)
