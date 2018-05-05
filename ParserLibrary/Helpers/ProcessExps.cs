@@ -69,7 +69,7 @@ namespace ParserLibrary.Helpers
                     if (buffer[i].name.Contains(buffer[j].name))
                     {
                         if (buffer[i].name != buffer[j].name &&
-                            Helpers.AddMethods.ExName(buffer[i].allNames, buffer[j].name))
+                            Helpers.HelpersMethods.ExName(buffer[i].allNames, buffer[j].name))
                         { buffer[i].allNames.Add(buffer[j].name); }
                         temp.Add(buffer[j]); tempPosition.Add(j);
                     }

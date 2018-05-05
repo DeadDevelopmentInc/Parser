@@ -67,20 +67,6 @@ namespace ParserLibrary
                 (newLevel != "Working knowledge" | newLevel != "Extensive knowledge")) { level = "Experienced"; return; }
             level = "Expert";
         }
-
-        public void HeadState()
-        {
-            string temp = null;
-            for(int i = 0; i < allNames.Count; i++)
-            {
-                if(!PrivateDictionary.CheckHead(name, allNames[i]))
-                {
-                    temp = allNames[i];
-                    allNames[i] = name;
-                    name = temp;
-                }
-            }
-        }
     }
 
     internal class SkillDate
