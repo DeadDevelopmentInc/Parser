@@ -83,6 +83,7 @@ namespace UniversalParserLibrary.Models
                     if (skills[i]._id == skills[j]._id)
                     {
                         if (skills[j].Date != null) { skills[i].AddLevel(skills[j].level); }
+                        skills[i].AllSkills.Add(skills[j]);
                         skills.RemoveAt(j);
                         j--;
                     }
@@ -106,7 +107,8 @@ namespace UniversalParserLibrary.Models
                 {
                     if (skills[i]._id == skills[j]._id)
                     {
-                        if(skills[j].Date != null) { skills[i].SimilarSkills.Add(skills[j]); }                        
+                        if(skills[j].Date != null) { skills[i].SimilarSkills.Add(skills[j]); }
+                        skills[i].AllSkills.Add(skills[j]);
                         skills.RemoveAt(j);
                         j--;
                     }

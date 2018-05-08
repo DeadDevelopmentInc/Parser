@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniversalParserLibrary.Models.Algorithms
 {
+    [Obsolete("The method not test yet", true)]
     internal static class DiceCoefficientExtensions
     {
 

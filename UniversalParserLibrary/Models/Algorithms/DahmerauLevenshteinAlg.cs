@@ -8,6 +8,11 @@ namespace UniversalParserLibrary.Models.Algorithms
 {
     internal class DahmerauLevenshteinAlg
     {
+        /// <summary>
+        /// Start training
+        /// </summary>
+        /// <param name="trains"></param>
+        /// <returns></returns>
         public static List<TrainSkill> Start(List<TrainSkill> trains)
         {
             bool? t = null;
@@ -25,6 +30,12 @@ namespace UniversalParserLibrary.Models.Algorithms
             return trains;
         }
 
+        /// <summary>
+        /// Check all names of main and second skill
+        /// </summary>
+        /// <param name="mainTrainSkill"></param>
+        /// <param name="secondTrainSkill"></param>
+        /// <returns>Desigion</returns>
         private static bool? CheckAllNames(TrainSkill mainTrainSkill, TrainSkill secondTrainSkill)
         {
             bool? fl = null;
@@ -53,6 +64,12 @@ namespace UniversalParserLibrary.Models.Algorithms
             return fl;
         }
 
+        /// <summary>
+        /// Methods for check distance between two words
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
+        /// <returns></returns>
         private static bool? CheckTwoValue(string first, string second)
         {
             int temp = Compute(first, second);
@@ -64,11 +81,23 @@ namespace UniversalParserLibrary.Models.Algorithms
             else { return null; }
         }
 
+        /// <summary>
+        /// Method of calculating the quantity of mistakes between two words
+        /// </summary>
+        /// <param name="l1">Length of first string</param>
+        /// <param name="l2">Length of second string</param>
+        /// <returns>Quantity of mistakes</returns>
         private static int CalcExp(int l1, int l2)
         {
             return (int)(((l1 + l2) / 2) * 0.45);
         }
-
+        
+        /// <summary>
+        /// Main logic for dahmerau-levenshtein
+        /// </summary>
+        /// <param name="first">First string</param>
+        /// <param name="second">Second string</param>
+        /// <returns>Distance between two strings</returns>
         internal static int Compute(string first, string second)
         {
             if (first == second)

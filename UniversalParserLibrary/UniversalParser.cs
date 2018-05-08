@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UniversalParserLibrary.Training;
 using UniversalParserLibrary.Parsing;
 using UniversalParserLibrary.Models;
+using UniversalParserLibrary.Models.Exceptions_and_Events;
 
 namespace UniversalParserLibrary
 {
@@ -27,19 +28,19 @@ namespace UniversalParserLibrary
                 List<Thread> threads = new List<Thread>();                                                     //Create list with threads
                 DirectoryInfo dir = new DirectoryInfo(destination_name);                                       //Open directory
                 FileInfo[] files = dir.GetFiles("*.doc");                                                      //Get files from directory
-                foreach (FileInfo file in files)                                                               //For each file, create new thread       
+                if(files.Length != 0)
                 {
-                    threads.Add(new Thread(() => LogicForParsing.NewParse(file.FullName, file.Name)));
-                    threads.Last().Start();
+                    foreach (FileInfo file in files)                                                               //For each file, create new thread       
+                    {
+                        threads.Add(new Thread(() => LogicForParsing.NewParse(file.FullName, file.Name)));
+                        threads.Last().Start();
+                    }
+                    AwaitThreads(ref threads);
+                    PrivateDictionary.UpdateDictionary();
                 }
-                AwaitThreads(ref threads);
-                PrivateDictionary.UpdateDictionary();
-                Console.WriteLine("DONE");
+                
             }
-            else
-            {
-                Console.WriteLine(destination_name + " PATH NOT FOUND\n");
-            }
+            else new Models.Exceptions_and_Events.Exception("finding folder", "ERROR", "folder not found");
         }
 
         /// <summary>
@@ -54,20 +55,20 @@ namespace UniversalParserLibrary
                 List<Thread> threads = new List<Thread>();                                                     //Create list with threads
                 DirectoryInfo dir = new DirectoryInfo(destination_name);                                       //Open directory
                 FileInfo[] files = dir.GetFiles("*.doc");                                                      //Get files from directory
-                foreach (FileInfo file in files)                                                               //For each file, create new thread       
+                if (files.Length != 0)
                 {
-                    threads.Add(new Thread(() => LogicForTraining.NewTrain(file.FullName)));
-                    threads.Last().Start();
+                    foreach (FileInfo file in files)                                                               //For each file, create new thread       
+                    {
+                        threads.Add(new Thread(() => LogicForTraining.NewTrain(file.FullName)));
+                        threads.Last().Start();
+                    }
+                    AwaitThreads(ref threads);
+                    if (type_of_parse) { WriteDataInDBWithSaving(); }
+                    else { WriteDataInDB(); }
                 }
-                AwaitThreads(ref threads);
-                if (type_of_parse) { WriteDataInDBWithSaving(); }
-                else { WriteDataInDB(); }
-                Console.WriteLine("DONE");
+                else new Models.Exceptions_and_Events.Exception("finding documents", "ERROR", "folder doesn't contain documents");
             }
-            else
-            {
-                Console.WriteLine(destination_name + " PATH NOT FOUND\n");
-            }
+            else new Models.Exceptions_and_Events.Exception("finding folder", "ERROR", "folder not found");
         }
 
         /// <summary>

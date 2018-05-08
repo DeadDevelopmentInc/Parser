@@ -8,6 +8,7 @@ using UniversalParserLibrary.Helpers;
 using Spire.Doc;
 using System.Text.RegularExpressions;
 using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace UniversalParserLibrary.Parsing
 {
@@ -22,6 +23,7 @@ namespace UniversalParserLibrary.Parsing
                 doc.LoadFromFile(destination);
                 //Find section with table
                 Section section = doc.Sections[0];
+                new Models.Exceptions_and_Events.Info("Resume Parsing", "INFO", "current user", name, 1);
                 Console.WriteLine("Complete read " + destination + " file");
                 //Get type of template
                 int type = doc.Sections[0].Tables.Count;
@@ -33,7 +35,7 @@ namespace UniversalParserLibrary.Parsing
                 SendDataToDB(name, skills);
 
             }
-            catch(Exception e) { Console.WriteLine(e.Message); }
+            catch(Exception e) { new Models.Exceptions_and_Events.Exception("Resume Parsing", "ERROR", e.Message, name); }
         }
 
         private static void ProcessBufferSkills(List<BufferSkill> skills)
@@ -163,24 +165,57 @@ namespace UniversalParserLibrary.Parsing
         private static List<SkillLevel> ProcessDataForDB(List<BufferSkill> skills)
         {
             List<SkillLevel> levels = new List<SkillLevel>();
+            List<BufferSkill> addsSkills = new List<BufferSkill>();
             foreach(BufferSkill skill in skills)
             {
-                levels.Add(new SkillLevel {
-                    _id = skill._id,
-                    level = skill.level
-                });
+                if(skill.AllSkills.Count != 0)
+                {
+                    for(int i = 0; i < skill.AllSkills.Count - 1; i++)
+                    { for(int j = i + 1; j < skill.AllSkills.Count; j++) {if(skill.AllSkills[i].name == skill.AllSkills[j].name) { skill.AllSkills.Remove(skill.AllSkills[j]); j--; }}}
+                    foreach(var skil in skill.AllSkills)
+                    {
+                        if(skil.name != skill.name)
+                        {
+                            skil.level = skill.level;
+                            addsSkills.Add(skil);
+                        }
+                    }
+                }
+            }
+            skills.AddRange(addsSkills);
+            foreach(BufferSkill skill in skills)
+            {
+                if (skill.name != "")
+                {
+                    levels.Add(new SkillLevel
+                    {
+                        _id = skill._id,
+                        level = skill.level,
+                        exactName = skill.name
+                    });
+                }
             }
             return levels;
         }
 
         private static void SendDataToDB(string name, List<BufferSkill> skills)
         {
+            name = name.Remove(name.IndexOf(".doc"), 4);
             List<SkillLevel> levels = ProcessDataForDB(skills);
             string connectionString = "mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db";
-            MongoClient client = new MongoClient(connectionString);
-            IMongoDatabase database = client.GetDatabase("workers_db");
-            var colSkills = database.GetCollection<User>("users");
-            colSkills.InsertOne(new User { _id = name, skills = levels});
+            try
+            {
+                MongoClient client = new MongoClient(connectionString);
+                IMongoDatabase database = client.GetDatabase("workers_db");
+                var colSkills = database.GetCollection<User>("users");
+                var skill = colSkills.FindOneAndDelete(new BsonDocument("_id", name));
+                colSkills.InsertOne(new User { _id = name, skills = levels });
+            }
+            catch(Exception e)
+            {
+                new Models.Exceptions_and_Events.Exception("write in db", "ERROR", e.Message, name);
+            }
+            
         }
     }
 }

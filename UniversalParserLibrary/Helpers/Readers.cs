@@ -40,20 +40,14 @@ namespace UniversalParserLibrary.Helpers
         {
             List<string> arraySkills = GetTextFromTable(table);
             List<BufferSkill> list = new List<BufferSkill>();
-            for (int i = 1; i < arraySkills.Count; i += 2)
+            for (int i = 1; i < arraySkills.Count && !arraySkills[i - 1].Contains("Fore"); i += 2)
             {
-                if (arraySkills[i].Contains('('))
-                {
-                    arraySkills[i] = arraySkills[i].Replace(" (", ", ");
-                    arraySkills[i] = arraySkills[i].Replace(")", "");
-                }
+                arraySkills[i] = Regex.Replace(arraySkills[i], ",(?=[^()]*\\))", "|");
                 string[] buff = Regex.Split(arraySkills[i], ", ");
-                foreach (string s in buff)
+                foreach (string m in buff)
                 {
-                    list.Add(new BufferSkill()
-                    {
-                        name = s,
-                    });
+                    string buffer = m.Replace("|", ",");
+                    list.Add(new BufferSkill { name = buffer });
                 }
             }
             return list;
@@ -66,11 +60,7 @@ namespace UniversalParserLibrary.Helpers
             foreach (var exp in exps)
             {
                 string temp = exp.Item1;
-                if (temp.Contains('('))
-                {
-                    temp = temp.Replace(" (", ", ");
-                    temp = temp.Replace(")", "");
-                }
+                temp = Regex.Replace(temp, ",(?=[^()]*\\))", "|");
                 string[] buff = Regex.Split(temp, ", ");
                 foreach (string s in buff)
                 {
@@ -96,11 +86,7 @@ namespace UniversalParserLibrary.Helpers
             List<BufferSkill> list = new List<BufferSkill>();
             for (int i = 1; i < arraySkills.Count; i += 2)
             {
-                if (arraySkills[i].Contains('('))
-                {
-                    arraySkills[i] = arraySkills[i].Replace(" (", ", ");
-                    arraySkills[i] = arraySkills[i].Replace(")", "");
-                }
+                arraySkills[i] = Regex.Replace(arraySkills[i], ",(?=[^()]*\\))", "|");
                 string[] buff = Regex.Split(arraySkills[i], ", ");
                 foreach (string s in buff)
                 {
@@ -121,14 +107,16 @@ namespace UniversalParserLibrary.Helpers
         /// <returns></returns>
         internal static List<Tuple<string, string>> GetExpsFromTable(ITable table)
         {
+            string date = null;
             List<Tuple<string, string>> list = new List<Tuple<string, string>>();
             List<string> temp = new List<string>();
             temp = GetTextFromTable(table);
-            Regex regex = new Regex(@"^\w+\s\d{4}\s\W\s\w+");
+            Regex regex = new Regex(@"^\w*\s\d{4}\s\W\s\w*");
             for (int i = 5; i < temp.Count; i++)
             {
-                MatchCollection match = regex.Matches(temp[i - 5]);
-                if (match.Count > 0 & temp[i] == "Environment") { list.Add(new Tuple<string, string>(temp[i + 1], temp[i - 5])); }
+                MatchCollection match = regex.Matches(temp[i]);
+                if(match.Count > 0) { date = temp[i]; } 
+                if (temp[i] == "Environment") { list.Add(new Tuple<string, string>(temp[i + 1], date)); date = null; }
             }
             return list;
         }

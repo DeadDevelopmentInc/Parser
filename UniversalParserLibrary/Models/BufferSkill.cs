@@ -17,6 +17,7 @@ namespace UniversalParserLibrary.Models
 
         public string Date { get; set; }
         public List<BufferSkill> SimilarSkills { get; set; } = new List<BufferSkill>();
+        public List<BufferSkill> AllSkills { get; set; } = new List<BufferSkill>();
 
         /// <summary>
         /// Sum levels for similar skills

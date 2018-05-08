@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace UniversalParserLibrary.Models.Algorithms
 {
+    [Obsolete("The method is inoperative", true)]
     internal class BKTrees
     {
         private Node _Root;
