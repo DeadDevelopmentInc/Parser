@@ -6,9 +6,20 @@ using System.Threading.Tasks;
 
 namespace UniversalParserLibrary.Models.Algorithms
 {
-    [Obsolete("The method not test yet", true)]
+    [Obsolete("The method not test yet")]
     internal static class DiceCoefficientExtensions
     {
+        public static void Start(List<Project> projects)
+        {
+            for (int i = 0; i < projects.Count - 1; i++)
+            {
+                for(int j = i + 1; j < projects.Count; j++)
+                {
+                    var diceCoef = DiceCoefficient(projects[i].code, projects[j].code);
+                    if (diceCoef > 0.75) { projects[i].MoveDate(projects[j]); projects.RemoveAt(j); j--; }
+                }
+            }
+        }
 
         /// <summary>
         /// Dice Coefficient based on bigrams. <br />

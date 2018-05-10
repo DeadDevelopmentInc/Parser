@@ -35,5 +35,20 @@ namespace UniversalParserLibrary.Training
             }
             return skill;
         }
+
+        internal static Project CreateRules(Project project)
+        {
+            project.code = project.name;
+            project.code = project.code.ToLower();
+            if (project.code.Contains("("))
+            {
+                project.code = project.code.Remove(project.code.IndexOf('('), project.code.IndexOf(')') - project.code.IndexOf('(') + 1);
+            }
+            foreach (var ru in rule.rules)
+            {
+                if (project.code.Contains(ru.Item1)) { project.code = project.code.Replace(ru.Item1, ru.Item2); }
+            }
+            return project;
+        }
     }
 }

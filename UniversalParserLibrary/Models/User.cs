@@ -14,5 +14,7 @@ namespace UniversalParserLibrary.Models
         public string _id { get; set; }
 
         public List<SkillLevel> skills { get; set; }
+
+        public List<UserProject> projects { get; set; }
     }
 }

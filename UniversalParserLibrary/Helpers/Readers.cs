@@ -53,10 +53,10 @@ namespace UniversalParserLibrary.Helpers
             return list;
         }
 
-        internal static List<BufferSkill> GetExpsFromOldTable(ITable table)
+        internal static List<BufferSkill> GetExpsFromOldTable(ITable table, List<BufferProject> bufferProjects)
         {
-            var exps = GetExpsFromTable(table);
             List<BufferSkill> list = new List<BufferSkill>();
+            var exps = GetExpsFromTable(table, ref bufferProjects, true);
             foreach (var exp in exps)
             {
                 string temp = exp.Item1;
@@ -105,12 +105,14 @@ namespace UniversalParserLibrary.Helpers
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        internal static List<Tuple<string, string>> GetExpsFromTable(ITable table)
+        internal static List<Tuple<string, string>> GetExpsFromTable(ITable table, ref List<BufferProject> bufferProjects, bool parse)
         {
             string date = null;
             List<Tuple<string, string>> list = new List<Tuple<string, string>>();
             List<string> temp = new List<string>();
             temp = GetTextFromTable(table);
+            if(parse)
+                CreateBufferProjects(bufferProjects, temp);
             Regex regex = new Regex(@"^\w*\s\d{4}\s\W\s\w*");
             for (int i = 5; i < temp.Count; i++)
             {
@@ -119,6 +121,28 @@ namespace UniversalParserLibrary.Helpers
                 if (temp[i] == "Environment") { list.Add(new Tuple<string, string>(temp[i + 1], date)); date = null; }
             }
             return list;
+        }
+
+        internal static void CreateBufferProjects(List<BufferProject> projects, List<string> texts)
+        {
+            Regex regex = new Regex(@"^\w*\s\d{4}\s\W\s\w*");
+            List<string> temp = new List<string>();
+            for(int  i = 0; i < texts.Count; i++)
+            {
+                MatchCollection match = regex.Matches(texts[i]);
+                if (match.Count > 0) { temp.Clear();  temp.Add(texts[i-1] != "" ? texts[i - 1] : texts[i - 2]); temp.Add(texts[i]); }
+                else
+                {
+                    if (texts[i] != "") { temp.Add(texts[i]); }
+                    if (temp.Count == 10)
+                    {
+                        string[] date = temp[1].Contains("-") ? Regex.Split(temp[1], " - ") : Regex.Split(temp[1], " – ");
+                        projects.Add(new BufferProject(temp[2], temp[2], temp[3], temp[9], temp[0], temp[5], date[0], date[1]));
+                        temp.Clear();
+                    }
+                } 
+            }
+            return;
         }
 
         /// <summary>
@@ -133,9 +157,7 @@ namespace UniversalParserLibrary.Helpers
             List<string> temp = new List<string>();
             temp = GetTextFromTable(table);
             for (int i = 1; i < temp.Count; i++) { if (temp[i - 1].Contains("Environment")) { list.Add(temp[i]); } }
-#if DEBUGX
-            HelpMeth.PrintTextForTest(list);
-#endif
+
             for (int i = 0; i < list.Count; i++)
             {
                 list[i] = Regex.Replace(list[i], ",(?=[^()]*\\))", "|");
@@ -161,6 +183,7 @@ namespace UniversalParserLibrary.Helpers
             temp = GetTextFromTable(table);
             for (int i = 1; i < temp.Count - 2; i += 2)
             {
+                //Replace ( , , ) => ( | | )
                 temp[i] = Regex.Replace(temp[i], ",(?=[^()]*\\))", "|");
                 string[] buff = Regex.Split(temp[i], ", ");
                 foreach (string m in buff)
@@ -173,7 +196,7 @@ namespace UniversalParserLibrary.Helpers
         }
 
         /// <summary>
-        /// 
+        /// Method for parse skill's table from new template 
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
@@ -184,6 +207,7 @@ namespace UniversalParserLibrary.Helpers
             temp = GetTextFromTable(table);
             for (int i = 1; i < temp.Count; i += 2)
             {
+                //Replace ( , , ) => ( | | )
                 temp[i] = Regex.Replace(temp[i], ",(?=[^()]*\\))", "|");
                 string[] buff = Regex.Split(temp[i], ", ");
                 foreach (string m in buff)

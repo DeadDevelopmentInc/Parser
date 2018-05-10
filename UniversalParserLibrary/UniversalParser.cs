@@ -14,8 +14,6 @@ namespace UniversalParserLibrary
 {
     public static class UniversalParser
     {
-        internal static List<Skill> Skills { get; set; } = new List<Skill>(); 
-
 
         /// <summary>
         /// Method for parse files from the specified folder 
@@ -36,6 +34,8 @@ namespace UniversalParserLibrary
                         threads.Last().Start();
                     }
                     AwaitThreads(ref threads);
+                    PrivateDictionary.SendProjects(Project.FindSimpleProjects(LogicForParsing.ProjectsList));
+                    
                     PrivateDictionary.UpdateDictionary();
                 }
                 

@@ -14,25 +14,29 @@ namespace UniversalParserLibrary.Parsing
 {
     internal static class LogicForParsing
     {
+        internal static List<Project> ProjectsList { get; set; } = new List<Project>();
+        private static object locker = new object();
+
+
         public static void NewParse(string destination, string name)
         {
             try
             {
                 List<BufferSkill> skills = new List<BufferSkill>();
+                List<UserProject> projects = new List<UserProject>();
                 Document doc = new Document();
                 doc.LoadFromFile(destination);
                 //Find section with table
                 Section section = doc.Sections[0];
                 new Models.Exceptions_and_Events.Info("Resume Parsing", "INFO", "current user", name, 1);
-                Console.WriteLine("Complete read " + destination + " file");
                 //Get type of template
                 int type = doc.Sections[0].Tables.Count;
                 switch (type)
                 {
-                    case 8: { skills = ParseNewTemplate(ParseSectionFromNewTemplate(section)); } break;
-                    case 2: { skills = ParseOldTemplate(ParseSectionFromOldTemplate(section)); } break;
+                    case 8: { var temp = ParseSectionFromNewTemplate(section); skills = ParseNewTemplate(temp.Item1, temp.Item2); projects = temp.Item2; } break;
+                    case 2: { var temp = ParseSectionFromOldTemplate(section); skills = ParseOldTemplate(temp.Item1, temp.Item2); projects = temp.Item2; } break;
                 }
-                SendDataToDB(name, skills);
+                SendDataToDB(name, skills, projects);
 
             }
             catch(Exception e) { new Models.Exceptions_and_Events.Exception("Resume Parsing", "ERROR", e.Message, name); }
@@ -50,31 +54,82 @@ namespace UniversalParserLibrary.Parsing
             }
         }
 
-        private static List<BufferSkill> ParseNewTemplate(List<BufferSkill> skills)
+        private static List<BufferSkill> ParseNewTemplate(List<BufferSkill> skills, List<UserProject> projects)
         {
             DeleteSimpleSkills(ref skills);
             return skills;
         }
 
-        private static List<BufferSkill> ParseOldTemplate(List<BufferSkill> skills)
+        private static List<BufferSkill> ParseOldTemplate(List<BufferSkill> skills, List<UserProject> projects)
         {
             DeleteSimpleSkills(ref skills);
             return skills;
         }
 
-        private static List<BufferSkill> ParseSectionFromNewTemplate(Section section)
+        private static Tuple<List<BufferSkill>, List<UserProject>> ParseSectionFromNewTemplate(Section section)
         {
-            var skills = Readers.GetExpsFromOldTable(section.Tables[7]);
+            var bufferProjects = new List<BufferProject>();
+            var userProjects = new List<UserProject>();
+            var projects = new List<Project>();
+            var skills = Readers.GetExpsFromOldTable(section.Tables[7], bufferProjects);
             for (int i = 0; i < 7; i++) { skills.AddRange(Readers.GetSkillsFromNewTable(section.Tables[i])); }
-
-            return skills;
+            foreach (BufferProject pr in bufferProjects)
+            {
+                userProjects.Add(new UserProject
+                {
+                    _id = pr._id,
+                    name = pr.name,
+                    role = pr.role,
+                    responsibility = pr.responsibility,
+                    startProjectDate = pr.startDate,
+                    endProjectDate = pr.endDate,
+                    result = pr.result
+                });
+                projects.Add(new Project
+                {
+                    _id = pr._id,
+                    name = pr.name,
+                    activity = pr.activity,
+                    customer = pr.customer,
+                    result = pr.result,
+                    startDate = pr.startDate,
+                    endDate = pr.endDate
+                });
+            }
+            AddToList(projects);
+            return new Tuple<List<BufferSkill>, List<UserProject>>(skills, userProjects);
         }
 
-        private static List<BufferSkill> ParseSectionFromOldTemplate(Section section)
+        private static Tuple<List<BufferSkill>, List<UserProject>> ParseSectionFromOldTemplate(Section section)
         {
-            var skills = Readers.GetExpsFromOldTable(section.Tables[1]);
+            var bufferProjects = new List<BufferProject>();
+            var userProjects = new List<UserProject>();
+            var projects= new List<Project>();
+            var skills = Readers.GetExpsFromOldTable(section.Tables[1], bufferProjects);
+            foreach(BufferProject pr in bufferProjects)
+            {
+                userProjects.Add(new UserProject {
+                    _id = pr._id,
+                    name = pr.name,
+                    role = pr.role,
+                    responsibility = pr.responsibility,
+                    startProjectDate = pr.startDate,
+                    endProjectDate = pr.endDate,
+                    result = pr.result
+                });
+                projects.Add(new Project {
+                    _id = pr._id,
+                    name = pr.name,
+                    activity = pr.activity,
+                    customer = pr.customer,
+                    result = pr.result,
+                    startDate = pr.startDate,
+                    endDate = pr.endDate
+                });
+            }
+            AddToList(projects);
             skills.AddRange(Readers.GetSkillsFromOldTable(section.Tables[0]));
-            return skills;
+            return new Tuple<List<BufferSkill>, List<UserProject>>(skills, userProjects);
         }
         
         private static void DeleteSimpleSkills(ref List<BufferSkill> skills)
@@ -198,7 +253,7 @@ namespace UniversalParserLibrary.Parsing
             return levels;
         }
 
-        private static void SendDataToDB(string name, List<BufferSkill> skills)
+        private static void SendDataToDB(string name, List<BufferSkill> skills, List<UserProject> projects)
         {
             name = name.Remove(name.IndexOf(".doc"), 4);
             List<SkillLevel> levels = ProcessDataForDB(skills);
@@ -209,13 +264,18 @@ namespace UniversalParserLibrary.Parsing
                 IMongoDatabase database = client.GetDatabase("workers_db");
                 var colSkills = database.GetCollection<User>("users");
                 var skill = colSkills.FindOneAndDelete(new BsonDocument("_id", name));
-                colSkills.InsertOne(new User { _id = name, skills = levels });
+                colSkills.InsertOne(new User { _id = name, skills = levels, projects = projects });
             }
             catch(Exception e)
             {
                 new Models.Exceptions_and_Events.Exception("write in db", "ERROR", e.Message, name);
             }
             
+        }
+
+        private static void AddToList(List<Project> projects)
+        {
+            lock (locker) { ProjectsList.AddRange(projects); }
         }
     }
 }

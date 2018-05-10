@@ -24,16 +24,16 @@ namespace UniversalParserLibrary.Training
                 doc.LoadFromFile(destination);
                 //Find section with table
                 Section section = doc.Sections[0];
-                Console.WriteLine("Complete read " + destination + " file");
                 //Get type of template
                 int type = doc.Sections[0].Tables.Count;
+                new Models.Exceptions_and_Events.Info("Resume Parsing", "INFO", "current user", destination, 1);
                 switch (type)
                 {
                     case 8: { AddToList(ParseNewDoc(section)); } break;
                     case 2: { AddToList(ParseOldDoc(section)); } break;
                 }
             }
-            catch(Exception e) { Console.WriteLine(e.Message); }
+            catch(Exception e) { new Models.Exceptions_and_Events.Exception("Resume Parsing", "ERROR", e.Message, destination); }
 
         }
 

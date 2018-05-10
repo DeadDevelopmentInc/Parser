@@ -14,7 +14,7 @@ namespace UniversalParserLibrary.Models.Exceptions_and_Events
     internal abstract class Event
     {
         [DataMember]
-        public string datetime { get; } = DateTime.Now.Date.ToString();
+        public string time { get; } = DateTime.Now.Date.ToString("dd.MM.yyyy HH:mm");
         [DataMember]
         public string process { get; set; } = null;
         [DataMember]

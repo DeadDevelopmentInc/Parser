@@ -11286,9 +11286,14 @@
             Gets or sets transparent color
             </summary>
         </member>
+        <member name="P:Spire.Doc.Fields.DocPicture.CropRectangle">
+            <summary>
+            Gets the cropped rectangle of picture object.
+            </summary>
+        </member>
         <member name="P:Spire.Doc.Fields.DocPicture.IsCrop">
             <summary>
-            Gets or sets whether the object is croping.
+            Gets whether the picture object is cropped.
             </summary>
         </member>
         <member name="P:Spire.Doc.Fields.DocPicture.HorizontalOrigin">
