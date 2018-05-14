@@ -26,7 +26,8 @@ namespace UniversalParserLibrary
                 List<Thread> threads = new List<Thread>();                                                     //Create list with threads
                 DirectoryInfo dir = new DirectoryInfo(destination_name);                                       //Open directory
                 FileInfo[] files = dir.GetFiles("*.doc");                                                      //Get files from directory
-                if(files.Length != 0)
+        
+                if (files.Length != 0)
                 {
                     foreach (FileInfo file in files)                                                               //For each file, create new thread       
                     {

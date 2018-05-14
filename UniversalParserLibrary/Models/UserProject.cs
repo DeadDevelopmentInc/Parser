@@ -10,7 +10,6 @@ namespace UniversalParserLibrary.Models
     class UserProject
     {
         public string _id { get; set; }
-        public string name { get; set; }
         public string role { get; set; }
         public string responsibility { get; set; }
         [BsonElementAttribute("startProjectDate")]

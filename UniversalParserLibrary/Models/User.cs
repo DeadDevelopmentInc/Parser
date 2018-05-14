@@ -12,6 +12,8 @@ namespace UniversalParserLibrary.Models
     internal class User
     {
         public string _id { get; set; }
+        public int itexperience { get; set; } = 0;
+        public List<string> abilities { get; set; }
 
         public List<SkillLevel> skills { get; set; }
 

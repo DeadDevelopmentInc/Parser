@@ -9,6 +9,7 @@ using Spire.Doc;
 using System.Text.RegularExpressions;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using UniversalParserLibrary.Parsing;
 
 namespace UniversalParserLibrary.Parsing
 {
@@ -28,6 +29,7 @@ namespace UniversalParserLibrary.Parsing
                 doc.LoadFromFile(destination);
                 //Find section with table
                 Section section = doc.Sections[0];
+
                 new Models.Exceptions_and_Events.Info("Resume Parsing", "INFO", "current user", name, 1);
                 //Get type of template
                 int type = doc.Sections[0].Tables.Count;
@@ -36,7 +38,7 @@ namespace UniversalParserLibrary.Parsing
                     case 8: { var temp = ParseSectionFromNewTemplate(section); skills = ParseNewTemplate(temp.Item1, temp.Item2); projects = temp.Item2; } break;
                     case 2: { var temp = ParseSectionFromOldTemplate(section); skills = ParseOldTemplate(temp.Item1, temp.Item2); projects = temp.Item2; } break;
                 }
-                SendDataToDB(name, skills, projects);
+                SendDataToDB(name, skills, projects, section);
 
             }
             catch(Exception e) { new Models.Exceptions_and_Events.Exception("Resume Parsing", "ERROR", e.Message, name); }
@@ -78,7 +80,6 @@ namespace UniversalParserLibrary.Parsing
                 userProjects.Add(new UserProject
                 {
                     _id = pr._id,
-                    name = pr.name,
                     role = pr.role,
                     responsibility = pr.responsibility,
                     startProjectDate = pr.startDate,
@@ -110,7 +111,6 @@ namespace UniversalParserLibrary.Parsing
             {
                 userProjects.Add(new UserProject {
                     _id = pr._id,
-                    name = pr.name,
                     role = pr.role,
                     responsibility = pr.responsibility,
                     startProjectDate = pr.startDate,
@@ -253,7 +253,7 @@ namespace UniversalParserLibrary.Parsing
             return levels;
         }
 
-        private static void SendDataToDB(string name, List<BufferSkill> skills, List<UserProject> projects)
+        private static void SendDataToDB(string name, List<BufferSkill> skills, List<UserProject> projects, Section section)
         {
             name = name.Remove(name.IndexOf(".doc"), 4);
             List<SkillLevel> levels = ProcessDataForDB(skills);
@@ -264,7 +264,14 @@ namespace UniversalParserLibrary.Parsing
                 IMongoDatabase database = client.GetDatabase("workers_db");
                 var colSkills = database.GetCollection<User>("users");
                 var skill = colSkills.FindOneAndDelete(new BsonDocument("_id", name));
-                colSkills.InsertOne(new User { _id = name, skills = levels, projects = projects });
+                colSkills.InsertOne(new User
+                {
+                    _id = name,
+                    abilities = HelpersForParsing.GetAbitiesFromSection(section),
+                    itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
+                    skills = levels,
+                    projects = projects
+                });
             }
             catch(Exception e)
             {

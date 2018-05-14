@@ -91,6 +91,7 @@
     <Compile Include="Models\TrainSkill.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserProject.cs" />
+    <Compile Include="Parsing\HelpersForParsing.cs" />
     <Compile Include="Parsing\LogicForParsing.cs" />
     <Compile Include="Training\LogicForTraining.cs" />
     <Compile Include="Training\Rules.cs" />

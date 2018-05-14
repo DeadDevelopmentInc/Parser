@@ -14,16 +14,19 @@ namespace UniversalParserLibrary.Models.Exceptions_and_Events
         {
             this.email = email;
             this.value = value.ToString();
+            Console.WriteLine(ToString());
         }
 
         public Info(string process, string type, string message, string email) : base(process, type, message)
         {
             this.email = email;
+            Console.WriteLine(ToString());
         }
 
         public Info(string process, string type, string message, int value) : base(process, type, message)
         {
             this.value = value.ToString();
+            Console.WriteLine(ToString());
         }
 
         public override string ToString() => this.ToJson();
