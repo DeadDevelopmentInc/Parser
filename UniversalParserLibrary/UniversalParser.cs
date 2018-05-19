@@ -101,28 +101,9 @@ namespace UniversalParserLibrary
 
         private static void WriteDataInDBWithSaving()
         {
-            var afterTrain = LogicForTraining.TrainList;
-            var tempList = new List<TrainSkill>();
+            var tempList = LogicForTraining.GenerateTrains(LogicForTraining.TrainList);
             var forWrite = new List<Skill>();
-            var fromDB = PrivateDictionary.GetDataFromDB();
-            foreach (var s in fromDB)
-            {
-                var temp = s.ForTrain();
-                Rules.CreateRules(temp);
-                foreach(string str in temp.SimilarSkills)
-                {
-                    temp.Skills.Add(new TrainSkill { NameOfSkill = str, CodeOfSkill = str });
-                    Rules.CreateRules(temp.Skills[temp.Skills.Count - 1]);
-                }
-                tempList.Add(temp);
-            }
-            LogicForTraining.PreproccessTech(ref tempList);
-            tempList.AddRange(afterTrain);
-            LogicForTraining.GenerateData(tempList);
-            foreach(var item in tempList)
-            {
-                forWrite.Add(item.ForWrite());
-            }
+            foreach(var item in tempList) { forWrite.Add(item.ForWrite()); }
             PrivateDictionary.UpdateDictionary(forWrite);
         }
     }

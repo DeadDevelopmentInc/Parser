@@ -31,10 +31,15 @@ namespace UniversalParserLibrary.Models
         //For users
         public DateTime endDate { get; set; }
 
+        public string Environment { get; set; }
+
+        public string sourceCompany { get; set; }
+
         public BufferProject(
             string name, string customer, string activity, 
             string result, string role, string responsibility,
-            string startProjectDate, string endProjectDate)
+            string startProjectDate, string endProjectDate,
+            string Env)
         {
             this.name = name;
             this.customer = customer;
@@ -44,6 +49,7 @@ namespace UniversalParserLibrary.Models
             this.role = role;
             this.startProjectDate = startProjectDate;
             this.endProjectDate = endProjectDate;
+            Environment = Env;
             GenerateDateTime();
         }
 

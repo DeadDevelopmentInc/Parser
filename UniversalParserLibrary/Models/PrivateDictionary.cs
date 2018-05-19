@@ -14,13 +14,18 @@ namespace UniversalParserLibrary.Models
     /// </summary>
     internal static class PrivateDictionary
     {
+        /// <summary>
+        /// Admin string for dictionary
+        /// </summary>
         const string connectionAdmin = @"mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db";
         internal static List<Skill> globalSkills { get; set; } = new List<Skill>();
+        internal static List<Project> globalProjects { get; set; } = new List<Project>();
         static object locker = new object();
 
         static PrivateDictionary()
         {
-            globalSkills = GetDataFromDB();
+            globalSkills = GetDataFromDB<Skill>("skills");
+            globalProjects = GetDataFromDB<Project>("projects");
         }
 
         internal static void PrintDictionary()
@@ -44,21 +49,25 @@ namespace UniversalParserLibrary.Models
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="projects"></param>
         internal static void SendProjects(List<Project> projects)
         {
             MongoClient client = new MongoClient(connectionAdmin);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<Project>("projects");
             //collection.DeleteMany(Builders<Project>.Filter.Empty);
-            collection.InsertMany(projects.ToArray());
+            //collection.InsertMany(projects.ToArray());
         }
 
-        internal static List<Skill> GetDataFromDB()
+        internal static List<T> GetDataFromDB<T>(string collectionName)
         {
             MongoClient client = new MongoClient(connectionAdmin);
             IMongoDatabase database = client.GetDatabase("workers_db");
-            var collection = database.GetCollection<Skill>("skills");
-            return collection.Find(Builders<Skill>.Filter.Empty).ToList();
+            var collection = database.GetCollection<T>(collectionName);
+            return collection.Find(Builders<T>.Filter.Empty).ToList();
         }
 
         /// <summary>
@@ -76,51 +85,23 @@ namespace UniversalParserLibrary.Models
         }
 
         /// <summary>
-        /// Find all concurrences in new template
+        /// Find all concurrences in template
         /// </summary>
         /// <param name="skills"></param>
-        internal static void FindAllСoncurrencesInNewTemplate(ref List<BufferSkill> skills)
+        internal static void FindAllСoncurrencesInTemplate(ref List<BufferSkill> skills)
         {
-            for (int i = 0; i < skills.Count; i++)
-            {
-                skills[i] = FindSkill(skills[i]);
-            }
-            for (int i = 0; i < skills.Count - 1; i++)
-            {
-                for (int j = i + 1; j < skills.Count; j++)
-                {
-                    if (skills[i]._id == skills[j]._id)
-                    {
-                        if (skills[j].Date != null) { skills[i].AddLevel(skills[j].level); }
-                        skills[i].AllSkills.Add(skills[j]);
-                        skills.RemoveAt(j);
-                        j--;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Find all concurrences in old template
-        /// </summary>
-        /// <param name="skills"></param>
-        internal static void FindAllСoncurrencesInOldTemplate(ref List<BufferSkill> skills)
-        {
-            for(int i = 0; i < skills.Count; i++)
-            {
-                skills[i] = FindSkill(skills[i]);
-            }
+            for(int i = 0; i < skills.Count; i++) { skills[i] = FindSkill(skills[i]); }
             for(int i = 0; i < skills.Count - 1; i++)
             {
-                for(int j = i + 1; j < skills.Count; j++)
+                for(int j = i + 1; j < skills.Count;)
                 {
                     if (skills[i]._id == skills[j]._id)
                     {
                         if(skills[j].Date != null) { skills[i].SimilarSkills.Add(skills[j]); }
                         skills[i].AllSkills.Add(skills[j]);
                         skills.RemoveAt(j);
-                        j--;
                     }
+                    else { j++; }
                 }
             }
         }
@@ -142,6 +123,14 @@ namespace UniversalParserLibrary.Models
             return skill;
         }
 
+        internal static void FindSkill(SkillInProject skill)
+        {
+            foreach (Skill globalSkill in globalSkills)
+            {
+                if (SimpleSkill(globalSkill, skill.exactName)) { skill._id = globalSkill._id; }
+            }
+        }
+        
         private static bool SimpleSkill(Skill skill, string name)
         {
             if (skill.name == name) { return true; }

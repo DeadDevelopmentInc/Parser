@@ -70,11 +70,24 @@ namespace UniversalParserLibrary.Parsing
 
         private static Tuple<List<BufferSkill>, List<UserProject>> ParseSectionFromNewTemplate(Section section)
         {
-            var bufferProjects = new List<BufferProject>();
-            var userProjects = new List<UserProject>();
-            var projects = new List<Project>();
+            var bufferProjects = new List<BufferProject>();            
             var skills = Readers.GetExpsFromOldTable(section.Tables[7], bufferProjects);
             for (int i = 0; i < 7; i++) { skills.AddRange(Readers.GetSkillsFromNewTable(section.Tables[i])); }
+            return CreateTuple(skills, bufferProjects);
+        }
+
+        private static Tuple<List<BufferSkill>, List<UserProject>> ParseSectionFromOldTemplate(Section section)
+        {
+            var bufferProjects = new List<BufferProject>();            
+            var skills = Readers.GetExpsFromOldTable(section.Tables[1], bufferProjects);            
+            skills.AddRange(Readers.GetSkillsFromOldTable(section.Tables[0]));
+            return CreateTuple(skills, bufferProjects);
+        }
+        
+        private static Tuple<List<BufferSkill>, List<UserProject>> CreateTuple(List<BufferSkill> bufferSkills, List<BufferProject> bufferProjects)
+        {
+            var userProjects = new List<UserProject>();
+            var projects = new List<Project>();
             foreach (BufferProject pr in bufferProjects)
             {
                 userProjects.Add(new UserProject
@@ -82,9 +95,11 @@ namespace UniversalParserLibrary.Parsing
                     _id = pr._id,
                     role = pr.role,
                     responsibility = pr.responsibility,
+                    sourceCompany = pr.sourceCompany,
                     startProjectDate = pr.startDate,
                     endProjectDate = pr.endDate,
-                    result = pr.result
+                    result = pr.result,
+                    Environment = pr.Environment,
                 });
                 projects.Add(new Project
                 {
@@ -98,43 +113,12 @@ namespace UniversalParserLibrary.Parsing
                 });
             }
             AddToList(projects);
-            return new Tuple<List<BufferSkill>, List<UserProject>>(skills, userProjects);
+            return new Tuple<List<BufferSkill>, List<UserProject>>(bufferSkills, userProjects);
         }
 
-        private static Tuple<List<BufferSkill>, List<UserProject>> ParseSectionFromOldTemplate(Section section)
-        {
-            var bufferProjects = new List<BufferProject>();
-            var userProjects = new List<UserProject>();
-            var projects= new List<Project>();
-            var skills = Readers.GetExpsFromOldTable(section.Tables[1], bufferProjects);
-            foreach(BufferProject pr in bufferProjects)
-            {
-                userProjects.Add(new UserProject {
-                    _id = pr._id,
-                    role = pr.role,
-                    responsibility = pr.responsibility,
-                    startProjectDate = pr.startDate,
-                    endProjectDate = pr.endDate,
-                    result = pr.result
-                });
-                projects.Add(new Project {
-                    _id = pr._id,
-                    name = pr.name,
-                    activity = pr.activity,
-                    customer = pr.customer,
-                    result = pr.result,
-                    startDate = pr.startDate,
-                    endDate = pr.endDate
-                });
-            }
-            AddToList(projects);
-            skills.AddRange(Readers.GetSkillsFromOldTable(section.Tables[0]));
-            return new Tuple<List<BufferSkill>, List<UserProject>>(skills, userProjects);
-        }
-        
         private static void DeleteSimpleSkills(ref List<BufferSkill> skills)
         {
-            PrivateDictionary.FindAllСoncurrencesInOldTemplate(ref skills);
+            PrivateDictionary.FindAllСoncurrencesInTemplate(ref skills);
             for(int i = 0; i < skills.Count; i++)
             {
                 if (skills[i].Date != null) { skills[i].SimilarSkills.Add(skills[i]); }
@@ -264,14 +248,15 @@ namespace UniversalParserLibrary.Parsing
                 IMongoDatabase database = client.GetDatabase("workers_db");
                 var colSkills = database.GetCollection<User>("users");
                 var skill = colSkills.FindOneAndDelete(new BsonDocument("_id", name));
-                colSkills.InsertOne(new User
+                var user = new User
                 {
                     _id = name,
                     abilities = HelpersForParsing.GetAbitiesFromSection(section),
                     itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
                     skills = levels,
                     projects = projects
-                });
+                };
+                colSkills.InsertOne(user.GetUser());
             }
             catch(Exception e)
             {

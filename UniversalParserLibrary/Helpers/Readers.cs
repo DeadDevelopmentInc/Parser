@@ -127,20 +127,29 @@ namespace UniversalParserLibrary.Helpers
         {
             Regex regex = new Regex(@"^\w*\s\d{4}\s\W\s\w*");
             List<string> temp = new List<string>();
+            string sourceCompany = null;
             for(int  i = 0; i < texts.Count; i++)
             {
                 MatchCollection match = regex.Matches(texts[i]);
-                if (match.Count > 0) { temp.Clear();  temp.Add(texts[i-1] != "" ? texts[i - 1] : texts[i - 2]); temp.Add(texts[i]); }
+                if (match.Count > 0)
+                {
+                    if(temp.Count > 0 && texts[i + 1] == "")
+                    {
+                        sourceCompany = temp[1];
+                    }
+                    else { temp.Clear(); temp.Add(texts[i - 1] != "" ? texts[i - 1] : texts[i - 2]); temp.Add(texts[i]); }
+                    
+                }
                 else
                 {
                     if (texts[i] != "") { temp.Add(texts[i]); }
                     if (temp.Count == 10)
                     {
                         string[] date = temp[1].Contains("-") ? Regex.Split(temp[1], " - ") : Regex.Split(temp[1], " – ");
-                        projects.Add(new BufferProject(temp[2], temp[2], temp[3], temp[9], temp[0], temp[5], date[0], date[1]));
+                        projects.Add(new BufferProject(temp[2], temp[2], temp[3], temp[9], temp[0], temp[5], date[0], date[1], temp[7]) { sourceCompany = sourceCompany });
                         temp.Clear();
                     }
-                } 
+                }
             }
             return;
         }

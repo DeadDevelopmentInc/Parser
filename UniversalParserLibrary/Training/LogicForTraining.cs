@@ -109,6 +109,26 @@ namespace UniversalParserLibrary.Training
             lock (locker) { TrainList.AddRange(skills); }
         }
 
+        internal static List<TrainSkill> GenerateTrains(List<TrainSkill> afterTrain)
+        {
+            var tempList = new List<TrainSkill>();
+            var fromDB = PrivateDictionary.GetDataFromDB<Skill>("skills");
+            foreach (var s in fromDB)
+            {
+                var temp = s.ForTrain();
+                Rules.CreateRules(temp);
+                foreach (string str in temp.SimilarSkills)
+                {
+                    temp.Skills.Add(new TrainSkill { NameOfSkill = str, CodeOfSkill = str });
+                    Rules.CreateRules(temp.Skills[temp.Skills.Count - 1]);
+                }
+                tempList.Add(temp);
+            }
+            PreproccessTech(ref tempList);
+            tempList.AddRange(afterTrain);
+            GenerateData(tempList);
+            return tempList;
+        }
 
     }
 }
