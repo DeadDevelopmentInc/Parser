@@ -14,7 +14,7 @@ namespace UniversalParserLibrary.Models
         public string _id { get; set; }
         public string name { get; set; }
         public string level { get; set; } = "Working knowledge";
-
+        public string type { get; set; } = "Other";
         public string Date { get; set; }
         public List<BufferSkill> SimilarSkills { get; set; } = new List<BufferSkill>();
         public List<BufferSkill> AllSkills { get; set; } = new List<BufferSkill>();

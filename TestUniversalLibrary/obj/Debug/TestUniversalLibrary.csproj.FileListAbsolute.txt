@@ -29,3 +29,4 @@ D:\repos\Parser\TestUniversalLibrary\obj\Debug\TestUniversalLibrary.csproj.CoreC
 D:\repos\Parser\TestUniversalLibrary\obj\Debug\TestUniversalLibrary.csproj.CopyComplete
 D:\repos\Parser\TestUniversalLibrary\obj\Debug\TestUniversalLibrary.dll
 D:\repos\Parser\TestUniversalLibrary\obj\Debug\TestUniversalLibrary.pdb
+D:\repos\Parser\TestUniversalLibrary\bin\Debug\TestUniversalLibrary.dll.config

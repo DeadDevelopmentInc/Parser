@@ -6,7 +6,6 @@ D:\repos\Parser\UniversalParserLibrary\bin\Debug\Spire.Pdf.dll
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\Microsoft.mshtml.dll
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\Spire.Doc.xml
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\Spire.License.xml
-D:\repos\Parser\UniversalParserLibrary\obj\Debug\UniversalParserLibrary.csprojResolveAssemblyReference.cache
 D:\repos\Parser\UniversalParserLibrary\obj\Debug\UniversalParserLibrary.csproj.CoreCompileInputs.cache
 D:\repos\Parser\UniversalParserLibrary\obj\Debug\UniversalParserLibrary.csproj.CopyComplete
 D:\repos\Parser\UniversalParserLibrary\obj\Debug\UniversalParserLibrary.dll
@@ -34,3 +33,4 @@ D:\repos\Parser\UniversalParserLibrary\bin\Debug\MongoDB.Bson.xml
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\MongoDB.Driver.xml
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\MongoDB.Driver.Core.xml
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\System.Buffers.xml
+D:\repos\Parser\UniversalParserLibrary\obj\Debug\UniversalParserLibrary.csprojAssemblyReference.cache

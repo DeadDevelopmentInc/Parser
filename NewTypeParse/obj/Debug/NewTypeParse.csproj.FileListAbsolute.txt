@@ -20,7 +20,6 @@ D:\repos\Parser\NewTypeParse\bin\Debug\Spire.Pdf.dll
 D:\repos\Parser\NewTypeParse\bin\Debug\Microsoft.mshtml.dll
 D:\repos\Parser\NewTypeParse\bin\Debug\Spire.Doc.xml
 D:\repos\Parser\NewTypeParse\bin\Debug\Spire.License.xml
-D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.csprojResolveAssemblyReference.cache
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.csproj.CoreCompileInputs.cache
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.exe
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.pdb
@@ -51,3 +50,4 @@ D:\repos\Parser\NewTypeParse\bin\Debug\System.Xml.XPath.XDocument.dll
 D:\repos\Parser\NewTypeParse\bin\Debug\UniversalParserLibrary.dll.config
 D:\repos\Parser\NewTypeParse\bin\Debug\System.Buffers.xml
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.exe.config
+D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.csprojAssemblyReference.cache

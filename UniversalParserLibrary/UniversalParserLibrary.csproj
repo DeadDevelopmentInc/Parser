@@ -75,6 +75,7 @@
     <Compile Include="Models\Algorithms\BKTrees.cs" />
     <Compile Include="Models\Algorithms\DiceCoefficientExtensions.cs" />
     <Compile Include="Models\Projects\BufferProject.cs" />
+    <Compile Include="Models\Template\ResumeTemplate.cs" />
     <Compile Include="Models\User\BufferSkill.cs" />
     <Compile Include="Models\Algorithms\DahmerauLevenshteinAlg.cs" />
     <Compile Include="Models\Date.cs" />

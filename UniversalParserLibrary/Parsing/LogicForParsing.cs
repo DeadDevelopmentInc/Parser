@@ -30,18 +30,22 @@ namespace UniversalParserLibrary.Parsing
                 //Find section with table
                 Section section = doc.Sections[0];
 
-                new Models.Exceptions_and_Events.Info("Resume Parsing", "INFO", "current user", name, 1);
+                new Models.Exceptions_and_Events.Info("Start Parsing", "INFO", "current user", name.Replace(".doc", ""), 1);
                 //Get type of template
                 int type = doc.Sections[0].Tables.Count;
+                dynamic temp = null;
                 switch (type)
                 {
-                    case 8: { var temp = ParseSectionFromNewTemplate(section); skills = ParseNewTemplate(temp.Item1, temp.Item2); projects = temp.Item2; } break;
-                    case 2: { var temp = ParseSectionFromOldTemplate(section); skills = ParseOldTemplate(temp.Item1, temp.Item2); projects = temp.Item2; } break;
+                    case 8: { temp = ParseSectionFromNewTemplate(section); } break;
+                    case 2: { temp = ParseSectionFromOldTemplate(section); } break;
                 }
+                unchecked { skills = ParseTemplate(temp.Item1, temp.Item2); projects = temp.Item2; }
                 SendDataToDB(name, skills, projects, section);
-
             }
-            catch(Exception e) { new Models.Exceptions_and_Events.Exception("Resume Parsing", "ERROR", e.Message, name); }
+            catch(Exception e) { new Models.Exceptions_and_Events.Exception("Resume Parsing", "ERROR", e.Message, name.Replace(".doc", "")); }
+            new Models.Exceptions_and_Events.Info("Finish Parsing", "INFO", "current user", name.Replace(".doc", ""), 1);
+
+
         }
 
         private static void ProcessBufferSkills(List<BufferSkill> skills)
@@ -56,17 +60,23 @@ namespace UniversalParserLibrary.Parsing
             }
         }
 
-        private static List<BufferSkill> ParseNewTemplate(List<BufferSkill> skills, List<UserProject> projects)
+        private static List<BufferSkill> ParseTemplate(List<BufferSkill> skills, List<UserProject> projects)
         {
             DeleteSimpleSkills(ref skills);
             return skills;
         }
 
-        private static List<BufferSkill> ParseOldTemplate(List<BufferSkill> skills, List<UserProject> projects)
-        {
-            DeleteSimpleSkills(ref skills);
-            return skills;
-        }
+        //private static List<BufferSkill> ParseNewTemplate(List<BufferSkill> skills, List<UserProject> projects)
+        //{
+        //    DeleteSimpleSkills(ref skills);
+        //    return skills;
+        //}
+
+        //private static List<BufferSkill> ParseOldTemplate(List<BufferSkill> skills, List<UserProject> projects)
+        //{
+        //    DeleteSimpleSkills(ref skills);
+        //    return skills;
+        //}
 
         private static Tuple<List<BufferSkill>, List<UserProject>> ParseSectionFromNewTemplate(Section section)
         {
@@ -242,27 +252,20 @@ namespace UniversalParserLibrary.Parsing
             name = name.Remove(name.IndexOf(".doc"), 4);
             List<SkillLevel> levels = ProcessDataForDB(skills);
             string connectionString = "mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db";
-            try
+            MongoClient client = new MongoClient(connectionString);
+            IMongoDatabase database = client.GetDatabase("workers_db");
+            var colSkills = database.GetCollection<User>("users");
+            var skill = colSkills.FindOneAndDelete(new BsonDocument("_id", name));
+            var user = new User
             {
-                MongoClient client = new MongoClient(connectionString);
-                IMongoDatabase database = client.GetDatabase("workers_db");
-                var colSkills = database.GetCollection<User>("users");
-                var skill = colSkills.FindOneAndDelete(new BsonDocument("_id", name));
-                var user = new User
-                {
-                    _id = name,
-                    abilities = HelpersForParsing.GetAbitiesFromSection(section),
-                    itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
-                    skills = levels,
-                    projects = projects
-                };
-                colSkills.InsertOne(user.GetUser());
-            }
-            catch(Exception e)
-            {
-                new Models.Exceptions_and_Events.Exception("write in db", "ERROR", e.Message, name);
-            }
-            
+                _id = name,
+                abilities = HelpersForParsing.GetAbitiesFromSection(section),
+                itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
+                skills = levels,
+                projects = projects
+            };
+            colSkills.InsertOne(user.GetUser());
+
         }
 
         private static void AddToList(List<Project> projects)

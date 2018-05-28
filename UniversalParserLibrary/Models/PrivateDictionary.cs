@@ -55,11 +55,12 @@ namespace UniversalParserLibrary.Models
         /// <param name="projects"></param>
         internal static void SendProjects(List<Project> projects)
         {
+            Project.FindSimpleProjects(projects);
             MongoClient client = new MongoClient(connectionAdmin);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<Project>("projects");
-            //collection.DeleteMany(Builders<Project>.Filter.Empty);
-            //collection.InsertMany(projects.ToArray());
+            collection.DeleteMany(Builders<Project>.Filter.Empty);
+            collection.InsertMany(projects.ToArray());
         }
 
         internal static List<T> GetDataFromDB<T>(string collectionName)

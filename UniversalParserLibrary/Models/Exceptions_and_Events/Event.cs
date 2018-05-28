@@ -32,5 +32,7 @@ namespace UniversalParserLibrary.Models.Exceptions_and_Events
             this.type = type;
             this.message = message;
         }
+
+        
     }
 }

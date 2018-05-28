@@ -25,7 +25,10 @@ namespace UniversalParserLibrary.Helpers
             {
                 foreach (TableCell cell in row.Cells)                                                            //For each cell read value
                 {
-                    foreach (Paragraph paragraph in cell.Paragraphs) { list.Add(paragraph.Text.Trim(':')); }     //Delete stuff from line
+                    foreach (Paragraph paragraph in cell.Paragraphs)
+                    {
+                        if(paragraph.Text != "") list.Add(paragraph.Text.Trim(':'));
+                    }     //Delete stuff from line
                 }
             }
             return list;
@@ -40,15 +43,26 @@ namespace UniversalParserLibrary.Helpers
         {
             List<string> arraySkills = GetTextFromTable(table);
             List<BufferSkill> list = new List<BufferSkill>();
-            for (int i = 1; i < arraySkills.Count && !arraySkills[i - 1].Contains("Fore"); i += 2)
+            for (int i = 1; i < arraySkills.Count; i += 2)
             {
-                arraySkills[i] = Regex.Replace(arraySkills[i], ",(?=[^()]*\\))", "|");
-                string[] buff = Regex.Split(arraySkills[i], ", ");
-                foreach (string m in buff)
+                if(!arraySkills[i - 1].Contains("Fore"))
                 {
-                    string buffer = m.Replace("|", ",");
-                    list.Add(new BufferSkill { name = buffer });
+                    arraySkills[i] = Regex.Replace(arraySkills[i], ",(?=[^()]*\\))", "|");
+                    string[] buff = Regex.Split(arraySkills[i], ", ");
+                    foreach (string m in buff)
+                    {
+                        string buffer = m.Replace("|", ",");
+                        list.Add(new BufferSkill { name = buffer });
+                    }
                 }
+                else
+                {
+                    for (int j = i; j < arraySkills.Count; j += 2)
+                    {
+                        list.Add(new BufferSkill { name = arraySkills[j], level = arraySkills[j + 1], type = arraySkills[j - 1] });
+                    }
+                }
+                
             }
             return list;
         }
@@ -93,7 +107,8 @@ namespace UniversalParserLibrary.Helpers
                     list.Add(new BufferSkill()
                     {
                         name = s,
-                        level = arraySkills[i + 1]
+                        level = arraySkills[i + 1],
+                        type = arraySkills[0]
                     });
                 }
             }
@@ -125,33 +140,34 @@ namespace UniversalParserLibrary.Helpers
 
         internal static void CreateBufferProjects(List<BufferProject> projects, List<string> texts)
         {
-            Regex regex = new Regex(@"^\w*\s\d{4}\s\W\s\w*");
-            List<string> temp = new List<string>();
-            string sourceCompany = null;
-            for(int  i = 0; i < texts.Count; i++)
+            int i = 0;
+            try
             {
-                MatchCollection match = regex.Matches(texts[i]);
-                if (match.Count > 0)
+                Regex regex = new Regex(@"^\w*\s\d{4}\s\W\s\w*");
+                List<string> temp = new List<string>();
+                string sourceCompany = null;
+                for (i = 0; i < texts.Count - 1; i++)
                 {
-                    if(temp.Count > 0 && texts[i + 1] == "")
+                    MatchCollection match = regex.Matches(texts[i]);
+                    if (match.Count > 0)
                     {
-                        sourceCompany = temp[1];
+                        if (temp.Count == 2) { sourceCompany = temp[1]; }
+                        else { temp.Clear(); temp.Add(texts[i - 1]); temp.Add(texts[i]); }
+
                     }
-                    else { temp.Clear(); temp.Add(texts[i - 1] != "" ? texts[i - 1] : texts[i - 2]); temp.Add(texts[i]); }
-                    
-                }
-                else
-                {
-                    if (texts[i] != "") { temp.Add(texts[i]); }
-                    if (temp.Count == 10)
+                    else
                     {
-                        string[] date = temp[1].Contains("-") ? Regex.Split(temp[1], " - ") : Regex.Split(temp[1], " – ");
-                        projects.Add(new BufferProject(temp[2], temp[2], temp[3], temp[9], temp[0], temp[5], date[0], date[1], temp[7]) { sourceCompany = sourceCompany });
-                        temp.Clear();
+                        temp.Add(texts[i]);
+                        if (temp.Count == 10)
+                        {
+                            string[] date = temp[1].Contains("-") ? Regex.Split(temp[1], " - ") : Regex.Split(temp[1], " – ");
+                            projects.Add(new BufferProject(temp[2], temp[2], temp[3], temp[9], temp[0], temp[5], date[0], date[1], temp[7]) { sourceCompany = sourceCompany });
+                            temp.Clear();
+                        }
                     }
                 }
             }
-            return;
+            catch { throw new Exception("Generate exception with creating projects"); }
         }
 
         /// <summary>
@@ -219,11 +235,7 @@ namespace UniversalParserLibrary.Helpers
                 //Replace ( , , ) => ( | | )
                 temp[i] = Regex.Replace(temp[i], ",(?=[^()]*\\))", "|");
                 string[] buff = Regex.Split(temp[i], ", ");
-                foreach (string m in buff)
-                {
-                    string buffer = m.Replace("|", ",");
-                    skills.Add(new TrainSkill { NameOfSkill = buffer, TypeOfSkill = temp[0] });
-                }
+                foreach (string m in buff) { skills.Add(new TrainSkill { NameOfSkill = m.Replace("|", ","), TypeOfSkill = temp[0] }); }
             }
             return skills;
         }        

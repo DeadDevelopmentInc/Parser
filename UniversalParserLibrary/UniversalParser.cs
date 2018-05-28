@@ -35,6 +35,7 @@ namespace UniversalParserLibrary
                         threads.Last().Start();
                     }
                     AwaitThreads(ref threads);
+
                     PrivateDictionary.SendProjects(Project.FindSimpleProjects(LogicForParsing.ProjectsList));
                     
                     PrivateDictionary.UpdateDictionary();
