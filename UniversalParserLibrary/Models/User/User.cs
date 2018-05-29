@@ -24,10 +24,12 @@ namespace UniversalParserLibrary.Models
         {
             foreach(UserProject pr in projects)
             {
-                string[] buff = Regex.Split(pr.Environment, ", ");
+                string temp = Regex.Replace(pr.Environment, ",(?=[^()]*\\))", "|");
+                string[] buff = Regex.Split(temp, ", ");
                 foreach(string s in buff)
                 {
-                    var skill = new SkillInProject { exactName = s };
+                    string buffer = s.Replace("|", ",");
+                    var skill = new SkillInProject { exactName = buffer };
                     PrivateDictionary.FindSkill(skill);
                     pr.skills.Add(skill);
                 }

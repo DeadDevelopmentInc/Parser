@@ -249,22 +249,26 @@ namespace UniversalParserLibrary.Parsing
 
         private static void SendDataToDB(string name, List<BufferSkill> skills, List<UserProject> projects, Section section)
         {
-            name = name.Remove(name.IndexOf(".doc"), 4);
-            List<SkillLevel> levels = ProcessDataForDB(skills);
-            string connectionString = "mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db";
-            MongoClient client = new MongoClient(connectionString);
-            IMongoDatabase database = client.GetDatabase("workers_db");
-            var colSkills = database.GetCollection<User>("users");
-            var skill = colSkills.FindOneAndDelete(new BsonDocument("_id", name));
-            var user = new User
+            try
             {
-                _id = name,
-                abilities = HelpersForParsing.GetAbitiesFromSection(section),
-                itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
-                skills = levels,
-                projects = projects
-            };
-            colSkills.InsertOne(user.GetUser());
+                name = name.Remove(name.IndexOf(".doc"), 4);
+                List<SkillLevel> levels = ProcessDataForDB(skills);
+                string connectionString = "mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db";
+                MongoClient client = new MongoClient(connectionString);
+                IMongoDatabase database = client.GetDatabase("workers_db");
+                var colSkills = database.GetCollection<User>("users");
+                var skill = colSkills.FindOneAndDelete(new BsonDocument("_id", name));
+                var user = new User
+                {
+                    _id = name,
+                    abilities = HelpersForParsing.GetAbitiesFromSection(section),
+                    itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
+                    skills = levels,
+                    projects = projects
+                };
+                colSkills.InsertOne(user.GetUser());
+            }
+            catch(Exception e) { throw new Exception(e.Message); }
 
         }
 

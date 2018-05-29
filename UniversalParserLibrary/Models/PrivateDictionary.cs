@@ -109,27 +109,34 @@ namespace UniversalParserLibrary.Models
 
         private static BufferSkill FindSkill(BufferSkill skill)
         {
-            foreach(Skill globalSkill in globalSkills)
-            {
-                if(SimpleSkill(globalSkill, skill.name)) { skill._id = globalSkill._id;  return skill; }
-            }
             lock(locker)
             {
-                globalSkills.Add(new Skill
+                foreach (Skill globalSkill in globalSkills)
                 {
-                    name = skill.name,
-                    _id = skill._id = Convert.ToString(Guid.NewGuid())
-                });
-            }
+                    if (SimpleSkill(globalSkill, skill.name)) { skill._id = globalSkill._id; return skill; }
+                }
+                lock (locker)
+                {
+                    globalSkills.Add(new Skill
+                    {
+                        name = skill.name,
+                        _id = skill._id = Convert.ToString(Guid.NewGuid())
+                    });
+                }
+            }            
             return skill;
         }
 
         internal static void FindSkill(SkillInProject skill)
         {
-            foreach (Skill globalSkill in globalSkills)
+            lock(locker)
             {
-                if (SimpleSkill(globalSkill, skill.exactName)) { skill._id = globalSkill._id; }
+                foreach (Skill globalSkill in globalSkills)
+                {
+                    if (SimpleSkill(globalSkill, skill.exactName)) { skill._id = globalSkill._id; }
+                }
             }
+            
         }
         
         private static bool SimpleSkill(Skill skill, string name)
