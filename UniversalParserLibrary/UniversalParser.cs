@@ -68,7 +68,11 @@ namespace UniversalParserLibrary
                     if (type_of_parse) { WriteDataInDBWithSaving(); }
                     else { WriteDataInDB(); }
                 }
-                else new Models.Exceptions_and_Events.Exception("finding documents", "ERROR", "folder doesn't contain documents");
+                else
+                {
+                    new Models.Exceptions_and_Events.Exception("finding documents", "ERROR", "folder doesn't contain documents, start retraining");
+                    WriteDataInDBWithSaving();
+                }
             }
             else new Models.Exceptions_and_Events.Exception("finding folder", "ERROR", "folder not found");
         }

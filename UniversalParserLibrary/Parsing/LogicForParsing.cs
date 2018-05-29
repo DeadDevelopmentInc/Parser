@@ -43,7 +43,7 @@ namespace UniversalParserLibrary.Parsing
                 SendDataToDB(name, skills, projects, section);
             }
             catch(Exception e) { new Models.Exceptions_and_Events.Exception("Resume Parsing", "ERROR", e.Message, name.Replace(".doc", "")); }
-            new Models.Exceptions_and_Events.Info("Finish Parsing", "INFO", "current user", name.Replace(".doc", ""), 1);
+            finally { new Models.Exceptions_and_Events.Info("Finish Parsing", "INFO", "current user", name.Replace(".doc", ""), 1); }
 
 
         }

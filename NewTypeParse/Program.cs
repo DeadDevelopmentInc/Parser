@@ -24,8 +24,8 @@ namespace NewTypeParse
             switch (type)
             {
                 case "1": { UniversalParser.StartParsing(folder); } break;
-                case "2": { UniversalParser.StartTraining(folder, true); } break;
-                case "3": { UniversalParser.StartTraining(folder, false); } break;
+                case "2": { UniversalParser.StartTraining(folder, true); } break; //with saving base
+                case "3": { UniversalParser.StartTraining(folder, false); } break; //without saving base
                 default: {  } break;
             }
             Console.ReadLine();

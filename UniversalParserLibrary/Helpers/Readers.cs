@@ -21,16 +21,21 @@ namespace UniversalParserLibrary.Helpers
         internal static List<string> GetTextFromTable(ITable table)
         {
             List<string> list = new List<string>();
-            foreach (TableRow row in table.Rows)
+            try
             {
-                foreach (TableCell cell in row.Cells)                                                            //For each cell read value
+                foreach (TableRow row in table.Rows)
                 {
-                    foreach (Paragraph paragraph in cell.Paragraphs)
+                    foreach (TableCell cell in row.Cells)                                                            //For each cell read value
                     {
-                        if(paragraph.Text != "") list.Add(paragraph.Text.Trim(':'));
-                    }     //Delete stuff from line
+                        foreach (Paragraph paragraph in cell.Paragraphs)
+                        {
+                            if (paragraph.Text != "") list.Add(paragraph.Text.Trim(':'));
+                        }     //Delete stuff from line
+                    }
                 }
             }
+            catch { throw new Exception("Unavalible read text"); }
+            
             return list;
         }
 
@@ -43,27 +48,32 @@ namespace UniversalParserLibrary.Helpers
         {
             List<string> arraySkills = GetTextFromTable(table);
             List<BufferSkill> list = new List<BufferSkill>();
-            for (int i = 1; i < arraySkills.Count; i += 2)
+            try
             {
-                if(!arraySkills[i - 1].Contains("Fore"))
+                for (int i = 1; i < arraySkills.Count; i += 2)
                 {
-                    arraySkills[i] = Regex.Replace(arraySkills[i], ",(?=[^()]*\\))", "|");
-                    string[] buff = Regex.Split(arraySkills[i], ", ");
-                    foreach (string m in buff)
+                    if (!arraySkills[i - 1].Contains("Fore"))
                     {
-                        string buffer = m.Replace("|", ",");
-                        list.Add(new BufferSkill { name = buffer });
+                        arraySkills[i] = Regex.Replace(arraySkills[i], ",(?=[^()]*\\))", "|");
+                        string[] buff = Regex.Split(arraySkills[i], ", ");
+                        foreach (string m in buff)
+                        {
+                            string buffer = m.Replace("|", ",");
+                            list.Add(new BufferSkill { name = buffer });
+                        }
                     }
-                }
-                else
-                {
-                    for (int j = i; j < arraySkills.Count; j += 2)
+                    else
                     {
-                        list.Add(new BufferSkill { name = arraySkills[j], level = arraySkills[j + 1], type = arraySkills[j - 1] });
+                        for (int j = i; j < arraySkills.Count; j += 2)
+                        {
+                            list.Add(new BufferSkill { name = arraySkills[j], level = arraySkills[j + 1], type = arraySkills[j - 1] });
+                        }
                     }
+
                 }
-                
             }
+
+            catch { throw new Exception("Exception in skills"); }
             return list;
         }
 
@@ -71,21 +81,25 @@ namespace UniversalParserLibrary.Helpers
         {
             List<BufferSkill> list = new List<BufferSkill>();
             var exps = GetExpsFromTable(table, ref bufferProjects, true);
-            foreach (var exp in exps)
+            try
             {
-                string temp = exp.Item1;
-                temp = Regex.Replace(temp, ",(?=[^()]*\\))", "|");
-                string[] buff = Regex.Split(temp, ", ");
-                foreach (string s in buff)
+                foreach (var exp in exps)
                 {
-                    list.Add(new BufferSkill
+                    string temp = exp.Item1;
+                    temp = Regex.Replace(temp, ",(?=[^()]*\\))", "|");
+                    string[] buff = Regex.Split(temp, ", ");
+                    foreach (string s in buff)
                     {
-                        name = s,
-                        Date = exp.Item2
-                    });
+                        list.Add(new BufferSkill
+                        {
+                            name = s,
+                            Date = exp.Item2
+                        });
+                    }
                 }
             }
 
+            catch { throw new Exception("Exception in exps"); }
             return list;
         }
 
