@@ -733,10 +733,26 @@
             The resume after.
             </value>
         </member>
+        <member name="P:MongoDB.Driver.ChangeStreamOptions.StartAtOperationTime">
+            <summary>
+            Gets or sets the start at operation time.
+            </summary>
+            <value>
+            The start at operation time.
+            </value>
+        </member>
         <member name="T:MongoDB.Driver.ChangeStreamStageOptions">
             <summary>
             Options for a $changeStream stage.
             </summary>
+        </member>
+        <member name="P:MongoDB.Driver.ChangeStreamStageOptions.AllChangesForCluster">
+            <summary>
+            Gets or sets whether to include all changes for an entire cluster in the change stream.
+            </summary>
+            <value>
+            Whether to include all changes for an entire cluster in the change stream.
+            </value>
         </member>
         <member name="P:MongoDB.Driver.ChangeStreamStageOptions.FullDocument">
             <summary>
@@ -754,67 +770,77 @@
             The resume after.
             </value>
         </member>
-        <member name="T:MongoDB.Driver.ClientSession">
+        <member name="P:MongoDB.Driver.ChangeStreamStageOptions.StartAtOperationTime">
             <summary>
-            A client session.
+            Gets or sets the start at operation time.
             </summary>
-            <seealso cref="T:MongoDB.Driver.IClientSession" />
-        </member>
-        <member name="P:MongoDB.Driver.ClientSession.Client">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.ClientSession.ClusterTime">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.ClientSession.IsImplicit">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.ClientSession.OperationTime">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.ClientSession.Options">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.ClientSession.ServerSession">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.ClientSession.AdvanceClusterTime(MongoDB.Bson.BsonDocument)">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.ClientSession.AdvanceOperationTime(MongoDB.Bson.BsonTimestamp)">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.ClientSession.Dispose">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.ClientSession.ThrowIfDisposed">
-            <summary>
-            Throws if disposed.
-            </summary>
-            <exception cref="T:System.ObjectDisposedException"></exception>
+            <value>
+            The start at operation time.
+            </value>
         </member>
         <member name="T:MongoDB.Driver.ClientSessionHandle">
             <summary>
-            A client session handle
+            A client session handle.
             </summary>
             <seealso cref="T:MongoDB.Driver.IClientSessionHandle" />
         </member>
-        <member name="M:MongoDB.Driver.ClientSessionHandle.#ctor(MongoDB.Driver.IClientSession)">
+        <member name="M:MongoDB.Driver.ClientSessionHandle.#ctor(MongoDB.Driver.IMongoClient,MongoDB.Driver.ClientSessionOptions,MongoDB.Driver.Core.Bindings.ICoreSessionHandle)">
             <summary>
-            Initializes a new instance of the <see cref="T:MongoDB.Driver.ClientSessionHandle"/> class.
+            Initializes a new instance of the <see cref="T:MongoDB.Driver.ClientSessionHandle" /> class.
             </summary>
-            <param name="wrapped">The wrapped session.</param>
+            <param name="client">The client.</param>
+            <param name="options">The options.</param>
+            <param name="coreSession">The wrapped session.</param>
         </member>
-        <member name="M:MongoDB.Driver.ClientSessionHandle.#ctor(MongoDB.Driver.ReferenceCountedClientSession)">
-            <summary>
-            Initializes a new instance of the <see cref="T:MongoDB.Driver.ClientSessionHandle"/> class.
-            </summary>
-            <param name="wrapped">The wrapped session.</param>
+        <member name="P:MongoDB.Driver.ClientSessionHandle.Client">
+            <inheritdoc />
+        </member>
+        <member name="P:MongoDB.Driver.ClientSessionHandle.ClusterTime">
+            <inheritdoc />
+        </member>
+        <member name="P:MongoDB.Driver.ClientSessionHandle.IsImplicit">
+            <inheritdoc />
+        </member>
+        <member name="P:MongoDB.Driver.ClientSessionHandle.IsInTransaction">
+            <inheritdoc />
+        </member>
+        <member name="P:MongoDB.Driver.ClientSessionHandle.OperationTime">
+            <inheritdoc />
+        </member>
+        <member name="P:MongoDB.Driver.ClientSessionHandle.Options">
+            <inheritdoc />
+        </member>
+        <member name="P:MongoDB.Driver.ClientSessionHandle.ServerSession">
+            <inheritdoc />
+        </member>
+        <member name="P:MongoDB.Driver.ClientSessionHandle.WrappedCoreSession">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.ClientSessionHandle.AbortTransaction(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.ClientSessionHandle.AbortTransactionAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.ClientSessionHandle.AdvanceClusterTime(MongoDB.Bson.BsonDocument)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.ClientSessionHandle.AdvanceOperationTime(MongoDB.Bson.BsonTimestamp)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.ClientSessionHandle.CommitTransaction(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.ClientSessionHandle.CommitTransactionAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.ClientSessionHandle.Dispose">
+            <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.ClientSessionHandle.Fork">
             <inheritdoc />
         </member>
-        <member name="M:MongoDB.Driver.ClientSessionHandle.Dispose(System.Boolean)">
+        <member name="M:MongoDB.Driver.ClientSessionHandle.StartTransaction(MongoDB.Driver.TransactionOptions)">
             <inheritdoc />
         </member>
         <member name="T:MongoDB.Driver.ClientSessionOptions">
@@ -827,6 +853,14 @@
             When true or unspecified, an application will read its own writes and subsequent
             reads will never observe an earlier version of the data.
             </summary>
+        </member>
+        <member name="P:MongoDB.Driver.ClientSessionOptions.DefaultTransactionOptions">
+            <summary>
+            Gets or sets the default transaction options.
+            </summary>
+            <value>
+            The default transaction options.
+            </value>
         </member>
         <member name="T:MongoDB.Driver.CreateIndexModel`1">
             <summary>
@@ -850,6 +884,17 @@
             <summary>
             Gets the options.
             </summary>
+        </member>
+        <member name="T:MongoDB.Driver.CreateOneIndexOptions">
+            <summary>
+            Options for creating a single index.
+            </summary>
+        </member>
+        <member name="P:MongoDB.Driver.CreateOneIndexOptions.MaxTime">
+            <summary>
+            Gets or sets the maximum time.
+            </summary>
+            <value>The maximum time.</value>
         </member>
         <member name="T:MongoDB.Driver.CreateViewOptions`1">
             <summary>
@@ -891,6 +936,38 @@
             Gets or sets the collation.
             </summary>
         </member>
+        <member name="T:MongoDB.Driver.CreateManyIndexesOptions">
+            <summary>
+            Options for creating multiple indexes.
+            </summary>
+        </member>
+        <member name="P:MongoDB.Driver.CreateManyIndexesOptions.MaxTime">
+            <summary>
+            Gets or sets the maximum time.
+            </summary>
+            <value>The maximum time.</value>
+        </member>
+        <member name="T:MongoDB.Driver.DropIndexOptions">
+            <summary>
+            Options for dropping an index.
+            </summary>
+        </member>
+        <member name="P:MongoDB.Driver.DropIndexOptions.MaxTime">
+            <summary>
+            Gets or sets the maximum time.
+            </summary>
+            <value>The maximum time.</value>
+        </member>
+        <member name="T:MongoDB.Driver.EstimatedDocumentCountOptions">
+            <summary>
+            Options for estimated document count.
+            </summary>
+        </member>
+        <member name="P:MongoDB.Driver.EstimatedDocumentCountOptions.MaxTime">
+            <summary>
+            Gets or sets the maximum time.
+            </summary>
+        </member>
         <member name="T:MongoDB.Driver.IClientSession">
             <summary>
             The interface for a client session.
@@ -920,6 +997,14 @@
               <c>true</c> if this session is an implicit session; otherwise, <c>false</c>.
             </value>
         </member>
+        <member name="P:MongoDB.Driver.IClientSession.IsInTransaction">
+            <summary>
+            Gets a value indicating whether this instance is in a transaction.
+            </summary>
+            <value>
+              <c>true</c> if this instance is in a transaction; otherwise, <c>false</c>.
+            </value>
+        </member>
         <member name="P:MongoDB.Driver.IClientSession.OperationTime">
             <summary>
             Gets the operation time.
@@ -944,6 +1029,27 @@
             The server session.
             </value>
         </member>
+        <member name="P:MongoDB.Driver.IClientSession.WrappedCoreSession">
+            <summary>
+            Gets the wrapped core session (intended for internal use only).
+            </summary>
+            <value>
+            The wrapped core session.
+            </value>
+        </member>
+        <member name="M:MongoDB.Driver.IClientSession.AbortTransaction(System.Threading.CancellationToken)">
+            <summary>
+            Aborts the transaction.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+        <member name="M:MongoDB.Driver.IClientSession.AbortTransactionAsync(System.Threading.CancellationToken)">
+            <summary>
+            Aborts the transaction.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A Task.</returns>
+        </member>
         <member name="M:MongoDB.Driver.IClientSession.AdvanceClusterTime(MongoDB.Bson.BsonDocument)">
             <summary>
             Advances the cluster time.
@@ -956,6 +1062,25 @@
             </summary>
             <param name="newOperationTime">The new operation time.</param>
         </member>
+        <member name="M:MongoDB.Driver.IClientSession.CommitTransaction(System.Threading.CancellationToken)">
+            <summary>
+            Commits the transaction.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+        <member name="M:MongoDB.Driver.IClientSession.CommitTransactionAsync(System.Threading.CancellationToken)">
+            <summary>
+            Commits the transaction.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A Task.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IClientSession.StartTransaction(MongoDB.Driver.TransactionOptions)">
+            <summary>
+            Starts a transaction.
+            </summary>
+            <param name="transactionOptions">The transaction options.</param>
+        </member>
         <member name="T:MongoDB.Driver.IClientSessionHandle">
             <summary>
             A handle to an underlying reference counted IClientSession.
@@ -967,6 +1092,108 @@
             Forks this instance.
             </summary>
             <returns>A session.</returns>
+        </member>
+        <member name="T:MongoDB.Driver.IMongoClientExtensions">
+            <summary>
+            Extension methods on IMongoClient.
+            </summary>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClientExtensions.Watch(MongoDB.Driver.IMongoClient,MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in all databases.
+            </summary>
+            <param name="client">The client.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClientExtensions.Watch(MongoDB.Driver.IMongoClient,MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in all databases.
+            </summary>
+            <param name="client">The client.</param>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClientExtensions.WatchAsync(MongoDB.Driver.IMongoClient,MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in all databases.
+            </summary>
+            <param name="client">The client.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClientExtensions.WatchAsync(MongoDB.Driver.IMongoClient,MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in all databases.
+            </summary>
+            <param name="client">The client.</param>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="T:MongoDB.Driver.IMongoDatabaseExtensions">
+            <summary>
+            Extension methods on IMongoDatabase.
+            </summary>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabaseExtensions.Watch(MongoDB.Driver.IMongoDatabase,MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collection in a database.
+            </summary>
+            <param name="database">The database.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabaseExtensions.Watch(MongoDB.Driver.IMongoDatabase,MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collection in a database.
+            </summary>
+            <param name="database">The database.</param>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabaseExtensions.WatchAsync(MongoDB.Driver.IMongoDatabase,MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collection in a database.
+            </summary>
+            <param name="database">The database.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabaseExtensions.WatchAsync(MongoDB.Driver.IMongoDatabase,MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collection in a database.
+            </summary>
+            <param name="database">The database.</param>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
         </member>
         <member name="T:MongoDB.Driver.IndexKeysDefinition`1">
             <summary>
@@ -1065,23 +1292,6 @@
             <summary>
             Gets or sets a value indicating whether to bypass document validation.
             </summary>
-        </member>
-        <member name="T:MongoDB.Driver.IServerSessionPool">
-            <summary>
-            A server session pool.
-            </summary>
-        </member>
-        <member name="M:MongoDB.Driver.IServerSessionPool.AcquireSession">
-            <summary>
-            Acquires a server session.
-            </summary>
-            <returns>A server session.</returns>
-        </member>
-        <member name="M:MongoDB.Driver.IServerSessionPool.ReleaseSession(MongoDB.Driver.IServerSession)">
-            <summary>
-            Releases a server session.
-            </summary>
-            <param name="serverSession">The server session.</param>
         </member>
         <member name="T:MongoDB.Driver.Linq.AggregateQueryableExecutionModel`1">
             <summary>
@@ -3397,6 +3607,31 @@
             Gets or sets the string translation mode.
             </summary>
         </member>
+        <member name="T:MongoDB.Driver.ListCollectionNamesOptions">
+            <summary>
+            Options for a list collection names operation.
+            </summary>
+        </member>
+        <member name="P:MongoDB.Driver.ListCollectionNamesOptions.Filter">
+            <summary>
+            Gets or sets the filter.
+            </summary>
+        </member>
+        <member name="T:MongoDB.Driver.ListDatabasesOptions">
+            <summary>
+            Options for a list databases operation.
+            </summary>
+        </member>
+        <member name="P:MongoDB.Driver.ListDatabasesOptions.Filter">
+            <summary>
+            Gets or sets the filter.
+            </summary>
+        </member>
+        <member name="P:MongoDB.Driver.ListDatabasesOptions.NameOnly">
+            <summary>
+            Gets or sets the NameOnly flag.
+            </summary>
+        </member>
         <member name="T:MongoDB.Driver.MongoX509Identity">
             <summary>
             Represents an identity defined by an X509 certificate.
@@ -3407,35 +3642,6 @@
             Initializes a new instance of the <see cref="T:MongoDB.Driver.MongoExternalIdentity" /> class.
             </summary>
             <param name="username">The username.</param>
-        </member>
-        <member name="T:MongoDB.Driver.NoServerSession">
-            <summary>
-            A class that represents no server session.
-            </summary>
-            <seealso cref="T:MongoDB.Driver.IServerSession" />
-        </member>
-        <member name="P:MongoDB.Driver.NoServerSession.Instance">
-            <summary>
-            Gets the pre-created instance.
-            </summary>
-            <value>
-            The instance.
-            </value>
-        </member>
-        <member name="P:MongoDB.Driver.NoServerSession.Id">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.NoServerSession.LastUsedAt">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.NoServerSession.AdvanceTransactionNumber">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.NoServerSession.Dispose">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.NoServerSession.WasUsed">
-            <inheritdoc />
         </member>
         <member name="T:MongoDB.Driver.PipelineDefinitionBuilder">
             <summary>
@@ -5949,31 +6155,6 @@
             Called by the driver when the session is used (i.e. sent to the server).
             </summary>
         </member>
-        <member name="T:MongoDB.Driver.ReferenceCountedClientSession">
-            <summary>
-            A reference counted client session wrapper.
-            </summary>
-            <seealso cref="T:MongoDB.Driver.WrappingClientSession" />
-        </member>
-        <member name="M:MongoDB.Driver.ReferenceCountedClientSession.#ctor(MongoDB.Driver.IClientSession)">
-            <summary>
-            Initializes a new instance of the <see cref="T:MongoDB.Driver.ReferenceCountedClientSession"/> class.
-            </summary>
-            <param name="wrapped">The wrapped session.</param>
-        </member>
-        <member name="M:MongoDB.Driver.ReferenceCountedClientSession.DecrementReferenceCount">
-            <summary>
-            Decrements the reference count.
-            </summary>
-        </member>
-        <member name="M:MongoDB.Driver.ReferenceCountedClientSession.IncrementReferenceCount">
-            <summary>
-            Increments the reference count.
-            </summary>
-        </member>
-        <member name="M:MongoDB.Driver.ReferenceCountedClientSession.Dispose(System.Boolean)">
-            <inheritdoc />
-        </member>
         <member name="T:MongoDB.Driver.ServerSession">
             <summary>
             A server session.
@@ -5993,24 +6174,6 @@
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.ServerSession.WasUsed">
-            <inheritdoc />
-        </member>
-        <member name="T:MongoDB.Driver.ServerSessionPool">
-            <summary>
-            A server session pool.
-            </summary>
-            <seealso cref="T:MongoDB.Driver.IServerSessionPool" />
-        </member>
-        <member name="M:MongoDB.Driver.ServerSessionPool.#ctor(MongoDB.Driver.IMongoClient)">
-            <summary>
-            Initializes a new instance of the <see cref="T:MongoDB.Driver.ServerSessionPool" /> class.
-            </summary>
-            <param name="client">The client.</param>
-        </member>
-        <member name="M:MongoDB.Driver.ServerSessionPool.AcquireSession">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.ServerSessionPool.ReleaseSession(MongoDB.Driver.IServerSession)">
             <inheritdoc />
         </member>
         <member name="T:MongoDB.Driver.SortDefinitionExtensions">
@@ -8135,6 +8298,50 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>A Task whose result is the count.</returns>
         </member>
+        <member name="M:MongoDB.Driver.IFindFluent`2.CountDocuments(System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents.
+            </summary>
+            <remarks>
+            Note: when migrating from Count to CountDocuments the following query operations must be replaced:
+            
+            <code>
+            +-------------+--------------------------------+
+            | Operator    | Replacement                    |
+            +=============+================================+
+            | $where      |  $expr                         |
+            +-------------+--------------------------------+
+            | $near       |  $geoWithin with $center       |
+            +-------------+--------------------------------+
+            | $nearSphere |  $geoWithin with $centerSphere |
+            +-------------+--------------------------------+
+            </code>
+            </remarks>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The count.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IFindFluent`2.CountDocumentsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents.
+            </summary>
+            <remarks>
+            Note: when migrating from CountAsync to CountDocumentsAsync the following query operations must be replaced:
+            
+            <code>
+            +-------------+--------------------------------+
+            | Operator    | Replacement                    |
+            +=============+================================+
+            | $where      |  $expr                         |
+            +-------------+--------------------------------+
+            | $near       |  $geoWithin with $center       |
+            +-------------+--------------------------------+
+            | $nearSphere |  $geoWithin with $centerSphere |
+            +-------------+--------------------------------+
+            </code>
+            </remarks>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A Task whose result is the count.</returns>
+        </member>
         <member name="M:MongoDB.Driver.IFindFluent`2.Limit(System.Nullable{System.Int32})">
             <summary>
             Limits the number of documents.
@@ -8395,6 +8602,60 @@
             </returns>
         </member>
         <member name="M:MongoDB.Driver.IMongoCollectionExtensions.CountAsync``1(MongoDB.Driver.IMongoCollection{``0},MongoDB.Driver.IClientSessionHandle,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents in the collection.
+            </summary>
+            <typeparam name="TDocument">The type of the document.</typeparam>
+            <param name="collection">The collection.</param>
+            <param name="session">The session.</param>
+            <param name="filter">The filter.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The number of documents in the collection.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoCollectionExtensions.CountDocuments``1(MongoDB.Driver.IMongoCollection{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents in the collection.
+            </summary>
+            <typeparam name="TDocument">The type of the document.</typeparam>
+            <param name="collection">The collection.</param>
+            <param name="filter">The filter.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The number of documents in the collection.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoCollectionExtensions.CountDocuments``1(MongoDB.Driver.IMongoCollection{``0},MongoDB.Driver.IClientSessionHandle,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents in the collection.
+            </summary>
+            <typeparam name="TDocument">The type of the document.</typeparam>
+            <param name="session">The session.</param>
+            <param name="collection">The collection.</param>
+            <param name="filter">The filter.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The number of documents in the collection.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoCollectionExtensions.CountDocumentsAsync``1(MongoDB.Driver.IMongoCollection{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents in the collection.
+            </summary>
+            <typeparam name="TDocument">The type of the document.</typeparam>
+            <param name="collection">The collection.</param>
+            <param name="filter">The filter.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The number of documents in the collection.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoCollectionExtensions.CountDocumentsAsync``1(MongoDB.Driver.IMongoCollection{``0},MongoDB.Driver.IClientSessionHandle,System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
             <summary>
             Counts the number of documents in the collection.
             </summary>
@@ -9671,57 +9932,22 @@
             Gets the collection settings.
             </summary>
         </member>
-        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOne(MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
-            <summary>
-            Creates an index.
-            </summary>
-            <param name="keys">The keys.</param>
-            <param name="options">The options.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            The name of the index that was created.
-            </returns>
-        </member>
-        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOne(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
-            <summary>
-            Creates an index.
-            </summary>
-            <param name="session">The session.</param>
-            <param name="keys">The keys.</param>
-            <param name="options">The options.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            The name of the index that was created.
-            </returns>
-        </member>
-        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOneAsync(MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
-            <summary>
-            Creates an index.
-            </summary>
-            <param name="keys">The keys.</param>
-            <param name="options">The options.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            A task whose result is the name of the index that was created.
-            </returns>
-        </member>
-        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOneAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
-            <summary>
-            Creates an index.
-            </summary>
-            <param name="session">The session.</param>
-            <param name="keys">The keys.</param>
-            <param name="options">The options.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            A task whose result is the name of the index that was created.
-            </returns>
-        </member>
         <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateMany(System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},System.Threading.CancellationToken)">
             <summary>
             Creates multiple indexes.
             </summary>
             <param name="models">The models defining each of the indexes.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            An <see cref="T:System.Collections.Generic.IEnumerable`1" /> of the names of the indexes that were created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateMany(System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},MongoDB.Driver.CreateManyIndexesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates multiple indexes.
+            </summary>
+            <param name="models">The models defining each of the indexes.</param>
+            <param name="options">The options for create multiple indexes.</param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>
             An <see cref="T:System.Collections.Generic.IEnumerable`1" /> of the names of the indexes that were created.
@@ -9738,11 +9964,34 @@
             An <see cref="T:System.Collections.Generic.IEnumerable`1" /> of the names of the indexes that were created.
             </returns>
         </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateMany(MongoDB.Driver.IClientSessionHandle,System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},MongoDB.Driver.CreateManyIndexesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates multiple indexes.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="models">The models defining each of the indexes.</param>
+            <param name="options">The options for create multiple indexes.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            An <see cref="T:System.Collections.Generic.IEnumerable`1" /> of the names of the indexes that were created.
+            </returns>
+        </member>
         <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateManyAsync(System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},System.Threading.CancellationToken)">
             <summary>
             Creates multiple indexes.
             </summary>
             <param name="models">The models defining each of the indexes.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task whose result is an <see cref="T:System.Collections.Generic.IEnumerable`1" /> of the names of the indexes that were created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateManyAsync(System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},MongoDB.Driver.CreateManyIndexesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates multiple indexes.
+            </summary>
+            <param name="models">The models defining each of the indexes.</param>
+            <param name="options">The options for create multiple indexes.</param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>
             A task whose result is an <see cref="T:System.Collections.Generic.IEnumerable`1" /> of the names of the indexes that were created.
@@ -9759,6 +10008,117 @@
             A task whose result is an <see cref="T:System.Collections.Generic.IEnumerable`1" /> of the names of the indexes that were created.
             </returns>
         </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateManyAsync(MongoDB.Driver.IClientSessionHandle,System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},MongoDB.Driver.CreateManyIndexesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates multiple indexes.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="models">The models defining each of the indexes.</param>
+            <param name="options">The options for create multiple indexes.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task whose result is an <see cref="T:System.Collections.Generic.IEnumerable`1" /> of the names of the indexes that were created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOne(MongoDB.Driver.CreateIndexModel{`0},MongoDB.Driver.CreateOneIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates an index.
+            </summary>
+            <param name="model">The model defining the index.</param>
+            <param name="options">The create index operation options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The name of the index that was created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOne(MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates an index.
+            </summary>
+            <param name="keys">The keys.</param>       
+            <param name="options">The create index request options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The name of the index that was created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOne(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates an index.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="keys">The keys.</param>
+            <param name="options">The create index request options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The name of the index that was created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOne(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.CreateIndexModel{`0},MongoDB.Driver.CreateOneIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates an index.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="model">The model defining the index.</param>
+            <param name="options">The create index operation options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The name of the index that was created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOneAsync(MongoDB.Driver.CreateIndexModel{`0},MongoDB.Driver.CreateOneIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates an index.
+            </summary>
+            <param name="model">The model defining the index.</param>
+            <param name="options">The create index operation options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task whose result is the name of the index that was created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOneAsync(MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates an index.
+            </summary>
+            <param name="keys">The keys.</param>
+            <param name="options">The create index request options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task whose result is the name of the index that was created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOneAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates an index.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="keys">The keys.</param>
+            <param name="options">The create index request options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task whose result is the name of the index that was created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.CreateOneAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.CreateIndexModel{`0},MongoDB.Driver.CreateOneIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Creates an index.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="model">The model defining the index.</param>
+            <param name="options">The create index operation options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task whose result is the name of the index that was created.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropAll(MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Drops all the indexes.
+            </summary>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
         <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropAll(System.Threading.CancellationToken)">
             <summary>
             Drops all the indexes.
@@ -9771,6 +10131,24 @@
             </summary>
             <param name="session">The session.</param>
             <param name="cancellationToken">The cancellation token.</param>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropAll(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Drops all the indexes.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropAllAsync(MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Drops all the indexes.
+            </summary>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task.
+            </returns>
         </member>
         <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropAllAsync(System.Threading.CancellationToken)">
             <summary>
@@ -9789,11 +10167,30 @@
             A task.
             </returns>
         </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropAllAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Drops all the indexes.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task.
+            </returns>
+        </member>
         <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropOne(System.String,System.Threading.CancellationToken)">
             <summary>
             Drops an index by its name.
             </summary>
             <param name="name">The name.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropOne(System.String,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Drops an index by its name.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="options">The options. </param>
             <param name="cancellationToken">The cancellation token.</param>
         </member>
         <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropOne(MongoDB.Driver.IClientSessionHandle,System.String,System.Threading.CancellationToken)">
@@ -9804,11 +10201,29 @@
             <param name="name">The name.</param>
             <param name="cancellationToken">The cancellation token.</param>
         </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropOne(MongoDB.Driver.IClientSessionHandle,System.String,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Drops an index by its name.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="name">The name.</param>
+            <param name="options">The options. </param>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
         <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropOneAsync(System.String,System.Threading.CancellationToken)">
             <summary>
             Drops an index by its name.
             </summary>
             <param name="name">The name.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A task.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropOneAsync(System.String,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Drops an index by its name.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="options">The options. </param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>A task.</returns>
         </member>
@@ -9818,6 +10233,18 @@
             </summary>
             <param name="session">The session.</param>
             <param name="name">The name.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A task.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoIndexManager`1.DropOneAsync(MongoDB.Driver.IClientSessionHandle,System.String,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <summary>
+            Drops an index by its name.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="name">The name.</param>
+            <param name= "options">The options. </param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>
             A task.
@@ -10019,22 +10446,58 @@
         <member name="M:MongoDB.Driver.MongoClientBase.GetDatabase(System.String,MongoDB.Driver.MongoDatabaseSettings)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.ListDatabaseNames(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.ListDatabaseNames(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.ListDatabaseNamesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.ListDatabaseNamesAsync(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoClientBase.ListDatabases(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.ListDatabases(MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoClientBase.ListDatabases(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.ListDatabases(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoClientBase.ListDatabasesAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.ListDatabasesAsync(MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoClientBase.ListDatabasesAsync(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.ListDatabasesAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoClientBase.StartSession(MongoDB.Driver.ClientSessionOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoClientBase.StartSessionAsync(MongoDB.Driver.ClientSessionOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.Watch``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.Watch``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.WatchAsync``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientBase.WatchAsync``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoClientBase.WithReadConcern(MongoDB.Driver.ReadConcern)">
@@ -10103,6 +10566,18 @@
         <member name="M:MongoDB.Driver.MongoCollectionBase`1.CountAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoCollectionBase`1.CountDocuments(MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoCollectionBase`1.CountDocuments(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoCollectionBase`1.CountDocumentsAsync(MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoCollectionBase`1.CountDocumentsAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoCollectionBase`1.DeleteMany(MongoDB.Driver.FilterDefinition{`0},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -10149,6 +10624,12 @@
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoCollectionBase`1.DistinctAsync``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.FieldDefinition{`0,``0},MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.DistinctOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoCollectionBase`1.EstimatedDocumentCount(MongoDB.Driver.EstimatedDocumentCountOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoCollectionBase`1.EstimatedDocumentCountAsync(MongoDB.Driver.EstimatedDocumentCountOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoCollectionBase`1.FindSync``1(MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.FindOptions{`0,``0},System.Threading.CancellationToken)">
@@ -10351,6 +10832,18 @@
         <member name="M:MongoDB.Driver.MongoDatabaseBase.GetCollection``1(System.String,MongoDB.Driver.MongoCollectionSettings)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoDatabaseBase.ListCollectionNames(MongoDB.Driver.ListCollectionNamesOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoDatabaseBase.ListCollectionNames(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListCollectionNamesOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoDatabaseBase.ListCollectionNamesAsync(MongoDB.Driver.ListCollectionNamesOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoDatabaseBase.ListCollectionNamesAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListCollectionNamesOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoDatabaseBase.ListCollections(MongoDB.Driver.ListCollectionsOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
@@ -10387,6 +10880,18 @@
         <member name="M:MongoDB.Driver.MongoDatabaseBase.RunCommandAsync``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.Command{``0},MongoDB.Driver.ReadPreference,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoDatabaseBase.Watch``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoDatabaseBase.Watch``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoDatabaseBase.WatchAsync``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoDatabaseBase.WatchAsync``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoDatabaseBase.WithReadConcern(MongoDB.Driver.ReadConcern)">
             <inheritdoc />
         </member>
@@ -10414,25 +10919,52 @@
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateOne(MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateOne(MongoDB.Driver.CreateIndexModel{`0},MongoDB.Driver.CreateOneIndexOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateOne(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateOne(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.CreateIndexModel{`0},MongoDB.Driver.CreateOneIndexOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateOneAsync(MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateOneAsync(MongoDB.Driver.CreateIndexModel{`0},MongoDB.Driver.CreateOneIndexOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateOneAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.IndexKeysDefinition{`0},MongoDB.Driver.CreateIndexOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateOneAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.CreateIndexModel{`0},MongoDB.Driver.CreateOneIndexOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateMany(System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateMany(System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},MongoDB.Driver.CreateManyIndexesOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateMany(MongoDB.Driver.IClientSessionHandle,System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateMany(MongoDB.Driver.IClientSessionHandle,System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},MongoDB.Driver.CreateManyIndexesOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateManyAsync(System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateManyAsync(System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},MongoDB.Driver.CreateManyIndexesOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateManyAsync(MongoDB.Driver.IClientSessionHandle,System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.CreateManyAsync(MongoDB.Driver.IClientSessionHandle,System.Collections.Generic.IEnumerable{MongoDB.Driver.CreateIndexModel{`0}},MongoDB.Driver.CreateManyIndexesOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropAll(MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropAll(System.Threading.CancellationToken)">
@@ -10441,22 +10973,43 @@
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropAll(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropAll(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropAllAsync(MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropAllAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropAllAsync(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropAllAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropOne(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropOne(System.String,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropOne(MongoDB.Driver.IClientSessionHandle,System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropOne(MongoDB.Driver.IClientSessionHandle,System.String,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropOneAsync(System.String,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropOneAsync(System.String,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropOneAsync(MongoDB.Driver.IClientSessionHandle,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.DropOneAsync(MongoDB.Driver.IClientSessionHandle,System.String,MongoDB.Driver.DropIndexOptions,System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.MongoIndexManagerBase`1.List(System.Threading.CancellationToken)">
@@ -10491,6 +11044,12 @@
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.FindFluentBase`2.CountAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.FindFluentBase`2.CountDocuments(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.FindFluentBase`2.CountDocumentsAsync(System.Threading.CancellationToken)">
             <inheritdoc />
         </member>
         <member name="M:MongoDB.Driver.FindFluentBase`2.Limit(System.Nullable{System.Int32})">
@@ -13853,10 +14412,48 @@
             <param name="settings">The database settings.</param>
             <returns>An implementation of a database.</returns>
         </member>
+        <member name="M:MongoDB.Driver.IMongoClient.ListDatabaseNames(System.Threading.CancellationToken)">
+            <summary>
+            Returns the names of the databases on the server.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The database names.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClient.ListDatabaseNames(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
+            <summary>
+            Returns the names of the databases on the server.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The database names.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClient.ListDatabaseNamesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Returns the names of the databases on the server.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The database names.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClient.ListDatabaseNamesAsync(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
+            <summary>
+            Returns the names of the databases on the server.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The database names.</returns>
+        </member>
         <member name="M:MongoDB.Driver.IMongoClient.ListDatabases(System.Threading.CancellationToken)">
             <summary>
             Lists the databases on the server.
             </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A cursor.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClient.ListDatabases(MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Lists the databases on the server.
+            </summary>
+            <param name="options">The options.</param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>A cursor.</returns>
         </member>
@@ -13870,11 +14467,30 @@
             A cursor.
             </returns>
         </member>
+        <member name="M:MongoDB.Driver.IMongoClient.ListDatabases(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Lists the databases on the server.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A cursor.
+            </returns>
+        </member>
         <member name="M:MongoDB.Driver.IMongoClient.ListDatabasesAsync(System.Threading.CancellationToken)">
             <summary>
             Lists the databases on the server.
             </summary>
             <param name="cancellationToken">The cancellation token.</param>
+            <returns>A Task whose result is a cursor.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClient.ListDatabasesAsync(MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Lists the databases on the server.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <param name="options">The options.</param>
             <returns>A Task whose result is a cursor.</returns>
         </member>
         <member name="M:MongoDB.Driver.IMongoClient.ListDatabasesAsync(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
@@ -13887,9 +14503,20 @@
             A Task whose result is a cursor.
             </returns>
         </member>
+        <member name="M:MongoDB.Driver.IMongoClient.ListDatabasesAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Lists the databases on the server.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>        
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A Task whose result is a cursor.
+            </returns>
+        </member>
         <member name="M:MongoDB.Driver.IMongoClient.StartSession(MongoDB.Driver.ClientSessionOptions,System.Threading.CancellationToken)">
             <summary>
-            Starts a client sesssion.
+            Starts a client session.
             </summary>
             <param name="options">The session options.</param>
             <param name="cancellationToken">The cancellation token.</param>
@@ -13899,12 +14526,62 @@
         </member>
         <member name="M:MongoDB.Driver.IMongoClient.StartSessionAsync(MongoDB.Driver.ClientSessionOptions,System.Threading.CancellationToken)">
             <summary>
-            Starts a client sesssion.
+            Starts a client session.
             </summary>
             <param name="options">The session options.</param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>
             A Task whose result is a client session.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClient.Watch``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in all databases.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+            <param name="pipeline">The pipeline.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClient.Watch``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in all databases.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+            <param name="session">The session.</param>
+            <param name="pipeline">The pipeline.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClient.WatchAsync``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in all databases.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+            <param name="pipeline">The pipeline.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoClient.WatchAsync``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in all databases.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+            <param name="session">The session.</param>
+            <param name="pipeline">The pipeline.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
             </returns>
         </member>
         <member name="M:MongoDB.Driver.IMongoClient.WithReadConcern(MongoDB.Driver.ReadConcern)">
@@ -14097,6 +14774,112 @@
             The number of documents in the collection.
             </returns>
         </member>
+        <member name="M:MongoDB.Driver.IMongoCollection`1.CountDocuments(MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents in the collection.
+            </summary>
+            <remarks>
+            Note: when migrating from Count to CountDocuments the following query operations must be replaced:
+            
+            <code>
+            +-------------+--------------------------------+
+            | Operator    | Replacement                    |
+            +=============+================================+
+            | $where      |  $expr                         |
+            +-------------+--------------------------------+
+            | $near       |  $geoWithin with $center       |
+            +-------------+--------------------------------+
+            | $nearSphere |  $geoWithin with $centerSphere |
+            +-------------+--------------------------------+
+            </code>
+            </remarks>
+            <param name="filter">The filter.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The number of documents in the collection.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoCollection`1.CountDocuments(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents in the collection.
+            </summary>
+            <remarks>
+            Note: when migrating from Count to CountDocuments the following query operations must be replaced:
+            
+            <code>
+            +-------------+--------------------------------+
+            | Operator    | Replacement                    |
+            +=============+================================+
+            | $where      |  $expr                         |
+            +-------------+--------------------------------+
+            | $near       |  $geoWithin with $center       |
+            +-------------+--------------------------------+
+            | $nearSphere |  $geoWithin with $centerSphere |
+            +-------------+--------------------------------+
+            </code>
+            </remarks>
+            <param name="session">The session.</param>
+            <param name="filter">The filter.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The number of documents in the collection.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoCollection`1.CountDocumentsAsync(MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents in the collection.
+            </summary>
+            <remarks>
+            Note: when migrating from CountAsync to CountDocumentsAsync the following query operations must be replaced:
+            
+            <code>
+            +-------------+--------------------------------+
+            | Operator    | Replacement                    |
+            +=============+================================+
+            | $where      |  $expr                         |
+            +-------------+--------------------------------+
+            | $near       |  $geoWithin with $center       |
+            +-------------+--------------------------------+
+            | $nearSphere |  $geoWithin with $centerSphere |
+            +-------------+--------------------------------+
+            </code>
+            </remarks>
+            <param name="filter">The filter.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The number of documents in the collection.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoCollection`1.CountDocumentsAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.CountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Counts the number of documents in the collection.
+            </summary>
+            <remarks>
+            Note: when migrating from CountAsync to CountDocumentsAsync the following query operations must be replaced:
+            
+            <code>
+            +-------------+--------------------------------+
+            | Operator    | Replacement                    |
+            +=============+================================+
+            | $where      |  $expr                         |
+            +-------------+--------------------------------+
+            | $near       |  $geoWithin with $center       |
+            +-------------+--------------------------------+
+            | $nearSphere |  $geoWithin with $centerSphere |
+            +-------------+--------------------------------+
+            </code>
+            </remarks>
+            <param name="session">The session.</param>
+            <param name="filter">The filter.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            The number of documents in the collection.
+            </returns>
+        </member>
         <member name="M:MongoDB.Driver.IMongoCollection`1.DeleteMany(MongoDB.Driver.FilterDefinition{`0},System.Threading.CancellationToken)">
             <summary>
             Deletes multiple documents.
@@ -14277,6 +15060,26 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>
             A Task whose result is a cursor.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoCollection`1.EstimatedDocumentCount(MongoDB.Driver.EstimatedDocumentCountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Returns an estimate of the number of documents in the collection.
+            </summary>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            An estimate of the number of documents in the collection.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoCollection`1.EstimatedDocumentCountAsync(MongoDB.Driver.EstimatedDocumentCountOptions,System.Threading.CancellationToken)">
+            <summary>
+            Returns an estimate of the number of documents in the collection.
+            </summary>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            An estimate of the number of documents in the collection.
             </returns>
         </member>
         <member name="M:MongoDB.Driver.IMongoCollection`1.FindSync``1(MongoDB.Driver.FilterDefinition{`0},MongoDB.Driver.FindOptions{`0,``0},System.Threading.CancellationToken)">
@@ -15011,9 +15814,43 @@
             <param name="settings">The settings.</param>
             <returns>An implementation of a collection.</returns>
         </member>
+        <member name="M:MongoDB.Driver.IMongoDatabase.ListCollectionNames(MongoDB.Driver.ListCollectionNamesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Lists the names of all the collections in the database.
+            </summary>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A cursor.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabase.ListCollectionNames(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListCollectionNamesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Lists the names of all the collections in the database.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A cursor.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabase.ListCollectionNamesAsync(MongoDB.Driver.ListCollectionNamesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Lists the names of all the collections in the database.
+            </summary>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A Task whose result is a cursor.</returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabase.ListCollectionNamesAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListCollectionNamesOptions,System.Threading.CancellationToken)">
+            <summary>
+            Lists the names of all the collections in the database.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A Task whose result is a cursor.</returns>
+        </member>
         <member name="M:MongoDB.Driver.IMongoDatabase.ListCollections(MongoDB.Driver.ListCollectionsOptions,System.Threading.CancellationToken)">
             <summary>
-            Lists all the collections on the server.
+            Lists all the collections in the database.
             </summary>
             <param name="options">The options.</param>
             <param name="cancellationToken">The cancellation token.</param>
@@ -15021,7 +15858,7 @@
         </member>
         <member name="M:MongoDB.Driver.IMongoDatabase.ListCollections(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListCollectionsOptions,System.Threading.CancellationToken)">
             <summary>
-            Lists all the collections on the server.
+            Lists all the collections in the database.
             </summary>
             <param name="session">The session.</param>
             <param name="options">The options.</param>
@@ -15032,7 +15869,7 @@
         </member>
         <member name="M:MongoDB.Driver.IMongoDatabase.ListCollectionsAsync(MongoDB.Driver.ListCollectionsOptions,System.Threading.CancellationToken)">
             <summary>
-            Lists all the collections on the server.
+            Lists all the collections in the database.
             </summary>
             <param name="options">The options.</param>
             <param name="cancellationToken">The cancellation token.</param>
@@ -15040,7 +15877,7 @@
         </member>
         <member name="M:MongoDB.Driver.IMongoDatabase.ListCollectionsAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListCollectionsOptions,System.Threading.CancellationToken)">
             <summary>
-            Lists all the collections on the server.
+            Lists all the collections in the database.
             </summary>
             <param name="session">The session.</param>
             <param name="options">The options.</param>
@@ -15139,6 +15976,56 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>
             The result of the command.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabase.Watch``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in a database.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+            <param name="pipeline">The pipeline.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabase.Watch``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in a database.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+            <param name="session">The session.</param>
+            <param name="pipeline">The pipeline.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabase.WatchAsync``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in a database.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+            <param name="pipeline">The pipeline.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
+            </returns>
+        </member>
+        <member name="M:MongoDB.Driver.IMongoDatabase.WatchAsync``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <summary>
+            Watches changes on all collections in a database.
+            </summary>
+            <typeparam name="TResult">The type of the result.</typeparam>
+            <param name="session">The session.</param>
+            <param name="pipeline">The pipeline.</param>
+            <param name="options">The options.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            A change stream.
             </returns>
         </member>
         <member name="M:MongoDB.Driver.IMongoDatabase.WithReadConcern(MongoDB.Driver.ReadConcern)">
@@ -16337,67 +17224,6 @@
         <member name="P:MongoDB.Driver.UpdateResult.Unacknowledged.UpsertedId">
             <inheritdoc/>
         </member>
-        <member name="T:MongoDB.Driver.WrappingClientSession">
-            <summary>
-            A base class for classes that wrap a client session.
-            </summary>
-            <seealso cref="T:MongoDB.Driver.IClientSession" />
-        </member>
-        <member name="P:MongoDB.Driver.WrappingClientSession.Client">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.WrappingClientSession.ClusterTime">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.WrappingClientSession.IsImplicit">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.WrappingClientSession.OperationTime">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.WrappingClientSession.Options">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.WrappingClientSession.ServerSession">
-            <inheritdoc />
-        </member>
-        <member name="P:MongoDB.Driver.WrappingClientSession.Wrapped">
-            <summary>
-            Gets the wrapped session.
-            </summary>
-            <value>
-            The wrapped session.
-            </value>
-        </member>
-        <member name="M:MongoDB.Driver.WrappingClientSession.AdvanceClusterTime(MongoDB.Bson.BsonDocument)">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.WrappingClientSession.AdvanceOperationTime(MongoDB.Bson.BsonTimestamp)">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.WrappingClientSession.Dispose">
-            <inheritdoc />
-        </member>
-        <member name="M:MongoDB.Driver.WrappingClientSession.Dispose(System.Boolean)">
-            <summary>
-            Releases unmanaged and - optionally - managed resources.
-            </summary>
-            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        </member>
-        <member name="M:MongoDB.Driver.WrappingClientSession.IsDisposed">
-            <summary>
-            Determines whether this instance is disposed.
-            </summary>
-            <returns>
-              <c>true</c> if this instance is disposed; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:MongoDB.Driver.WrappingClientSession.ThrowIfDisposed">
-            <summary>
-            Throws if disposed.
-            </summary>
-            <exception cref="T:System.ObjectDisposedException"></exception>
-        </member>
         <member name="T:MongoDB.Driver.WriteConcernError">
             <summary>
             Represents the details of a write concern error.
@@ -16407,6 +17233,14 @@
             <summary>
             Gets the error code.
             </summary>
+        </member>
+        <member name="P:MongoDB.Driver.WriteConcernError.CodeName">
+            <summary>
+            Gets the name of the error code.
+            </summary>
+            <value>
+            The name of the error code.
+            </value>
         </member>
         <member name="P:MongoDB.Driver.WriteConcernError.Details">
             <summary>
@@ -16664,18 +17498,30 @@
         <member name="M:MongoDB.Driver.MongoClient.#ctor(MongoDB.Driver.MongoClientSettings)">
             <summary>
             Initializes a new instance of the MongoClient class.
+            In .NET Standard, authenticating via SCRAM-SHA-256 may not work with non-ASCII passwords because SaslPrep is
+            not fully implemented due to the lack of a string normalization function in .NET Standard 1.5.
+            Normalizing the password into Unicode Normalization Form KC beforehand MAY help.
+            SCRAM-SHA-1 is the recommended alternative for now.
             </summary>
             <param name="settings">The settings.</param>
         </member>
         <member name="M:MongoDB.Driver.MongoClient.#ctor(MongoDB.Driver.MongoUrl)">
             <summary>
             Initializes a new instance of the MongoClient class.
+            In .NET Standard, authenticating via SCRAM-SHA-256 may not work with non-ASCII passwords because SaslPrep is
+            not fully implemented due to the lack of a string normalization function in .NET Standard 1.5.
+            Normalizing the password into Unicode Normalization Form KC beforehand MAY help.
+            SCRAM-SHA-1 is the recommended alternative for now.
             </summary>
             <param name="url">The URL.</param>
         </member>
         <member name="M:MongoDB.Driver.MongoClient.#ctor(System.String)">
             <summary>
             Initializes a new instance of the MongoClient class.
+            In .NET Standard, authenticating via SCRAM-SHA-256 may not work with non-ASCII passwords because SaslPrep is
+            not fully implemented due to the lack of a string normalization function in .NET Standard 1.5.
+            Normalizing the password into Unicode Normalization Form KC beforehand MAY help.
+            SCRAM-SHA-1 is the recommended alternative for now.
             </summary>
             <param name="connectionString">The connection string.</param>
         </member>
@@ -16702,16 +17548,40 @@
         <member name="M:MongoDB.Driver.MongoClient.GetDatabase(System.String,MongoDB.Driver.MongoDatabaseSettings)">
             <inheritdoc/>
         </member>
+        <member name="M:MongoDB.Driver.MongoClient.ListDatabaseNames(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClient.ListDatabaseNames(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClient.ListDatabaseNamesAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:MongoDB.Driver.MongoClient.ListDatabaseNamesAsync(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
         <member name="M:MongoDB.Driver.MongoClient.ListDatabases(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MongoDB.Driver.MongoClient.ListDatabases(MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
         <member name="M:MongoDB.Driver.MongoClient.ListDatabases(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
+        <member name="M:MongoDB.Driver.MongoClient.ListDatabases(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="M:MongoDB.Driver.MongoClient.ListDatabasesAsync(System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
+        <member name="M:MongoDB.Driver.MongoClient.ListDatabasesAsync(MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
         <member name="M:MongoDB.Driver.MongoClient.ListDatabasesAsync(MongoDB.Driver.IClientSessionHandle,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MongoDB.Driver.MongoClient.ListDatabasesAsync(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.ListDatabasesOptions,System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
         <member name="M:MongoDB.Driver.MongoClient.StartImplicitSession(System.Threading.CancellationToken)">
@@ -16730,6 +17600,18 @@
             <inheritdoc/>
         </member>
         <member name="M:MongoDB.Driver.MongoClient.StartSessionAsync(MongoDB.Driver.ClientSessionOptions,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MongoDB.Driver.MongoClient.Watch``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MongoDB.Driver.MongoClient.Watch``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MongoDB.Driver.MongoClient.WatchAsync``1(MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:MongoDB.Driver.MongoClient.WatchAsync``1(MongoDB.Driver.IClientSessionHandle,MongoDB.Driver.PipelineDefinition{MongoDB.Driver.ChangeStreamDocument{MongoDB.Bson.BsonDocument},``0},MongoDB.Driver.ChangeStreamOptions,System.Threading.CancellationToken)">
             <inheritdoc/>
         </member>
         <member name="M:MongoDB.Driver.MongoClient.WithReadConcern(MongoDB.Driver.ReadConcern)">
@@ -16930,6 +17812,13 @@
             <returns>
               <c>true</c> if the left hand side is not equal to the right hand side; otherwise, <c>false</c>.
             </returns>
+        </member>
+        <member name="M:MongoDB.Driver.MongoClientSettings.FromConnectionString(System.String)">
+            <summary>
+            Gets a MongoClientSettings object intialized with values from a connection string.
+            </summary>
+            <param name="connectionString">The connection string.</param>
+            <returns>A MongoClientSettings.</returns>
         </member>
         <member name="M:MongoDB.Driver.MongoClientSettings.FromUrl(MongoDB.Driver.MongoUrl)">
             <summary>
@@ -17733,6 +18622,10 @@
         <member name="M:MongoDB.Driver.PasswordEvidence.#ctor(System.Security.SecureString)">
             <summary>
             Initializes a new instance of the <see cref="T:MongoDB.Driver.PasswordEvidence" /> class.
+            Less secure when used in conjunction with SCRAM-SHA-256, due to the need to store the password in a managed
+            string in order to SaslPrep it.
+            See <a href="https://github.com/mongodb/specifications/blob/master/source/auth/auth.rst#scram-sha-256">Driver Authentication: SCRAM-SHA-256</a>
+            for additional details.
             </summary>
             <param name="password">The password.</param>
         </member>
@@ -17769,7 +18662,7 @@
             Computes the MONGODB-CR password digest.
             </summary>
             <param name="username">The username.</param>
-            <returns></returns>
+            <returns>The MONGODB-CR password digest.</returns>
         </member>
         <member name="T:MongoDB.Driver.Setting`1">
             <summary>
@@ -18055,7 +18948,11 @@
             <summary>
             Initializes a new instance of the <see cref="T:MongoDB.Driver.MongoCredential" /> class.
             </summary>
-            <param name="mechanism">Mechanism to authenticate with.</param>
+            <param name="mechanism">Mechanism to authenticate with.
+            In .NET Standard, authenticating via SCRAM-SHA-256 may not work with non-ASCII passwords because SaslPrep is
+            not fully implemented due to the lack of a string normalization function in .NET Standard 1.5.
+            Normalizing the password into Unicode Normalization Form KC beforehand MAY help.
+            SCRAM-SHA-1 is the recommended alternative for now.</param>
             <param name="identity">The identity.</param>
             <param name="evidence">The evidence.</param>
         </member>
@@ -18072,6 +18969,10 @@
         <member name="P:MongoDB.Driver.MongoCredential.Mechanism">
             <summary>
             Gets the mechanism to authenticate with.
+            In .NET Standard, authenticating via SCRAM-SHA-256 may not work with non-ASCII passwords because SaslPrep is
+            not fully implemented due to the lack of a string normalization function in .NET Standard 1.5.
+            Normalizing the password into Unicode Normalization Form KC beforehand MAY help.
+            SCRAM-SHA-1 is the recommended alternative for now.
             </summary>
         </member>
         <member name="P:MongoDB.Driver.MongoCredential.Password">
@@ -18167,7 +19068,7 @@
         </member>
         <member name="M:MongoDB.Driver.MongoCredential.CreateMongoX509Credential(System.String)">
             <summary>
-            Creates a credential used with MONGODB-CR.
+            Creates a credential used with MONGODB-X509.
             </summary>
             <param name="username">The username.</param>
             <returns>A credential for MONGODB-X509.</returns>

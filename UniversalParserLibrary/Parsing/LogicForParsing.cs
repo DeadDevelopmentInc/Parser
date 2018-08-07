@@ -18,7 +18,6 @@ namespace UniversalParserLibrary.Parsing
         internal static List<Project> ProjectsList { get; set; } = new List<Project>();
         private static object locker = new object();
 
-
         public static void NewParse(string destination, string name)
         {
             try
@@ -246,30 +245,28 @@ namespace UniversalParserLibrary.Parsing
             }
             return levels;
         }
-
-        private static void SendDataToDB(string name, List<BufferSkill> skills, List<UserProject> projects, Section section)
+        
+        private async static void SendDataToDB(string name, List<BufferSkill> skills, List<UserProject> projects, Section section)
         {
             try
             {
                 name = name.Remove(name.IndexOf(".doc"), 4);
                 List<SkillLevel> levels = ProcessDataForDB(skills);
-                string connectionString = "mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db";
-                MongoClient client = new MongoClient(connectionString);
+                MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
                 IMongoDatabase database = client.GetDatabase("workers_db");
-                var colSkills = database.GetCollection<User>("users");
-                var skill = colSkills.FindOneAndDelete(new BsonDocument("_id", name));
-                var user = new User
+                var colUsers = database.GetCollection<User>("users");
+                User newUser = await colUsers.FindOneAndReplaceAsync(Builders<User>.Filter.Eq(r => r._id, name), new User
                 {
                     _id = name,
                     abilities = HelpersForParsing.GetAbitiesFromSection(section),
                     itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
                     skills = levels,
                     projects = projects
-                };
-                colSkills.InsertOne(user.GetUser());
+                });
             }
+            /*Exception e - from System Exception
+              new Exception({params}) - from Exeptions_and_Events*/
             catch(Exception e) { throw new Exception(e.Message); }
-
         }
 
         private static void AddToList(List<Project> projects)

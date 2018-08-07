@@ -9644,6 +9644,7 @@
         <member name="P:Spire.Doc.Fields.FormField.Name">
             <summary>
             Gets or sets form field title name (bookmark name).
+            The name is unique in the document.
             </summary>
         </member>
         <member name="P:Spire.Doc.Fields.FormField.Help">
@@ -12247,7 +12248,7 @@
         </member>
         <member name="P:Spire.Doc.Fields.TextFormField.Text">
             <summary>
-            Returns or setsthe text of text form field.
+            Returns or sets the text of text form field.
             </summary>
             <value></value>
         </member>

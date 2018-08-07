@@ -17,7 +17,6 @@ namespace UniversalParserLibrary.Models
         /// <summary>
         /// Admin string for dictionary
         /// </summary>
-        const string connectionAdmin = @"mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db";
         internal static List<Skill> globalSkills { get; set; } = new List<Skill>();
         internal static List<Project> globalProjects { get; set; } = new List<Project>();
         static object locker = new object();
@@ -39,9 +38,9 @@ namespace UniversalParserLibrary.Models
         /// <summary>
         /// Update dictionary with global skills
         /// </summary>
-        internal static void UpdateDictionary()
+        internal static void UpdateDictionarySkills()
         {
-            MongoClient client = new MongoClient(connectionAdmin);
+            MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<Skill>("skills");
             collection.DeleteMany(Builders<Skill>.Filter.Empty);
@@ -56,7 +55,7 @@ namespace UniversalParserLibrary.Models
         internal static void SendProjects(List<Project> projects)
         {
             Project.FindSimpleProjects(projects);
-            MongoClient client = new MongoClient(connectionAdmin);
+            MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<Project>("projects");
             collection.DeleteMany(Builders<Project>.Filter.Empty);
@@ -65,7 +64,7 @@ namespace UniversalParserLibrary.Models
 
         internal static List<T> GetDataFromDB<T>(string collectionName)
         {
-            MongoClient client = new MongoClient(connectionAdmin);
+            MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<T>(collectionName);
             return collection.Find(Builders<T>.Filter.Empty).ToList();
@@ -75,9 +74,9 @@ namespace UniversalParserLibrary.Models
         /// Update dictionary with local skills
         /// </summary>
         /// <param name="skills">local skills, replay global skills</param>
-        internal static void UpdateDictionary(List<Skill> skills)
+        internal static void UpdateDictionarySkills(List<Skill> skills)
         {
-            MongoClient client = new MongoClient(connectionAdmin);
+            MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<Skill>("skills");
             collection.DeleteMany(Builders<Skill>.Filter.Empty);

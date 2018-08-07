@@ -38,7 +38,7 @@ namespace UniversalParserLibrary
 
                     PrivateDictionary.SendProjects(Project.FindSimpleProjects(LogicForParsing.ProjectsList));
                     
-                    PrivateDictionary.UpdateDictionary();
+                    PrivateDictionary.UpdateDictionarySkills();
                 }
                 
             }
@@ -76,7 +76,6 @@ namespace UniversalParserLibrary
             }
             else new Models.Exceptions_and_Events.Exception("finding folder", "ERROR", "folder not found");
         }
-
         /// <summary>
         /// Method for waiting while all threads finish
         /// </summary>
@@ -101,7 +100,7 @@ namespace UniversalParserLibrary
             LogicForTraining.GenerateData(list);
             List<Skill> newList = new List<Skill>();
             foreach(var skill in list) { newList.Add(skill.ForWrite()); }
-            PrivateDictionary.UpdateDictionary(newList);
+            PrivateDictionary.UpdateDictionarySkills(newList);
         }
 
         private static void WriteDataInDBWithSaving()
@@ -109,7 +108,14 @@ namespace UniversalParserLibrary
             var tempList = LogicForTraining.GenerateTrains(LogicForTraining.TrainList);
             var forWrite = new List<Skill>();
             foreach(var item in tempList) { forWrite.Add(item.ForWrite()); }
-            PrivateDictionary.UpdateDictionary(forWrite);
+            PrivateDictionary.UpdateDictionarySkills(forWrite);
+        }
+
+        //add method for starting parse single document
+        public static void SingleParsing(string pathToFile)
+        {
+            FileInfo file = new FileInfo(pathToFile);
+            LogicForParsing.NewParse(file.FullName, file.Name);
         }
     }
 }
