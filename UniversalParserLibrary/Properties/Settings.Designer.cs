@@ -26,9 +26,18 @@ namespace UniversalParserLibrary.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db")]
-        public string connectionString {
+        public string connectionStringMongo {
             get {
-                return ((string)(this["connectionString"]));
+                return ((string)(this["connectionStringMongo"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=127.0.0.1;Port=5432;Database=postgres;User Id=postgres;Password=78564523;")]
+        public string connectionStringPostgre {
+            get {
+                return ((string)(this["connectionStringPostgre"]));
             }
         }
     }

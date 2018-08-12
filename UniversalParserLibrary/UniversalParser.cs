@@ -9,18 +9,19 @@ using UniversalParserLibrary.Training;
 using UniversalParserLibrary.Parsing;
 using UniversalParserLibrary.Models;
 using UniversalParserLibrary.Models.Exceptions_and_Events;
+using Npgsql;
 
 namespace UniversalParserLibrary
 {
     public static class UniversalParser
     {
-
         /// <summary>
         /// Method for parse files from the specified folder 
         /// </summary>
         /// <param name="destination_name">specified folder</param>
         public static void StartParsing(string destination_name)
         {
+            PostgreDB.ReadFilesInDB();
             if (Directory.Exists(destination_name))
             {
                 List<Thread> threads = new List<Thread>();                                                     //Create list with threads
@@ -51,6 +52,7 @@ namespace UniversalParserLibrary
         /// <param name="destination_name">specified folder</param>
         public static void StartTraining(string destination_name, bool type_of_parse)
         {
+            PostgreDB.ReadFilesInDB();
             LogicForTraining.TrainList = new List<TrainSkill>();
             if (Directory.Exists(destination_name))
             {
@@ -112,9 +114,10 @@ namespace UniversalParserLibrary
         }
 
         //add method for starting parse single document
-        public static void SingleParsing(string pathToFile)
+        public static void SingleParsing(string id)
         {
-            FileInfo file = new FileInfo(pathToFile);
+            PostgreDB.ReadFilesInDB(id);
+            FileInfo file = new FileInfo("TemplateFromPostgre/" + id + ".doc");
             LogicForParsing.NewParse(file.FullName, file.Name);
         }
     }

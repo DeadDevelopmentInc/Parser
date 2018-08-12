@@ -52,3 +52,12 @@ D:\repos\Parser\NewTypeParse\bin\Debug\System.Buffers.xml
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.exe.config
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.csprojAssemblyReference.cache
 D:\repos\Parser\NewTypeParse\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\Npgsql.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\System.ValueTuple.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\repos\Parser\NewTypeParse\bin\Debug\Npgsql.pdb
+D:\repos\Parser\NewTypeParse\bin\Debug\Npgsql.xml
+D:\repos\Parser\NewTypeParse\bin\Debug\System.ValueTuple.xml
+D:\repos\Parser\NewTypeParse\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\repos\Parser\NewTypeParse\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml

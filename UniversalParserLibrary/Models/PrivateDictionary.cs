@@ -40,7 +40,7 @@ namespace UniversalParserLibrary.Models
         /// </summary>
         internal static void UpdateDictionarySkills()
         {
-            MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
+            MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<Skill>("skills");
             collection.DeleteMany(Builders<Skill>.Filter.Empty);
@@ -55,7 +55,7 @@ namespace UniversalParserLibrary.Models
         internal static void SendProjects(List<Project> projects)
         {
             Project.FindSimpleProjects(projects);
-            MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
+            MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<Project>("projects");
             collection.DeleteMany(Builders<Project>.Filter.Empty);
@@ -64,7 +64,7 @@ namespace UniversalParserLibrary.Models
 
         internal static List<T> GetDataFromDB<T>(string collectionName)
         {
-            MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
+            MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<T>(collectionName);
             return collection.Find(Builders<T>.Filter.Empty).ToList();
@@ -76,7 +76,7 @@ namespace UniversalParserLibrary.Models
         /// <param name="skills">local skills, replay global skills</param>
         internal static void UpdateDictionarySkills(List<Skill> skills)
         {
-            MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
+            MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<Skill>("skills");
             collection.DeleteMany(Builders<Skill>.Filter.Empty);

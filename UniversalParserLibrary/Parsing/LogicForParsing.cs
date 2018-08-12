@@ -65,17 +65,6 @@ namespace UniversalParserLibrary.Parsing
             return skills;
         }
 
-        //private static List<BufferSkill> ParseNewTemplate(List<BufferSkill> skills, List<UserProject> projects)
-        //{
-        //    DeleteSimpleSkills(ref skills);
-        //    return skills;
-        //}
-
-        //private static List<BufferSkill> ParseOldTemplate(List<BufferSkill> skills, List<UserProject> projects)
-        //{
-        //    DeleteSimpleSkills(ref skills);
-        //    return skills;
-        //}
 
         private static Tuple<List<BufferSkill>, List<UserProject>> ParseSectionFromNewTemplate(Section section)
         {
@@ -252,7 +241,7 @@ namespace UniversalParserLibrary.Parsing
             {
                 name = name.Remove(name.IndexOf(".doc"), 4);
                 List<SkillLevel> levels = ProcessDataForDB(skills);
-                MongoClient client = new MongoClient(Properties.Settings.Default.connectionString);
+                MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
                 IMongoDatabase database = client.GetDatabase("workers_db");
                 var colUsers = database.GetCollection<User>("users");
                 User newUser = await colUsers.FindOneAndReplaceAsync(Builders<User>.Filter.Eq(r => r._id, name), new User
