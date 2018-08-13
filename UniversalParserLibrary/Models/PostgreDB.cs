@@ -14,6 +14,15 @@ namespace UniversalParserLibrary.Models
 
         static PostgreDB()
         {
+            if(!Directory.Exists("ems-resume"))
+            {
+                Directory.CreateDirectory("ems-resume");
+            }
+            else
+            {
+                Directory.Delete("ems-resume", true);
+                Directory.CreateDirectory("ems-resume");
+            }
             try
             {
                 Connection = new NpgsqlConnection(Properties.Settings.Default.connectionStringPostgre);
@@ -26,6 +35,7 @@ namespace UniversalParserLibrary.Models
         {
             try
             {
+
                 using (var cmd = new NpgsqlCommand("SELECT id,file FROM testing", Connection))
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -33,7 +43,7 @@ namespace UniversalParserLibrary.Models
                     {
 
                         var array = (byte[])reader[1];
-                        File.WriteAllBytes("TemplateFromPostgre/" + reader[0] + ".doc", array);
+                        File.WriteAllBytes("ems-resume/" + reader[0] + ".doc", array);
                     }
                 }
             }
@@ -52,7 +62,7 @@ namespace UniversalParserLibrary.Models
                     {
 
                         var array = (byte[])reader[1];
-                        File.WriteAllBytes("TemplateFromPostgre/" + reader[0] + ".doc", array);
+                        File.WriteAllBytes("ems-resume/" + reader[0] + ".doc", array);
                     }
             }
             catch (Exception e) { new Exceptions_and_Events.Exception("Connectiong to DB", "ERROR", e.Message); }

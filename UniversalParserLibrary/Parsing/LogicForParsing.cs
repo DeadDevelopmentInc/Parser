@@ -235,7 +235,7 @@ namespace UniversalParserLibrary.Parsing
             return levels;
         }
         
-        private async static void SendDataToDB(string name, List<BufferSkill> skills, List<UserProject> projects, Section section)
+        private static void SendDataToDB(string name, List<BufferSkill> skills, List<UserProject> projects, Section section)
         {
             try
             {
@@ -244,18 +244,21 @@ namespace UniversalParserLibrary.Parsing
                 MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
                 IMongoDatabase database = client.GetDatabase("workers_db");
                 var colUsers = database.GetCollection<User>("users");
-                User newUser = await colUsers.FindOneAndReplaceAsync(Builders<User>.Filter.Eq(r => r._id, name), new User
+                UpdateOptions updateOptions = new UpdateOptions { IsUpsert = true };
+                User user = new User
                 {
                     _id = name,
                     abilities = HelpersForParsing.GetAbitiesFromSection(section),
                     itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
                     skills = levels,
                     projects = projects
-                });
+                };
+                FilterDefinition<User> builders = Builders<User>.Filter.Eq(r => r._id, name);
+                colUsers.ReplaceOne(builders, user, updateOptions);
             }
             /*Exception e - from System Exception
               new Exception({params}) - from Exeptions_and_Events*/
-            catch(Exception e) { throw new Exception(e.Message); }
+            catch(Exception e) { new Models.Exceptions_and_Events.Exception("writing in db", "ERROR", e.Message); }
         }
 
         private static void AddToList(List<Project> projects)
