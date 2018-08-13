@@ -34,7 +34,6 @@ D:\repos\Parser\UniversalParserLibrary\bin\Debug\MongoDB.Driver.xml
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\MongoDB.Driver.Core.xml
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\System.Buffers.xml
 D:\repos\Parser\UniversalParserLibrary\obj\Debug\UniversalParserLibrary.csprojAssemblyReference.cache
-D:\repos\Parser\UniversalParserLibrary\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\Npgsql.dll
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 D:\repos\Parser\UniversalParserLibrary\bin\Debug\System.Threading.Tasks.Extensions.dll

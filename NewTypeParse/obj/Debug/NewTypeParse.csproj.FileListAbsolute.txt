@@ -51,7 +51,6 @@ D:\repos\Parser\NewTypeParse\bin\Debug\UniversalParserLibrary.dll.config
 D:\repos\Parser\NewTypeParse\bin\Debug\System.Buffers.xml
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.exe.config
 D:\repos\Parser\NewTypeParse\obj\Debug\NewTypeParse.csprojAssemblyReference.cache
-D:\repos\Parser\NewTypeParse\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 D:\repos\Parser\NewTypeParse\bin\Debug\Npgsql.dll
 D:\repos\Parser\NewTypeParse\bin\Debug\System.ValueTuple.dll
 D:\repos\Parser\NewTypeParse\bin\Debug\System.Threading.Tasks.Extensions.dll

@@ -21,7 +21,7 @@ namespace UniversalParserLibrary
         /// <param name="destination_name">specified folder</param>
         public static void StartParsing(string destination_name)
         {
-            PostgreDB.ReadFilesInDB();
+            //PostgreDB.ReadFilesInDB();
             if (Directory.Exists(destination_name))
             {
                 List<Thread> threads = new List<Thread>();                                                     //Create list with threads
@@ -36,9 +36,9 @@ namespace UniversalParserLibrary
                         threads.Last().Start();
                     }
                     AwaitThreads(ref threads);
-
+                    new Info("updating projects and skills", "INFO", "sending projects", 0);
                     PrivateDictionary.SendProjects(Project.FindSimpleProjects(LogicForParsing.ProjectsList));
-                    
+                    new Info("updating projects and skills", "INFO", "sending skills", 0);
                     PrivateDictionary.UpdateDictionarySkills();
                 }
                 
@@ -70,11 +70,7 @@ namespace UniversalParserLibrary
                     if (type_of_parse) { WriteDataInDBWithSaving(); }
                     else { WriteDataInDB(); }
                 }
-                else
-                {
-                    new Models.Exceptions_and_Events.Exception("finding documents", "ERROR", "folder doesn't contain documents, start retraining");
-                    WriteDataInDBWithSaving();
-                }
+                else { new Models.Exceptions_and_Events.Exception("finding documents", "ERROR", "folder doesn't contain documents"); }
             }
             else new Models.Exceptions_and_Events.Exception("finding folder", "ERROR", "folder not found");
         }

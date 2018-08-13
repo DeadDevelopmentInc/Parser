@@ -14,15 +14,7 @@ namespace UniversalParserLibrary.Models
 
         static PostgreDB()
         {
-            if(!Directory.Exists("ems-resume"))
-            {
-                Directory.CreateDirectory("ems-resume");
-            }
-            else
-            {
-                Directory.Delete("ems-resume", true);
-                Directory.CreateDirectory("ems-resume");
-            }
+            
             try
             {
                 Connection = new NpgsqlConnection(Properties.Settings.Default.connectionStringPostgre);
@@ -33,10 +25,19 @@ namespace UniversalParserLibrary.Models
 
         internal static void ReadFilesInDB()
         {
+            if (!Directory.Exists("ems-resume"))
+            {
+                Directory.CreateDirectory("ems-resume");
+            }
+            else
+            {
+                Directory.Delete("ems-resume", true);
+                Directory.CreateDirectory("ems-resume");
+            }
             try
             {
 
-                using (var cmd = new NpgsqlCommand("SELECT id,file FROM testing", Connection))
+                using (var cmd = new NpgsqlCommand("SELECT cvname,cvfile FROM cv", Connection))
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -54,9 +55,18 @@ namespace UniversalParserLibrary.Models
 
         internal static void ReadFilesInDB(string id)
         {
+            if (!Directory.Exists("ems-resume"))
+            {
+                Directory.CreateDirectory("ems-resume");
+            }
+            else
+            {
+                Directory.Delete("ems-resume", true);
+                Directory.CreateDirectory("ems-resume");
+            }
             try
             {
-                using (var cmd = new NpgsqlCommand("SELECT id, file FROM testing where \"id\"='" + id + "'", Connection))
+                using (var cmd = new NpgsqlCommand("SELECT cvname,cvfile FROM cv where \"person_id\"='" + id + "'", Connection))
                 using (var reader = cmd.ExecuteReader())
                     while (reader.Read())
                     {
@@ -66,6 +76,11 @@ namespace UniversalParserLibrary.Models
                     }
             }
             catch (Exception e) { new Exceptions_and_Events.Exception("Connectiong to DB", "ERROR", e.Message); }
+        }
+
+        internal static void UploadFileInDB()
+        {
+
         }
     }
 }

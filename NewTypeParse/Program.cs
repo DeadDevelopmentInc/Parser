@@ -19,9 +19,12 @@ namespace NewTypeParse
     {
         static void Main(string[] args)
         {
-            string type = args[0]; //type of process
-            string folder = args[1]; //path to folder
-            string idOfFile = args[1]; //path to file
+            string type = "1";
+            string folder = "ems-resume";
+            string idOfFile = "24";
+            //string type = args[0]; //type of process
+            //string folder = args[1]; //path to folder
+            //string idOfFile = args[1]; //path to file
             switch (type)
             {
                 case "1": { UniversalParser.StartParsing(folder); } break;
@@ -30,6 +33,7 @@ namespace NewTypeParse
                 case "4": { UniversalParser.SingleParsing(idOfFile); } break; //parsing single document
                 default: { } break;
             }
+            Console.ReadLine();
         }
     }
 }

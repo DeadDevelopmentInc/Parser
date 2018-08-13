@@ -59,15 +59,23 @@ namespace UniversalParserLibrary.Models
             IMongoDatabase database = client.GetDatabase("workers_db");
             var collection = database.GetCollection<Project>("projects");
             collection.DeleteMany(Builders<Project>.Filter.Empty);
-            collection.InsertMany(projects.ToArray());
+            if(projects.Count != 0)
+                collection.InsertMany(projects.ToArray());
         }
 
         internal static List<T> GetDataFromDB<T>(string collectionName)
         {
-            MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
-            IMongoDatabase database = client.GetDatabase("workers_db");
-            var collection = database.GetCollection<T>(collectionName);
-            return collection.Find(Builders<T>.Filter.Empty).ToList();
+            int suc = 0;
+            try
+            {
+                MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
+                IMongoDatabase database = client.GetDatabase("workers_db");
+                var collection = database.GetCollection<T>(collectionName);
+                suc = 1;
+                return collection.Find(Builders<T>.Filter.Empty).ToList();
+            }
+            catch(Exception e) { new Models.Exceptions_and_Events.Exception("getting data from db", "ERROR", e.Message); return new List<T>(); }
+            finally { new Exceptions_and_Events.Info("getting data from db", "INFO", "getted " + collectionName +" data", suc); }
         }
 
         /// <summary>

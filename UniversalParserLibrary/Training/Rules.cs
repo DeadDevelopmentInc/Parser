@@ -10,15 +10,27 @@ namespace UniversalParserLibrary.Training
 {
     internal static class Rules
     {
+        static bool newCreate = true;
         static Rule rule { get; set; } = new Rule();
         static string connectionString = @"mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db";
 
         static Rules()
         {
-            MongoClient client = new MongoClient(connectionString);
-            IMongoDatabase database = client.GetDatabase("workers_db");
-            var collection = database.GetCollection<Rule>("Rules_for_parser");
-            rule = collection.Find(Builders<Rule>.Filter.Empty).Single();
+            if(newCreate)
+            {
+                MongoClient client = new MongoClient(connectionString);
+                IMongoDatabase database = client.GetDatabase("workers_db");
+                var collection = database.GetCollection<Rule>("Rules_for_parser");
+                rule = collection.Find(Builders<Rule>.Filter.Empty).Single();
+            }
+            //try
+            //{
+            //    MongoClient client = new MongoClient(connectionString);
+            //    IMongoDatabase database = client.GetDatabase("workers_db");
+            //    var collection = database.GetCollection<Rule>("Rules_for_parser");
+            //    rule = collection.Find(Builders<Rule>.Filter.Empty).Single();
+            //}
+            //catch(Exception e) { new Models.Exceptions_and_Events.Exception("", "", e.Message); }
         }
 
         internal static TrainSkill CreateRules(TrainSkill skill)

@@ -34,10 +34,21 @@ namespace UniversalParserLibrary.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=127.0.0.1;Port=5432;Database=postgres;User Id=postgres;Password=78564523;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=gml-vt1.gomel.iba.by;Port=5432;Database=postgres; Search Path = employee;U" +
+            "ser Id=postgres;Password=123456;")]
         public string connectionStringPostgre {
             get {
                 return ((string)(this["connectionStringPostgre"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Port=5432;Database=postgres; Search Path = employee;User Id=post" +
+            "gres;Password=78564523;")]
+        public string tc {
+            get {
+                return ((string)(this["tc"]));
             }
         }
     }
