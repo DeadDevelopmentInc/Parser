@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="connectionStringMongo" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db</Value>
+      <Value Profile="(Default)">mongodb://ems_user:IBA_EMS_2017@gml-pedia:27017/ems</Value>
     </Setting>
     <Setting Name="connectionStringPostgre" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Server=gml-vt1.gomel.iba.by;Port=5432;Database=postgres; Search Path = employee;User Id=postgres;Password=123456;</Value>

@@ -20,29 +20,30 @@ namespace UniversalParserLibrary.Parsing
 
         public static void NewParse(string destination, string name)
         {
-            try
-            {
-                List<BufferSkill> skills = new List<BufferSkill>();
-                List<UserProject> projects = new List<UserProject>();
-                Document doc = new Document();
-                doc.LoadFromFile(destination);
-                //Find section with table
-                Section section = doc.Sections[0];
+            List<BufferSkill> skills = new List<BufferSkill>();
+            List<UserProject> projects = new List<UserProject>();
+            Document doc = new Document();
+            doc.LoadFromFile(destination);
+            //Find section with table
+            Section section = doc.Sections[0];
 
-                new Models.Exceptions_and_Events.Info("Start Parsing", "INFO", "current user", name.Replace(".doc", ""), 1);
-                //Get type of template
-                int type = doc.Sections[0].Tables.Count;
-                dynamic temp = null;
-                switch (type)
-                {
-                    case 8: { temp = ParseSectionFromNewTemplate(section); } break;
-                    case 2: { temp = ParseSectionFromOldTemplate(section); } break;
-                }
-                unchecked { skills = ParseTemplate(temp.Item1, temp.Item2); projects = temp.Item2; }
-                SendDataToDB(name, skills, projects, section);
+            new Models.Exceptions_and_Events.Info("Start Parsing", "INFO", "current user", name.Replace(".doc", ""), 1);
+            //Get type of template
+            int type = doc.Sections[0].Tables.Count;
+            dynamic temp = null;
+            switch (type)
+            {
+                case 8: { temp = ParseSectionFromNewTemplate(section); } break;
+                case 2: { temp = ParseSectionFromOldTemplate(section); } break;
             }
-            catch(Exception e) { new Models.Exceptions_and_Events.Exception("Resume Parsing", "ERROR", e.Message, name.Replace(".doc", "")); }
-            finally { new Models.Exceptions_and_Events.Info("Finish Parsing", "INFO", "current user", name.Replace(".doc", ""), 1); }
+            unchecked { skills = ParseTemplate(temp.Item1, temp.Item2); projects = temp.Item2; }
+            SendDataToDB(name, skills, projects, section);
+            //try
+            //{
+
+            //}
+            //catch(Exception e) { new Models.Exceptions_and_Events.Exception("Resume Parsing", "ERROR", e.Message, name.Replace(".doc", "")); }
+            //finally { new Models.Exceptions_and_Events.Info("Finish Parsing", "INFO", "current user", name.Replace(".doc", ""), 1); }
 
 
         }
@@ -242,23 +243,25 @@ namespace UniversalParserLibrary.Parsing
                 name = name.Remove(name.IndexOf(".doc"), 4);
                 List<SkillLevel> levels = ProcessDataForDB(skills);
                 MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
-                IMongoDatabase database = client.GetDatabase("workers_db");
+                IMongoDatabase database = client.GetDatabase("ems");
                 var colUsers = database.GetCollection<User>("users");
                 UpdateOptions updateOptions = new UpdateOptions { IsUpsert = true };
-                User user = new User
-                {
-                    _id = name,
-                    abilities = HelpersForParsing.GetAbitiesFromSection(section),
-                    itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
-                    skills = levels,
-                    projects = projects
-                };
+                User user = new User(name, levels, projects, section);
+                //{
+                //    _id = name,
+                //    abilities = HelpersForParsing.GetAbitiesFromSection(section),
+                //    itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text),
+                //    skills = levels,
+                //    projects = projects
+                //};
                 FilterDefinition<User> builders = Builders<User>.Filter.Eq(r => r._id, name);
                 colUsers.ReplaceOne(builders, user, updateOptions);
+                new Models.Exceptions_and_Events.Info("sending data","INFO","document " + name +" succesesfull send in db", 1);
             }
             /*Exception e - from System Exception
               new Exception({params}) - from Exeptions_and_Events*/
             catch(Exception e) { new Models.Exceptions_and_Events.Exception("writing in db", "ERROR", e.Message); }
+
         }
 
         private static void AddToList(List<Project> projects)

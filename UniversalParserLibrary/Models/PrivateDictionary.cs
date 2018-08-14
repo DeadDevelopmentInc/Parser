@@ -41,7 +41,7 @@ namespace UniversalParserLibrary.Models
         internal static void UpdateDictionarySkills()
         {
             MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
-            IMongoDatabase database = client.GetDatabase("workers_db");
+            IMongoDatabase database = client.GetDatabase("ems");
             var collection = database.GetCollection<Skill>("skills");
             collection.DeleteMany(Builders<Skill>.Filter.Empty);
             collection.InsertMany(globalSkills.ToArray());
@@ -56,7 +56,7 @@ namespace UniversalParserLibrary.Models
         {
             Project.FindSimpleProjects(projects);
             MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
-            IMongoDatabase database = client.GetDatabase("workers_db");
+            IMongoDatabase database = client.GetDatabase("ems");
             var collection = database.GetCollection<Project>("projects");
             collection.DeleteMany(Builders<Project>.Filter.Empty);
             if(projects.Count != 0)
@@ -69,7 +69,7 @@ namespace UniversalParserLibrary.Models
             try
             {
                 MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
-                IMongoDatabase database = client.GetDatabase("workers_db");
+                IMongoDatabase database = client.GetDatabase("ems");
                 var collection = database.GetCollection<T>(collectionName);
                 suc = 1;
                 return collection.Find(Builders<T>.Filter.Empty).ToList();
@@ -85,7 +85,7 @@ namespace UniversalParserLibrary.Models
         internal static void UpdateDictionarySkills(List<Skill> skills)
         {
             MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
-            IMongoDatabase database = client.GetDatabase("workers_db");
+            IMongoDatabase database = client.GetDatabase("ems");
             var collection = database.GetCollection<Skill>("skills");
             collection.DeleteMany(Builders<Skill>.Filter.Empty);
             collection.InsertMany(skills.ToArray());

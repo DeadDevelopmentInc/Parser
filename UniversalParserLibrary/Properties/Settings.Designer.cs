@@ -25,7 +25,7 @@ namespace UniversalParserLibrary.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("mongodb://admin:78564523@ds014578.mlab.com:14578/workers_db")]
+        [global::System.Configuration.DefaultSettingValueAttribute("mongodb://ems_user:IBA_EMS_2017@gml-pedia:27017/ems")]
         public string connectionStringMongo {
             get {
                 return ((string)(this["connectionStringMongo"]));

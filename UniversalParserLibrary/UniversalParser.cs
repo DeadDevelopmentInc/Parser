@@ -21,7 +21,7 @@ namespace UniversalParserLibrary
         /// <param name="destination_name">specified folder</param>
         public static void StartParsing(string destination_name)
         {
-            //PostgreDB.ReadFilesInDB();
+            PostgreDB.ReadFilesInDB();
             if (Directory.Exists(destination_name))
             {
                 List<Thread> threads = new List<Thread>();                                                     //Create list with threads

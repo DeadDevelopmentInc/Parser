@@ -89,7 +89,7 @@
     <Compile Include="Models\PostgreDB.cs" />
     <Compile Include="Models\Projects\BufferProject.cs" />
     <Compile Include="Models\Template\ResumeTemplate.cs" />
-    <Compile Include="Models\User\BufferSkill.cs" />
+    <Compile Include="Models\Users\BufferSkill.cs" />
     <Compile Include="Models\Algorithms\DahmerauLevenshteinAlg.cs" />
     <Compile Include="Models\Date.cs" />
     <Compile Include="Models\Algorithms\LevenshteinAlg.cs" />
@@ -100,11 +100,12 @@
     <Compile Include="Models\PrivateDictionary.cs" />
     <Compile Include="Models\Projects\Project.cs" />
     <Compile Include="Models\Rule.cs" />
-    <Compile Include="Models\User\Skill.cs" />
+    <Compile Include="Models\Users\PostgreUser.cs" />
+    <Compile Include="Models\Users\Skill.cs" />
     <Compile Include="Models\Projects\SkillInProject.cs" />
-    <Compile Include="Models\User\SkillLevel.cs" />
-    <Compile Include="Models\User\TrainSkill.cs" />
-    <Compile Include="Models\User\User.cs" />
+    <Compile Include="Models\Users\SkillLevel.cs" />
+    <Compile Include="Models\Users\TrainSkill.cs" />
+    <Compile Include="Models\Users\User.cs" />
     <Compile Include="Models\Projects\UserProject.cs" />
     <Compile Include="Parsing\HelpersForParsing.cs" />
     <Compile Include="Parsing\LogicForParsing.cs" />
