@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using UniversalParserLibrary.Parsing;
+using Spire.Doc.Documents;
 
 namespace UniversalParserLibrary.Parsing
 {
@@ -24,6 +25,9 @@ namespace UniversalParserLibrary.Parsing
             doc.LoadFromFile(destination);
             //Find section with table
             Section section = doc.Sections[0];
+            var te = section.Paragraphs;
+            List<string> vs = new List<string>();
+            foreach(Paragraph t in te) { vs.Add(t.Text); }
             List<BufferSkill> skills = new List<BufferSkill>();
             List<UserProject> projects = new List<UserProject>();
             try

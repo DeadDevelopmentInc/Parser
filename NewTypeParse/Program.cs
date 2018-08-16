@@ -19,18 +19,18 @@ namespace NewTypeParse
     {
         static void Main(string[] args)
         {
-            string type = "1";
-            string folder = "ems-resume";
+            string type = "pFD";
             string idOfFile = "24";
             //string type = args[0]; //type of process
-            //string folder = args[1]; //path to folder
             //string idOfFile = args[1]; //path to file
             switch (type)
             {
-                case "1": { UniversalParser.StartParsing(folder); } break;
-                case "2": { UniversalParser.StartTraining(folder, true); } break; //with saving base
-                case "3": { UniversalParser.StartTraining(folder, false); } break; //without saving base
-                case "4": { UniversalParser.SingleParsing(idOfFile); } break; //parsing single document
+                case "pFD": { UniversalParser.StartParsingAllDoc(); } break;
+                case "pFP": { UniversalParser.StartParsingAllWithoutDoc(); } break;
+                case "tN": { UniversalParser.StartTraining(true); } break; //with saving S
+                case "tO": { UniversalParser.StartTraining(false); } break; //without saving base
+                case "pSD": { UniversalParser.SingleParsingWithDoc(idOfFile); } break; //parsing single document
+                case "pSP": { UniversalParser.SingleParsingWithoutDoc(idOfFile); } break;
                 default: { } break;
             }
             Console.ReadLine();

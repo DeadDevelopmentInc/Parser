@@ -116,10 +116,50 @@ namespace UniversalParserLibrary.Models
                 }
             return user;
         }
+
+        internal static List<User> GetUsers()
+        {
+            List<User> users = new List<User>();
+            using (var cmd = new NpgsqlCommand("SELECT firstname,middlename,lastname, engfirstname, englastname, startworkingdate, location, companyaddress, spherename, divisionname, departmentname, sectorname, jobtitle, university, vacation_start_date, vacation_end_date, sciencedegree, birthday, email, pejd, personun FROM emp_info ", Connection))
+            using (var reader = cmd.ExecuteReader())
+                while (reader.Read())
+                {
+                    users.Add(new User
+                    {
+                        fname = (string)reader[0],
+                        mname = (string)reader[1],
+                        lname = (string)reader[2],
+                        passport = new List<string> { (string)reader[3], (string)reader[4] },
+                        startWork = (DateTime)reader[5],
+                        room = (string)reader[6],
+                        adress = (string)reader[7],
+                        sphere = (string)reader[8],
+                        division = (string)reader[9],
+                        department = (string)reader[10],
+                        sector = (string)reader[11],
+                        position = (string)reader[12],
+                        univer = (string)reader[13],
+                        vacation = new List<DateTime> { (DateTime)reader[14], (DateTime)reader[15] },
+                        degree = (string)reader[16],
+                        birthDay = (DateTime)reader[17],
+                        email = (string)reader[18],
+                        sParse = "Postgre",
+                        personId = (string)reader[20],
+                        phones = (string)reader[19]
+                    });
+                }
+            int i = 0;
+            using (var cmd = new NpgsqlCommand("SELECT cvdate FROM cv", Connection))
+            using (var reader = cmd.ExecuteReader())
+                while (reader.Read())
+                {
+                    users[i].lUploaded = (DateTime)reader[0];
+                    i++;
+                }
+            return users;
+        }
     }
 }
 
 
 
-// vniba, in phones
-//phones mob + in

@@ -52,18 +52,25 @@ namespace UniversalParserLibrary.Models
         public List<SkillLevel> skills { get; set; }
         public List<UserProject> projects { get; set; }
 
+        public User()
+        {
+
+        }
+
         public User(string id, List<SkillLevel> levels, List<UserProject> projects, Section section)
         {
             _id = Guid.NewGuid().ToString();
             personId = id;
             this.projects = projects;
             this.skills = levels;
-            var temp = PostgreDB.GettingPersonalInfoFromDB(id, this);
+            PostgreDB.GettingPersonalInfoFromDB(id, this);
             educations = HelpersForParsing.GetEducationsFromSection(section);
             certifications = HelpersForParsing.GetCertificationsFromSection(section);
             abilities = HelpersForParsing.GetAbitiesFromSection(section);
             itexperience = HelpersForParsing.GetITExperienceFromSection(section.Paragraphs[1].Text);
             forLang = HelpersForParsing.GetForLangFromSection(section);
+            educations = HelpersForParsing.GetEducationsFromSection(section);
+            certifications = HelpersForParsing.GetCertificationsFromSection(section);
 
         }
 
@@ -141,10 +148,57 @@ namespace UniversalParserLibrary.Models
                 { "educations", new BsonArray(educations)},
                 { "birthDay", birthDay},
                 { "projects", GetProj() },
-                { "lotuspersonUn", personId},
 
             };
             foreach(var item in up)
+            {
+                update = update.Set(item.Name, item.Value);
+            }
+            return update;
+        }
+
+        public UpdateDefinition<BsonDocument> GetUserBsonSingle()
+        {
+            var update = Builders<BsonDocument>.Update.Set("firstname", fname);
+            var up = new BsonDocument
+            {
+                { "firstname", fname },
+                { "middlename", mname },
+                { "lastname", lname },
+                { "passport",  new BsonDocument {
+                    { "givenNames", passport[0]},
+                    {  "surname", passport[1]} } },
+                { "startWorkingDay", startWork},
+                { "officeRoomNumber", room},
+                { "officeAddress", adress},
+                { "sphere", new BsonDocument {
+                        { "name", sphere } }
+                },
+                { "division", new BsonDocument {
+                        { "name", division } }
+                },
+                { "department", new BsonDocument {
+                        { "name", department} }
+                },
+                { "sector", new BsonDocument {
+                        { "name", sector} }
+                },
+                { "company", new BsonDocument {
+                        { "name", company } }
+                },
+                { "position", position},
+                { "email", email },
+                { "phones", GetPhones() },
+                { "vacation", new BsonDocument{ { "start_date", vacation[0]},{ "end_date", vacation[1] } } },
+                { "resumeParserError", error == null ? new BsonArray(0) : new BsonArray(error)},
+                { "resumeLastUpdated", lUploaded},
+                { "resumeLastParsed", lParsed},
+                { "resumeParsedSource", sParse},
+                { "academicDegrees", GetDegrees()},
+                { "birthDay", birthDay},
+
+            };
+            foreach (var item in up)
             {
                 update = update.Set(item.Name, item.Value);
             }
@@ -198,13 +252,15 @@ namespace UniversalParserLibrary.Models
             List<BsonDocument> bsonElements = new List<BsonDocument>();
             foreach (var b in skills)
             {
+                List<string> exName = new List<string>();
+                exName.Add(b.exactName);
                 bsonElements.Add(new BsonDocument
                 {
                     { "skill", b._id },
                     { "experience", b.level },
                     { "change", "ParsedResume" },
-                    //{ "lastUsedDate", b.lastUs == null ? BsonNull.Value : b.lastUs},
-                    { "exactName", b.exactName}
+                    { "lastUsedDate", b.lastUs },
+                    { "exactName", new BsonArray(exName)}
                 });
             }
             return new BsonArray(bsonElements);

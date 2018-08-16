@@ -72,13 +72,26 @@ namespace UniversalParserLibrary.Parsing
 
         internal static  List<string> GetEducationsFromSection(Section section)
         {
+            bool read = false;
             List<string> educations = new List<string>();
+            foreach(Paragraph p in section.Paragraphs)
+            {
+                if (read) educations.Add(p.Text);
+                if (p.Text.Contains("EDUCATION")) read = true;
+            }
             return educations;
         }
 
         internal static List<string> GetCertificationsFromSection(Section section)
         {
+            bool read = false;
             List<string> certifications = new List<string>();
+            foreach (Paragraph p in section.Paragraphs)
+            {
+                if (p.Text.Contains("PROFESSIONAL EXPERIENCE")) break;
+                if (read) certifications.Add(p.Text);
+                if (p.Text.Contains("EDUCATION")) read = true;
+            }
             return certifications;
         }
     }

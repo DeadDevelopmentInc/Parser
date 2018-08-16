@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using UniversalParserLibrary.Training;
 using UniversalParserLibrary.Parsing;
 using UniversalParserLibrary.Models;
-using UniversalParserLibrary.Models.Exceptions_and_Events;
 using Npgsql;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace UniversalParserLibrary
 {
@@ -19,8 +20,9 @@ namespace UniversalParserLibrary
         /// Method for parse files from the specified folder 
         /// </summary>
         /// <param name="destination_name">specified folder</param>
-        public static void StartParsing(string destination_name)
+        public static void StartParsingAllDoc()
         {
+            string destination_name = "ems-resume";
             //PostgreDB.ReadFilesInDB();
             if (Directory.Exists(destination_name))
             {
@@ -36,9 +38,9 @@ namespace UniversalParserLibrary
                         threads.Last().Start();
                     }
                     AwaitThreads(ref threads);
-                    new Info("updating projects and skills", "INFO", "sending projects", 0);
+                    new Models.Exceptions_and_Events.Info("updating projects and skills", "INFO", "sending projects", 0);
                     PrivateDictionary.SendProjects(Project.FindSimpleProjects(LogicForParsing.ProjectsList));
-                    new Info("updating projects and skills", "INFO", "sending skills", 0);
+                    new Models.Exceptions_and_Events.Info("updating projects and skills", "INFO", "sending skills", 0);
                     PrivateDictionary.UpdateDictionarySkills();
                 }
                 
@@ -47,11 +49,69 @@ namespace UniversalParserLibrary
         }
 
         /// <summary>
+        /// Method for parse all users from postre without files
+        /// </summary>
+        public static void StartParsingAllWithoutDoc()
+        {
+            var users = PostgreDB.GetUsers();
+            try
+            {
+                MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
+                IMongoDatabase database = client.GetDatabase("ems");
+                var colUsers = database.GetCollection<BsonDocument>("users");
+                UpdateOptions updateOptions = new UpdateOptions { IsUpsert = true };
+                foreach (var user in users)
+                {
+                    FilterDefinition<BsonDocument> builders = Builders<BsonDocument>.Filter.Eq("lotuspersonUn", user.personId);
+                    colUsers.UpdateOne(builders, user.GetUserBson(), updateOptions);
+                    new Models.Exceptions_and_Events.Info("sending data", "INFO", "document " + user.personId + " succesesfull send in db", 1);
+                }               
+            }
+            /*Exception e - from System Exception
+              new Exception({params}) - from Exeptions_and_Events*/
+            catch (Exception e) { new Models.Exceptions_and_Events.Exception("writing in db", "ERROR", e.Message); }
+        }
+
+        /// <summary>
+        /// Add method for starting parse single document
+        /// </summary>
+        public static void SingleParsingWithDoc(string id)
+        {
+            PostgreDB.ReadFilesInDB(id);
+            FileInfo file = new FileInfo("ems-resume/" + id + ".doc");
+            LogicForParsing.NewParse(file.FullName, file.Name);
+        }
+
+        /// <summary>
+        /// Add method for starting parse single user
+        /// </summary>
+        public static void SingleParsingWithoutDoc(string id)
+        {
+            User user = new User();
+            PostgreDB.GettingPersonalInfoFromDB(id, user);
+            try
+            {
+                MongoClient client = new MongoClient(Properties.Settings.Default.connectionStringMongo);
+                IMongoDatabase database = client.GetDatabase("ems");
+                var colUsers = database.GetCollection<BsonDocument>("users");
+                UpdateOptions updateOptions = new UpdateOptions { IsUpsert = true };
+                FilterDefinition<BsonDocument> builders = Builders<BsonDocument>.Filter.Eq("lotuspersonUn", user.personId);
+                colUsers.UpdateOne(builders, user.GetUserBson(), updateOptions);
+                new Models.Exceptions_and_Events.Info("sending data", "INFO", "document " + user.personId + " succesesfull send in db", 1);
+            }
+            /*Exception e - from System Exception
+              new Exception({params}) - from Exeptions_and_Events*/
+            catch (Exception e) { new Models.Exceptions_and_Events.Exception("writing in db", "ERROR", e.Message); }
+
+        }
+
+        /// <summary>
         /// Method for training base with data from the specified folder 
         /// </summary>
         /// <param name="destination_name">specified folder</param>
-        public static void StartTraining(string destination_name, bool type_of_parse)
+        public static void StartTraining(bool type_of_parse)
         {
+            string destination_name = "ems-resume";
             PostgreDB.ReadFilesInDB();
             LogicForTraining.TrainList = new List<TrainSkill>();
             if (Directory.Exists(destination_name))
@@ -74,6 +134,7 @@ namespace UniversalParserLibrary
             }
             else new Models.Exceptions_and_Events.Exception("finding folder", "ERROR", "folder not found");
         }
+        
         /// <summary>
         /// Method for waiting while all threads finish
         /// </summary>
@@ -107,14 +168,6 @@ namespace UniversalParserLibrary
             var forWrite = new List<Skill>();
             foreach(var item in tempList) { forWrite.Add(item.ForWrite()); }
             PrivateDictionary.UpdateDictionarySkills(forWrite);
-        }
-
-        //add method for starting parse single document
-        public static void SingleParsing(string id)
-        {
-            PostgreDB.ReadFilesInDB(id);
-            FileInfo file = new FileInfo("TemplateFromPostgre/" + id + ".doc");
-            LogicForParsing.NewParse(file.FullName, file.Name);
         }
     }
 }
