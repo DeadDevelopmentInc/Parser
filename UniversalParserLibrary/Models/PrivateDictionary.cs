@@ -24,6 +24,7 @@ namespace UniversalParserLibrary.Models
         static PrivateDictionary()
         {
             globalSkills = GetDataFromDB<Skill>("skills");
+            foreach(var skill in globalSkills) { skill.isSkillNew = false; }
             globalProjects = GetDataFromDB<Project>("projects");
         }
 
@@ -34,7 +35,7 @@ namespace UniversalParserLibrary.Models
                 skill.Print();
             }
         }
-        
+
         /// <summary>
         /// Update dictionary with global skills
         /// </summary>
@@ -44,7 +45,10 @@ namespace UniversalParserLibrary.Models
             IMongoDatabase database = client.GetDatabase("ems");
             var collection = database.GetCollection<Skill>("skills");
             collection.DeleteMany(Builders<Skill>.Filter.Empty);
-            collection.InsertMany(globalSkills.ToArray());
+            foreach (var sk in globalSkills)
+            { 
+                collection.ReplaceOne(Builders<Skill>.Filter.Eq(r => r._id, sk._id), sk, new UpdateOptions { IsUpsert = true });
+            }
 
         }
 
@@ -60,7 +64,10 @@ namespace UniversalParserLibrary.Models
             var collection = database.GetCollection<Project>("projects");
             collection.DeleteMany(Builders<Project>.Filter.Empty);
             if(projects.Count != 0)
-                collection.InsertMany(projects.ToArray());
+                foreach (var sk in globalProjects)
+                {
+                    collection.ReplaceOne(Builders<Project>.Filter.Eq(r => r._id, sk._id), sk, new UpdateOptions { IsUpsert = true });
+                }
         }
 
         internal static List<T> GetDataFromDB<T>(string collectionName)

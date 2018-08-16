@@ -83,9 +83,7 @@ namespace UniversalParserLibrary.Models
 
         internal static User GettingPersonalInfoFromDB(string personal_id, User user)
         {
-            using (var cmd = new NpgsqlCommand("SELECT firstname, middlename, lastname,  engfirstname, englastname, startworkingdate, location, companyaddress" +
-                "spherename, divisionname, departmentname, sectorname, jobtitle, university, vacation_start_date, vacation_end_date, sciencedegree, birthday, email, pejd" +
-                "FROM emp_info where \"personun\"='" + personal_id + "'", Connection))
+            using (var cmd = new NpgsqlCommand("SELECT firstname,middlename,lastname,  engfirstname, englastname, startworkingdate, location, companyaddress, spherename, divisionname, departmentname, sectorname, jobtitle, university, vacation_start_date, vacation_end_date, sciencedegree, birthday, email, pejd FROM emp_info where \"personun\"='" + personal_id + "'", Connection))
             using (var reader = cmd.ExecuteReader())
                 while (reader.Read())
                 {
@@ -93,7 +91,7 @@ namespace UniversalParserLibrary.Models
                     user.mname = (string)reader[1];
                     user.lname = (string)reader[2];
                     user.passport = new List<string> { (string)reader[3], (string)reader[4] };
-                    user.startWork = (Date)reader[5];
+                    user.startWork = (DateTime)reader[5];
                     user.room = (string)reader[6];
                     user.adress = (string)reader[7];
                     user.sphere = (string)reader[8];
@@ -102,9 +100,9 @@ namespace UniversalParserLibrary.Models
                     user.sector = (string)reader[11];
                     user.position = (string)reader[12];
                     user.univer = (string)reader[13];
-                    user.vacation = new List<Date> { (Date)reader[14], (Date)reader[15] };
+                    user.vacation = new List<DateTime> { (DateTime)reader[14], (DateTime)reader[15] };
                     user.degree = (string)reader[16];
-                    user.birthDay= (Date)reader[17];
+                    user.birthDay= (DateTime)reader[17];
                     user.email = (string)reader[18];
                     user.sParse = "Postgre";
                     user.personId = personal_id;
@@ -123,4 +121,5 @@ namespace UniversalParserLibrary.Models
 
 
 
-//pejd, vniba,
+// vniba, in phones
+//phones mob + in

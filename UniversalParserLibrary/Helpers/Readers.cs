@@ -62,13 +62,13 @@ namespace UniversalParserLibrary.Helpers
                             list.Add(new BufferSkill { name = buffer });
                         }
                     }
-                    else
-                    {
-                        for (int j = i; j < arraySkills.Count; j += 2)
-                        {
-                            list.Add(new BufferSkill { name = arraySkills[j], level = arraySkills[j + 1], type = arraySkills[j - 1] });
-                        }
-                    }
+                    //else
+                    //{
+                    //    for (int j = i; j < arraySkills.Count; j += 2)
+                    //    {
+                    //        list.Add(new BufferSkill { name = arraySkills[j], level = arraySkills[j + 1], type = arraySkills[j - 1] });
+                    //    }
+                    //}
 
                 }
             }

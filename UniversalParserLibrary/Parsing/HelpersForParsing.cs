@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using UniversalParserLibrary.Helpers;
 
 namespace UniversalParserLibrary.Parsing
 {
@@ -25,6 +26,41 @@ namespace UniversalParserLibrary.Parsing
             return abilities;
         }
 
+        internal static List<Tuple<string, string>> GetForLangFromSection(Section section)
+        {
+            List<Tuple<string, string>> forLangs = new List<Tuple<string, string>>();
+            int type = section.Tables.Count;
+            switch (type)
+            {
+                case 8: {
+                        List<string> arraySkills = Readers.GetTextFromTable(section.Tables[6]);
+                        for (int i = 1; i < arraySkills.Count; i += 2)
+                        {
+                            arraySkills[i] = Regex.Replace(arraySkills[i], ",(?=[^()]*\\))", "|");
+                            string[] buff = Regex.Split(arraySkills[i], ", ");
+                            foreach (string s in buff)
+                            {
+                                forLangs.Add(new Tuple<string, string>(s, arraySkills[i + 1]));
+                            }
+                        }
+                    } break;
+                case 2: {
+                        List<string> arraySkills = Readers.GetTextFromTable(section.Tables[0]);
+                        for (int i = 1; i < arraySkills.Count; i++)
+                        {
+                            if (arraySkills[i - 1].Contains("Fore"))
+                            {
+                                for (int j = i; j < arraySkills.Count; j += 2)
+                                {
+                                    forLangs.Add(new Tuple<string, string>(arraySkills[j], arraySkills[j + 1]));
+                                }
+                            }
+                        }
+                    } break;
+            }
+            return forLangs;
+        }
+
         internal static int GetITExperienceFromSection(string line)
         {
             string age = "";
@@ -32,6 +68,18 @@ namespace UniversalParserLibrary.Parsing
             MatchCollection matches = reg.Matches(line);
             if(matches.Count > 0) { foreach (Match m in matches) { age = age.Insert(age.Length, m.Value); } return int.Parse(age); }
             return 0;
+        }
+
+        internal static  List<string> GetEducationsFromSection(Section section)
+        {
+            List<string> educations = new List<string>();
+            return educations;
+        }
+
+        internal static List<string> GetCertificationsFromSection(Section section)
+        {
+            List<string> certifications = new List<string>();
+            return certifications;
         }
     }
 }

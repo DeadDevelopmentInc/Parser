@@ -14,5 +14,6 @@ namespace UniversalParserLibrary.Models
         public string _id { get; set; }
         public string exactName { get; set; }
         public string level { get; set; }
+        public DateTime? lastUs { get; set; } = null;
     }
 }
